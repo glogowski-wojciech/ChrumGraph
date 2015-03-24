@@ -1,0 +1,67 @@
+class Shape;
+
+class Vertex {
+    double X;
+    double Y;
+    List<Shape> Shapes;
+    List<Edge> Edges;
+    bool Pinned;
+    bool PositionChanged;
+    double ForcedX, ForcedY;
+};
+
+class Edge {
+    Vertex V1;
+    Vertex V2;
+    Shape Shape;
+};
+
+interface VisualCore {
+    void CreateVertex(double x, double y);
+    void RemoveVertex(Vertex v);
+    void CreateEdge(Vertex v1, Vertex v2);
+    void RemoveEdge(Edge e);
+    void Pin(Vertex v); // Mutex(Core)
+    void Unpin(Vertex v); // Mutex(Core)
+    void SetPosition(Vertex v, double x, double y); // Mutex(Core)
+    void LoadFromFile(string filename);
+    void SaveGraph(string filename);
+    void SaveVisualGraph(string filename);
+    bool Visible;
+};
+
+class Core {
+    void CreateVertex(double x, double y);
+    void RemoveVertex(Vertex v);
+    void CreateEdge(Vertex v1, Vertex v2);
+    void RemoveEdge(Edge e);
+    void Pin(Vertex v); // Mutex(Core)
+    void Unpin(Vertex v); // Mutex(Core)
+    void SetPosition(Vertex v, double x, double y); // Mutex(Core)
+    void LoadGraphFromFile(string filename);
+    void SaveGraphToFile(string filename);
+    void SaveVisualGraphToFile(string filename);
+    bool Visible;
+    List<Vertex> vertices;
+    List<Edge> edges;
+    static Core Core;
+    private Core();
+    DispatcherTimer timer;
+};
+
+interface Visual {
+    void CreateVisualVertex(Vertex v);
+    void RemoveVisualVertex(Vertex v);
+    void CreateVisualEdge(Edge e);
+    void RemoveVisualEdge(Edge e);
+    bool Visible;
+    void Refresh();
+};
+
+interface Physics {
+    // ... parametry
+    void StartSimulation(double fps); // Mutex(Core)
+    void StartSimulation();
+    void StopSimulation();
+};
+
