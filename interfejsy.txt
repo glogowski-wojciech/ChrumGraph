@@ -1,5 +1,3 @@
-class Shape;
-
 class Vertex {
     double X;
     double Y;
@@ -27,7 +25,6 @@ interface VisualCore {
     void LoadFromFile(string filename);
     void SaveGraph(string filename);
     void SaveVisualGraph(string filename);
-    bool Visible;
 };
 
 class Core {
@@ -35,16 +32,16 @@ class Core {
     void RemoveVertex(Vertex v);
     void CreateEdge(Vertex v1, Vertex v2);
     void RemoveEdge(Edge e);
+    void SimulationFinished();
     void Pin(Vertex v); // Mutex(Core)
     void Unpin(Vertex v); // Mutex(Core)
     void SetPosition(Vertex v, double x, double y); // Mutex(Core)
     void LoadGraphFromFile(string filename);
     void SaveGraphToFile(string filename);
     void SaveVisualGraphToFile(string filename);
-    bool Visible;
-    List<Vertex> vertices;
-    List<Edge> edges;
-    static Core Core;
+    List<Vertex> Vertices;
+    List<Edge> Edges;
+    static Core Instance;
     private Core();
     DispatcherTimer timer;
 };
