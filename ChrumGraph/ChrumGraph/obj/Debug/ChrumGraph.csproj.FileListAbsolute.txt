@@ -1,0 +1,13 @@
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\bin\Debug\ChrumGraph.exe.config
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\bin\Debug\ChrumGraph.exe
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\bin\Debug\ChrumGraph.pdb
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.csprojResolveAssemblyReference.cache
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\MainWindow.baml
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\MainWindow.g.cs
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\App.g.cs
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph_MarkupCompile.cache
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.g.resources
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.Properties.Resources.resources
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.csproj.GenerateResource.Cache
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.exe
+D:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.pdb

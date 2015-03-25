@@ -4,7 +4,7 @@ class Vertex {
     List<Shape> Shapes;
     List<Edge> Edges;
     bool Pinned;
-    bool PositionChanged;
+    bool PositionForced;
     double ForcedX, ForcedY;
 };
 
@@ -28,6 +28,8 @@ interface VisualCore {
 };
 
 class Core {
+	private Core();
+	static Core Instance;
     void CreateVertex(double x, double y);
     void RemoveVertex(Vertex v);
     void CreateEdge(Vertex v1, Vertex v2);
@@ -41,12 +43,12 @@ class Core {
     void SaveVisualGraphToFile(string filename);
     List<Vertex> Vertices;
     List<Edge> Edges;
-    static Core Instance;
-    private Core();
     DispatcherTimer timer;
 };
 
 interface Visual {
+	private Visual();
+	static Visual Instance;
     void CreateVisualVertex(Vertex v);
     void RemoveVisualVertex(Vertex v);
     void CreateVisualEdge(Edge e);
@@ -61,4 +63,3 @@ interface Physics {
     void StartSimulation();
     void StopSimulation();
 };
-
