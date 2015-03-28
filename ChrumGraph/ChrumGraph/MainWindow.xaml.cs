@@ -23,8 +23,7 @@ namespace ChrumGraph
 		public MainWindow()
 		{
 			InitializeComponent();
-			Core a = new Core();
-			a.FPS = 2.0;
+			//Core.Create();
 		}
 	}
 }

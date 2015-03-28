@@ -53,7 +53,7 @@ class Core : PhysicsCore, VisualCore
 
 /* Interface of Core for Visual */
 
-interface VisualCore
+interface IVisualCore
 {
     void CreateVertex(double x, double y);
     void RemoveVertex(Vertex v);
@@ -69,43 +69,45 @@ interface VisualCore
 
 /* Interface of Core for Physics */
 
-interface PhysicsCore
+interface IPhysicsCore
 {
-    List<PhysicsVertex> Vertices
+    List<IPhysicsVertex> Vertices
     {
         get;
         set;
     }
-    List<PhysicsEdge> Edges
+    List<IPhysicsEdge> Edges
     {
         get;
         set;
     }
-    static PhysicsCore Instance; // for Mutex
     void SimulationFinished();
 };
 
 
 /* Interface of Visual for Core */
 
-interface Visual
+interface IVisual
 {
-    private Visual();
-    static Visual Instance;
+	Visual(IVisualCore core); //not part of interface
     void CreateVisualVertex(Vertex v);
     void RemoveVisualVertex(Vertex v);
     void CreateVisualEdge(Edge e);
     void RemoveVisualEdge(Edge e);
-    bool Visible;
+    bool Visible
+    {
+    	get;
+    	set;
+    }
     void Refresh();
 };
 
 /* Interface of Physics for Core */
 
-interface Physics
+interface IPhysics
 {
     // ... parameters
-    Physics(PhysicsCore physicsCore);
+    Physics(IPhysicsCore core); //not part of interface
     void StartSimulation(double fps); // Mutex(Core)
     void StartSimulation();
     void StopSimulation();
@@ -113,7 +115,7 @@ interface Physics
 
 /* Vertex, Edge interfaces for Physics */
 
-interface PhysicsVertex
+interface IPhysicsVertex
 {
     double X
     {
@@ -125,24 +127,20 @@ interface PhysicsVertex
         get;
         set;
     }
-    System.Collections.Generic.List<Edge> Edges
+    List<Edge> Edges
     {
         get;
-        set;
     }
 };
 
-interface PhysicsEdge
+interface IPhysicsEdge
 {
     PhysicsVertex V1
     {
         get;
-        set;
     }
     PhysicsVertex V2
     {
         get;
-        set;
     }
 };
-
