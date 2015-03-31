@@ -23,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -61,11 +63,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\Core %28MP%29.cs" />
+    <Compile Include="Classes\Core.cs" />
     <Compile Include="Classes\GraphStructs.cs" />
     <Compile Include="Interfaces\IPhysics.cs" />
     <Compile Include="Interfaces\IPhysicsCore.cs" />
     <Compile Include="Interfaces\IVisual.cs" />
+    <Compile Include="Interfaces\IVisualCore.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

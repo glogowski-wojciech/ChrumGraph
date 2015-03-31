@@ -6,10 +6,20 @@ using System.Threading.Tasks;
 
 namespace ChrumGraph
 {
-	//for now it's only temporary (for compiling reasons),
-	//later we'll see whether we want that interface or not
+	/// <summary>
+	/// Interface of Visual for Core.
+	/// </summary>
 	public interface IVisual
 	{
+		void CreateVisualVertex(Vertex v);
+		void RemoveVisualVertex(Vertex v);
+		void CreateVisualEdge(Edge e);
+		void RemoveVisualEdge(Edge e);
+		bool Visible
+		{
+			get;
+			set;
+		}
 		void Refresh();
 	}
 }

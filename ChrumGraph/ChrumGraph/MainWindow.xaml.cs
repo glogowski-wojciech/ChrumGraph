@@ -20,10 +20,12 @@ namespace ChrumGraph
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		Core core;
+
 		public MainWindow()
 		{
 			InitializeComponent();
-			//Core.Create();
+			core = new Core();
 		}
 	}
 }

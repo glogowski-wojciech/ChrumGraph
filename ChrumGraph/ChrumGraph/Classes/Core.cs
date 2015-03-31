@@ -11,24 +11,29 @@ namespace ChrumGraph
 	/// <summary>
 	/// Graph logic.
 	/// </summary>
-	public partial class Core
+	public class Core//: IVisualCore, IPhysicsCore
 	{
 		private const double defaultFPS = 30.0;
 
 		private DispatcherTimer refreshTimer = new DispatcherTimer();
 		private double fps;
 
-		//only temporary here, eventually it will be in Ewa's part and assigned in constructor
-		private IVisual Visual;
+		private IVisual visual;
+		private IPhysics physics;
 
-		//to be called in the constructor
-		private void Init()
+		/// <summary>
+		/// Initializes a new Core object.
+		/// </summary>
+		public Core()
 		{
 			FPS = defaultFPS;
 			refreshTimer.Tick += (sender, e) =>
 				{
-					Visual.Refresh();
+					visual.Refresh();
 				};
+
+			//visual = new Visual();
+			//physics = new Physics();
 		}
 
 		/// <summary>
@@ -40,13 +45,10 @@ namespace ChrumGraph
 			set
 			{
 				if (value <= 0) return;
-				double secondsDouble = 1.0 / value;
-				int seconds, milliseconds;
-				seconds = (int)secondsDouble;
-				milliseconds = (int)((secondsDouble - seconds) * 1000);
-				if (seconds != 0 || milliseconds != 0)
+				int ms = (int)(1000.0 / value);
+				if (ms > 0)
 				{
-					refreshTimer.Interval = new TimeSpan(0, 0, 0, seconds, milliseconds);
+					refreshTimer.Interval = new TimeSpan(0, 0, 0, 0, ms);
 					fps = value;
 				}
 			}
