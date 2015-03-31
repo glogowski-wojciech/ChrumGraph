@@ -11,9 +11,10 @@ namespace ChrumGraph
 	/// </summary>
     interface IPhysics
     {
-        // ... parameters
+        double vertexForce;
+        double edgeForce;
         void StartSimulation(double fps);
-        void StartSimulation();
+        void StartSimulation(); //TODO
         void StopSimulation();
     }
 }

@@ -68,5 +68,12 @@ namespace ChrumGraph
 		/// Second vertex that is connected by an edge.
 		/// </summary>
 		public Vertex V2;
+
+        /// <summary>
+        /// Return other than given end of edge.
+        /// </summary>
+        /// <param name="one">The given vertex.</param>
+        /// <returns></returns>
+        public Vertex Other(Vertex one);
 	}
 }
