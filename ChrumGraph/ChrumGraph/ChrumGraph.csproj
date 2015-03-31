@@ -63,6 +63,8 @@
     </Compile>
     <Compile Include="Classes\Core %28MP%29.cs" />
     <Compile Include="Classes\GraphStructs.cs" />
+    <Compile Include="Interfaces\IPhysics.cs" />
+    <Compile Include="Interfaces\IPhysicsCore.cs" />
     <Compile Include="Interfaces\IVisual.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -70,6 +72,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Physics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

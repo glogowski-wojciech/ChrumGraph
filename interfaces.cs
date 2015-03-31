@@ -89,7 +89,6 @@ interface IPhysicsCore
 
 interface IVisual
 {
-	Visual(IVisualCore core); //not part of interface
     void CreateVisualVertex(Vertex v);
     void RemoveVisualVertex(Vertex v);
     void CreateVisualEdge(Edge e);
@@ -107,40 +106,7 @@ interface IVisual
 interface IPhysics
 {
     // ... parameters
-    Physics(IPhysicsCore core); //not part of interface
     void StartSimulation(double fps); // Mutex(Core)
     void StartSimulation();
     void StopSimulation();
-};
-
-/* Vertex, Edge interfaces for Physics */
-
-interface IPhysicsVertex
-{
-    double X
-    {
-        get;
-        set;
-    }
-    double Y
-    {
-        get;
-        set;
-    }
-    List<Edge> Edges
-    {
-        get;
-    }
-};
-
-interface IPhysicsEdge
-{
-    PhysicsVertex V1
-    {
-        get;
-    }
-    PhysicsVertex V2
-    {
-        get;
-    }
 };
