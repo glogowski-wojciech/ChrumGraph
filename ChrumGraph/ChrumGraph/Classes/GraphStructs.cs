@@ -16,19 +16,12 @@ namespace ChrumGraph
 		/// <summary>
 		/// Position of a vertex (X coordinate).
 		/// </summary>
-		public double X
-		{
-			get;
-			set;
-		}
+		public double X { get; set; }
+
 		/// <summary>
 		/// Position of a vertex (Y coordinate).
 		/// </summary>
-		public double Y
-		{
-			get;
-			set;
-		}
+		public double Y { get; set; }
 
 		/// <summary>
 		/// Gets list of edges whose one of endpoints is specified vertex.
@@ -41,17 +34,28 @@ namespace ChrumGraph
 		/// <summary>
 		/// Specifies whether a vertex is pinned.
 		/// </summary>
-		public bool Pinned;
+		public bool Pinned { get; set; }
 
 		/// <summary>
 		/// Specifies whether user forced position of a vertex.
 		/// </summary>
-		public bool PositionForced;
+		public bool PositionForced { get; set; }
 
 		/// <summary>
-		/// Position forced by user (meaning it won't be changed by Physics).
+		/// Position forced by user (X coordinate).
 		/// </summary>
-		public double ForcedX, ForcedY;
+		/// <remarks>
+		/// When position is forced by user, it won't by changed by Physics.
+		/// </remarks>
+		public double ForcedX { get; set; }
+
+		/// <summary>
+		/// Position forced by user (Y coordinate).
+		/// </summary>
+		/// <remarks>
+		/// When position is forced by user, it won't by changed by Physics.
+		/// </remarks>
+		public double ForcedY { get; set; }
 	}
 
 	/// <summary>
@@ -62,18 +66,23 @@ namespace ChrumGraph
 		/// <summary>
 		/// First vertex that is connected by an edge.
 		/// </summary>
-		public Vertex V1;
+		public Vertex V1 { get; set; }
 
 		/// <summary>
 		/// Second vertex that is connected by an edge.
 		/// </summary>
-		public Vertex V2;
+		public Vertex V2 { get; set; }
 
-        /// <summary>
-        /// Return other than given end of edge.
-        /// </summary>
-        /// <param name="one">The given vertex.</param>
-        /// <returns></returns>
-        public Vertex Other(Vertex one);
+		/// <summary>
+		/// Returns other than given end of edge.
+		/// </summary>
+		/// <param name="one">The given vertex.</param>
+		/// <returns>The other vertex if the first one was valid, null otherwise.</returns>
+        public Vertex Other(Vertex one)
+		{
+			if (one == V1) return V2;
+			else if (one == V2) return V1;
+			return null;
+		}
 	}
 }

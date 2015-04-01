@@ -15,11 +15,7 @@ namespace ChrumGraph
 		void RemoveVisualVertex(Vertex v);
 		void CreateVisualEdge(Edge e);
 		void RemoveVisualEdge(Edge e);
-		bool Visible
-		{
-			get;
-			set;
-		}
+		bool Visible { get; set; }
 		void Refresh();
 	}
 }

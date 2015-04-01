@@ -11,14 +11,9 @@ namespace ChrumGraph
 	/// </summary>
     interface IPhysicsCore
     {
-        List<Vertex> Vertices
-        {
-            get;
-        }
-        List<Edge> Edges
-        {
-            get;
-        }
+        List<Vertex> Vertices { get; }
+        List<Edge> Edges { get; }
+
         void SimulationFinished();
     };
 }

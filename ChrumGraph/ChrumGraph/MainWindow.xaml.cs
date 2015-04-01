@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Visual = ChrumGraph.Visual;
 
 namespace ChrumGraph
 {
@@ -21,11 +22,14 @@ namespace ChrumGraph
 	public partial class MainWindow : Window
 	{
 		Core core;
+        Visual visual;
 
 		public MainWindow()
 		{
 			InitializeComponent();
-			core = new Core();
+
+            //visual = new Visual(...);
+			//core = new Core(visual);
 		}
 	}
 }

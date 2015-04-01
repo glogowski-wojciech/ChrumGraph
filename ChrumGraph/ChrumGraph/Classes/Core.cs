@@ -11,7 +11,7 @@ namespace ChrumGraph
 	/// <summary>
 	/// Graph logic.
 	/// </summary>
-	public class Core//: IVisualCore, IPhysicsCore
+	public class Core: IPhysicsCore//, IVisualCore
 	{
 		private const double defaultFPS = 30.0;
 
@@ -21,19 +21,22 @@ namespace ChrumGraph
 		private IVisual visual;
 		private IPhysics physics;
 
+		private List<Vertex> vertices = new List<Vertex>();
+		private List<Edge> edges = new List<Edge>();
+
 		/// <summary>
-		/// Initializes a new Core object.
+		/// Initializes a new instance of the Core class.
 		/// </summary>
-		public Core()
+		public Core(IVisual visual)
 		{
+            this.visual = visual;
+			physics = new Physics(this);
+
 			FPS = defaultFPS;
 			refreshTimer.Tick += (sender, e) =>
 				{
-					visual.Refresh();
+					if (visual.Visible) visual.Refresh();
 				};
-
-			//visual = new Visual();
-			//physics = new Physics();
 		}
 
 		/// <summary>
@@ -92,5 +95,29 @@ namespace ChrumGraph
 				vertex.Y = y;
 			}
 		}
+
+		/// <summary>
+		/// Gets list of graph's vertices.
+		/// </summary>
+		public List<Vertex> Vertices
+		{
+			get { return vertices; }
+		}
+
+        /// <summary>
+        /// Gets list of graph's edges.
+        /// </summary>
+        public List<Edge> Edges
+        {
+            get { return edges; }
+        }
+
+        /// <summary>
+        /// Schould be called after the simulation has finished.
+        /// </summary>
+        public void SimulationFinished()
+        {
+            //TODO
+        }
 	}
 }
