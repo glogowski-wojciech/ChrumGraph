@@ -17,6 +17,8 @@ namespace ChrumGraph
         void RemoveEdge(Edge e);
         void Pin(Vertex v);
         void Unpin(Vertex v);
+		void VertexClicked(Vertex v);
+		void VertexUnclicked(Vertex v);
         void SetPosition(Vertex v, double x, double y);
         void LoadFromFile(string filename);
         void SaveGraph(string filename);

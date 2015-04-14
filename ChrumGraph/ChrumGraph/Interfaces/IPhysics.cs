@@ -15,7 +15,7 @@ namespace ChrumGraph
         double EdgeForce { get; set; }
 
         void StartSimulation(double fps);
-        void StartSimulation(int ms); //TODO
+        void StartSimulation(int ms);
         void StopSimulation();
     }
 }
