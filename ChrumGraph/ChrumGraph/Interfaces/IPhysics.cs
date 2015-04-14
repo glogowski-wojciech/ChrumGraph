@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ChrumGraph
 {
-	/// <summary>
-	/// Interface of Physics for Core.
-	/// </summary>
+    /// <summary>
+    /// Interface of Physics for Core.
+    /// </summary>
     interface IPhysics
     {
         double VertexForce { get; set; }

@@ -24,3 +24,16 @@ E:\home\Documents\Studia\2 rok\IO\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\Chr
 E:\home\Documents\Studia\2 rok\IO\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.g.resources
 E:\home\Documents\Studia\2 rok\IO\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.Properties.Resources.resources
 E:\home\Documents\Studia\2 rok\IO\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.csproj.GenerateResource.Cache
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\bin\Debug\ChrumGraph.exe.config
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.exe
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.pdb
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\bin\Debug\ChrumGraph.exe
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\bin\Debug\ChrumGraph.pdb
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.csprojResolveAssemblyReference.cache
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\MainWindow.baml
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\MainWindow.g.cs
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\App.g.cs
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph_MarkupCompile.cache
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.g.resources
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.Properties.Resources.resources
+c:\GitHub\ChrumGraph\ChrumGraph\ChrumGraph\obj\Debug\ChrumGraph.csproj.GenerateResource.Cache

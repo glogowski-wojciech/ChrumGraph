@@ -16,20 +16,20 @@ using Visual = ChrumGraph.Visual;
 
 namespace ChrumGraph
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow : Window
-	{
-		Core core;
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        Core core;
         Visual visual;
 
-		public MainWindow()
-		{
-			InitializeComponent();
+        public MainWindow()
+        {
+            InitializeComponent();
 
             //visual = new Visual(...);
-			//core = new Core(visual);
-		}
-	}
+            //core = new Core(visual);
+        }
+    }
 }
