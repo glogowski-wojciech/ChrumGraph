@@ -1,8 +1,14 @@
 ﻿<Window x:Class="ChrumGraph.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Chrum graph" Height="525" Width="525" MinHeight="250" MinWidth="250">
     <Grid>
-		
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" Height="25" Background="#CFCFFF">
+            <Button x:Name="bOpen" Content="Open" Width="50" Click="bOpen_Click" />
+            <Button x:Name="bSave" Content="Save" Width="50" Margin="5,0,0,0" Click="bSave_Click"/>
+        </StackPanel>
+
+        <Canvas HorizontalAlignment="Stretch" Margin="0,30,0,0" VerticalAlignment="Stretch" Background="#AAAAAA"/>
+
     </Grid>
 </Window>
