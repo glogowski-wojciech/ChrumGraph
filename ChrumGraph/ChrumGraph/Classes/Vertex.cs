@@ -18,10 +18,12 @@ namespace ChrumGraph
         /// </summary>
         /// <param name="x">X coordinate of the vertex.</param>
         /// <param name="y">Y coordinate of the vertex.</param>
-        public Vertex(double x, double y)
+        /// <param name="label">Label of the vertex.</param>
+        public Vertex(double x, double y, string label="")
         {
             X = x;
             Y = y;
+            Label = label;
             Pinned = false;
             Clicked = false;
         }
@@ -62,5 +64,7 @@ namespace ChrumGraph
         {
             get { return Pinned || Clicked; }
         }
+
+        public string Label { get; set; }
     }
 }
