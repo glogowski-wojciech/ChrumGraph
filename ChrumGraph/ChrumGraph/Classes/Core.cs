@@ -11,7 +11,7 @@ namespace ChrumGraph
     /// <summary>
     /// Graph logic.
     /// </summary>
-    public class Core: IPhysicsCore//, IVisualCore
+    public class Core: IPhysicsCore, IVisualCore
     {
         private const double defaultFPS = 30.0;
 
@@ -135,6 +135,94 @@ namespace ChrumGraph
         /// Schould be called after the simulation has finished.
         /// </summary>
         public void SimulationFinished()
+        {
+            visual.Visible = true;
+        }
+
+        /// <summary>
+        /// Creates Core vertex and releted Visual vertex.
+        /// </summary>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        public void CreateVertex(double x, double y)
+        {
+            Vertex v = new Vertex(x, y);
+            Vertices.Add(v);
+            visual.CreateVisualVertex(v);
+        }
+
+        /// <summary>
+        /// Removes every edge connected with vertex intended to be removed.
+        /// </summary>
+        /// <param name="v">Vertex intended to be removed.</param>
+        private void RemoveEdgesInVertex(Vertex v)
+        {
+            foreach (Edge e in v.Edges)
+            {
+                RemoveEdge(e);
+            }
+        }
+
+        /// <summary>
+        /// Removes Core vertex and related Visual vertex.
+        /// </summary>
+        /// <param name="v">Vertex to be removed.</param>
+        public void RemoveVertex(Vertex v)
+        {
+            RemoveEdgesInVertex(v);
+            Vertices.Remove(v);
+            visual.RemoveVisualVertex(v);
+        }
+
+        /// <summary>
+        /// Creates Core edge and related Visual edge.
+        /// </summary>
+        /// <param name="v1">Endpoint of creating edge.</param>
+        /// <param name="v2">Endpoint of creating edge.</param>
+        public void CreateEdge(Vertex v1, Vertex v2)
+        {
+            Edge e = new Edge(v1, v2);
+            Edges.Add(e);
+            v1.Edges.Add(e);
+            v2.Edges.Add(e);
+            visual.CreateVisualEdge(e);
+        }
+
+        /// <summary>
+        /// Removes Core edge and related Visual edge.
+        /// </summary>
+        /// <param name="e">Edge being removed.</param>
+        public void RemoveEdge(Edge e)
+        {
+            e.V1.Edges.Remove(e);
+            e.V2.Edges.Remove(e);
+            Edges.Remove(e);
+            visual.RemoveVisualEdge(e);
+        }
+
+        /// <summary>
+        /// Loads graph from file represenation, that ignores vertex position.
+        /// </summary>
+        /// <param name="filename">File being read.</param>
+        public void LoadFromFile(string filename)
+        {
+            //TODO
+        }
+
+        /// <summary>
+        /// Saves graph ignoring vertex positions.
+        /// </summary>
+        /// <param name="filename">File for saved graph.</param>
+        public void SaveGraph(string filename)
+        {
+            //TODO
+        }
+
+        /// <summary>
+        /// Saves graph keeping vertex position.
+        /// </summary>
+        /// <param name="filename">File for saved graph</param>
+        public void SaveVisualGraph(string filename)
         {
             //TODO
         }
