@@ -35,13 +35,13 @@ namespace ChrumGraph
             FPS = defaultFPS;
             refreshTimer.Tick += (sender, e) =>
                 {
-					if (visual.Visible)
-					{
-						lock(this)
-						{
-							visual.Refresh();
-						}
-					}
+                    if (visual.Visible)
+                    {
+                        lock(this)
+                        {
+                            visual.Refresh();
+                        }
+                    }
                 };
         }
 
@@ -81,24 +81,24 @@ namespace ChrumGraph
             lock (this) { vertex.Pinned = false; }
         }
 
-		/// <summary>
-		/// Sets vertex state to clicked, so its position temporarily won't be
-		/// changed by Physics.
-		/// </summary>
-		/// <param name="vertex">Vertex whose state should be changed.</param>
-		public void VertexClicked(Vertex vertex)
-		{
-			lock (this) { vertex.Clicked = true; }
-		}
+        /// <summary>
+        /// Sets vertex state to clicked, so its position temporarily won't be
+        /// changed by Physics.
+        /// </summary>
+        /// <param name="vertex">Vertex whose state should be changed.</param>
+        public void VertexClicked(Vertex vertex)
+        {
+            lock (this) { vertex.Clicked = true; }
+        }
 
-		/// <summary>
-		/// Sets vertex state to not clicked.
-		/// </summary>
-		/// <param name="vertex">Vertex whose position should by changed.</param>
-		public void VertexUnclicked(Vertex vertex)
-		{
-			lock (this) { vertex.Clicked = false; }
-		}
+        /// <summary>
+        /// Sets vertex state to not clicked.
+        /// </summary>
+        /// <param name="vertex">Vertex whose position should by changed.</param>
+        public void VertexUnclicked(Vertex vertex)
+        {
+            lock (this) { vertex.Clicked = false; }
+        }
 
         /// <summary>
         /// Sets position of a given vertex.
