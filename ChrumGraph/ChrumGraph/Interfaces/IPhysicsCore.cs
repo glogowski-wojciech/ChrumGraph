@@ -9,7 +9,7 @@ namespace ChrumGraph
     /// <summary>
     /// Interface of Core for Physics.
     /// </summary>
-    interface IPhysicsCore
+    public interface IPhysicsCore
     {
         List<Vertex> Vertices { get; }
         List<Edge> Edges { get; }

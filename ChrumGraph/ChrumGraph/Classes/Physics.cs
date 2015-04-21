@@ -11,7 +11,7 @@ using System.Windows;
 namespace ChrumGraph
 {
 
-    class Physics : IPhysics
+    public class Physics : IPhysics
     {
 
         /// <summary>

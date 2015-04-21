@@ -9,7 +9,7 @@ namespace ChrumGraph
     /// <summary>
     /// Interface of Core for Visual.
     /// </summary>
-    interface IVisualCore
+    public interface IVisualCore
     {
         void CreateVertex(double x, double y);
         void RemoveVertex(Vertex v);

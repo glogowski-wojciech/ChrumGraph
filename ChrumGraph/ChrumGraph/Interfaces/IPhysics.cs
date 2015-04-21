@@ -9,7 +9,7 @@ namespace ChrumGraph
 	/// <summary>
 	/// Interface of Physics for Core.
 	/// </summary>
-    interface IPhysics
+    public interface IPhysics
     {
         double VertexForceParam { get; set; }
         double EdgeForceParam { get; set; }
