@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChrumGraph", "ChrumGraph\ChrumGraph.csproj", "{F43D54CC-3192-43A2-AFBD-6DB6682A0664}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChrumGraphTest", "ChrumGraphTest\ChrumGraphTest.csproj", "{162B54C8-1A86-4260-9E2C-8F08C0A6593D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F43D54CC-3192-43A2-AFBD-6DB6682A0664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F43D54CC-3192-43A2-AFBD-6DB6682A0664}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F43D54CC-3192-43A2-AFBD-6DB6682A0664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162B54C8-1A86-4260-9E2C-8F08C0A6593D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162B54C8-1A86-4260-9E2C-8F08C0A6593D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162B54C8-1A86-4260-9E2C-8F08C0A6593D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162B54C8-1A86-4260-9E2C-8F08C0A6593D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
