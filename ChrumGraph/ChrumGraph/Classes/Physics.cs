@@ -13,6 +13,33 @@ namespace ChrumGraph
 
     class Physics : IPhysics
     {
+
+        /// <summary>
+        /// Reference to global Core.
+        /// </summary>
+        private IPhysicsCore physicsCore;
+
+        /// <summary>
+        /// Reference to physicsCore's Vertices.
+        /// </summary>
+        private List<Vertex> vertices;
+
+        /// <summary>
+        /// Reference to physicsCore's Edges.
+        /// </summary>
+        private List<Edge> edges;
+
+        /// <summary>
+        /// Movement vectors for updating vertices' coordinates.
+        /// </summary>
+        private Vector[] netForces;
+
+        /// <summary>
+        /// Vertices' coordinates are easier to manipulate as Vector objects.
+        /// </summary>
+        private Vector[] coordinatesArray;
+
+        private DispatcherTimer dispatcherTimer;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="Physics"/> class.
@@ -20,18 +47,19 @@ namespace ChrumGraph
         /// <param name="physicsCore">The physics core.</param>
         public Physics(IPhysicsCore physicsCore)
         {
+            vertexForceParamGuard = new object();
+            edgeForceParamGuard = new object();
+            frictionParamGuard = new object();
+            simulateGuard = new object();
             this.physicsCore = physicsCore;
             vertices = physicsCore.Vertices;
             edges = physicsCore.Edges;
             dispatcherTimer = new DispatcherTimer();
-            VertexForce = 1.0;
-            EdgeForce = 1.0;
+            VertexForceParam = 1.0;
+            EdgeForceParam = 1.0;
             vertices = physicsCore.Vertices;
             edges = physicsCore.Edges;
             Simulate = false;
-            vertexForceParamGuard = new object();
-            edgeForceParamGuard = new object();
-            simulateGuard = new object();
         }
         
         /// <summary>
@@ -61,6 +89,9 @@ namespace ChrumGraph
             Simulate = false;
         }
 
+        /// <summary>
+        /// Iterations that can be stopped only by switching Simulate to false.
+        /// </summary>
         private void nonStopSimulation()
         {
             Simulate = true;
@@ -72,95 +103,182 @@ namespace ChrumGraph
 
         /* Simulation step and auxiliary methods */
 
+        /// <summary>
+        /// Executes one step of simulation.
+        /// </summary>
         private void IterateSimulation()
         {
             lock (physicsCore)
             {
                 int n = vertices.Count;
-                verticesArray = vertices.ToArray();
                 coordinatesArray = new Vector[n];
                 netForces = new Vector[n];
-                for (int i = 0; i < n; ++i)
+                Parallel.For(0, n, (int i) =>
                 {
-                    Vertex v = verticesArray[i];
+                    Vertex v = vertices[i];
                     coordinatesArray[i] = new Vector(v.X, v.Y);
                     netForces[i] = new Vector(0.0, 0.0);
-                }
-                Task[] tasks = new Task[n];
-                for (int i = 0; i < n; ++i)
+                });
+                Parallel.For(0, n, (int i) =>
                 {
-                    tasks[i] = Task.Factory.StartNew((() => { updateForces(i); }));
-                }
-                try
+                    updateForces(i);
+                });
+                Parallel.For(0, n, (int i) =>
                 {
-                    Task.WaitAll(tasks);
-                }
-                catch (AggregateException)
-                {
-                    Console.WriteLine("AggregateException that does something"); //TODO
-                }
+                    vertices[i].X += netForces[i].X;
+                    vertices[i].Y += netForces[i].Y;
+                });
             }
 
         }
 
+        /// <summary>
+        /// Updates the movement vector of given vertex.
+        /// </summary>
+        /// <param name="k">Index of vertex which movement vector is to be updated.</param>
         private void updateForces(int k)
         {
             int n = vertices.Count;
             Vector currentCoordinates = coordinatesArray[k];
-            Vertex currentVertex = verticesArray[k];
+            Vertex currentVertex = vertices[k];
             for (int i = 0; i < n; ++i)
             {
-                netForces[k] += vertexForce(currentCoordinates, coordinatesArray[i]);
+                netForces[k] += VertexForce(ref currentCoordinates, ref coordinatesArray[i]);
             }
             foreach (Edge e in currentVertex.Edges)
             {
                 Vertex other = e.Other(currentVertex);
-                netForces[k] += edgeForce(currentCoordinates, new Vector(other.X, other.Y));
+                Vector otherCoordinates = new Vector(other.X, other.Y);
+                netForces[k] += EdgeForce(ref currentCoordinates, ref otherCoordinates);
             }
+            netForces[k] += Friction(netForces[k]);
         }
-
-        private IPhysicsCore physicsCore;
-        private List<Vertex> vertices;
-        private List<Edge> edges;
-        private Vertex[] verticesArray;
-        private Vector[] netForces;
-        private Vector[] coordinatesArray;
-
-        private DispatcherTimer dispatcherTimer;
        
         /* physical forces */
 
-        private Vector vertexForce(Vector current, Vector other)
+        /// <summary>
+        /// Counts the movement vector of 'current' vertex that comes from vertical influence of 'other'.
+        /// </summary>
+        /// <param name="current">The current vertex.</param>
+        /// <param name="other">The other vertex.</param>
+        /// <returns></returns>
+        private Vector VertexForce(ref Vector current, ref Vector other)
         {
+            Vector d = other - current;
+            double l = d.Length;
+            d.Normalize();
+            return d * VertexForceFunction(l);
+        }
+
+        /// <summary>
+        /// Vertex influence of distance function.
+        /// </summary>
+        /// <param name="x">The distance.</param>
+        /// <returns></returns>
+        private double VertexForceFunction(double x)
+        {
+            return vertexForceParam * (x >= 0.0 ? (x <= 1.0 ? -1.0 : -1.0 / x)
+                                                : (x >= -1.0 ? 1.0 : -1.0 / x));
+        }
+
+        /// <summary>
+        /// Counts the movement vector of 'current' vertex that comes from edge influence of 'other'.
+        /// </summary>
+        /// <param name="current">The current vertex.</param>
+        /// <param name="other">The other vertex.</param>
+        /// <returns></returns>
+        private Vector EdgeForce(ref Vector current, ref Vector other)
+        {
+            Vector v = other - current;
             return new Vector(); //TODO
         }
 
-        private Vector edgeForce(Vector current, Vector other)
+        /// <summary>
+        /// Edge influence of distance function.
+        /// </summary>
+        /// <param name="x">The given distance.</param>
+        /// <returns></returns>
+        private double EdgeForceFunction(double x)
         {
-            return new Vector(); //TODO
+            return -edgeForceParam * x;
+        }
+        
+        /// <summary>
+        /// Returns the movement vector of force after adding friction to current vector.
+        /// </summary>
+        /// <param name="force">The given vector.</param>
+        /// <returns></returns>
+        private Vector Friction(Vector force)
+        {
+            double l = force.Length;
+            force.Normalize(); // we use the fact that Vector is passed by copy as it is structure
+            force *= FrictionFunction(l);
+            return force;
+        }
+
+        /// <summary>
+        /// Frictions influence of force function.
+        /// </summary>
+        /// <param name="x">The given force.</param>
+        /// <returns></returns>
+        private double FrictionFunction(double x)
+        {
+            return frictionParam / 2.0 * (x + (Math.Abs(x - frictionParam) - Math.Abs(x + frictionParam)));
         }
 
         /* guards of fields for multithreading */
 
+        /// <summary>
+        /// The guard of vertexForceParam.
+        /// </summary>
         private object vertexForceParamGuard;
+
+        /// <summary>
+        /// The guard of edgeForceParam.
+        /// </summary>
         private object edgeForceParamGuard;
+
+        /// <summary>
+        /// The guard of frictionParam.
+        /// </summary>
+        private object frictionParamGuard;
+
+        /// <summary>
+        /// The guard of simulate.
+        /// </summary>
         private object simulateGuard;
        
         /* fields accesed by properties */
 
+        /// <summary>
+        /// Linear coefficient of vertical force.
+        /// </summary>
         private double vertexForceParam;
+
+        /// <summary>
+        /// Linear coefficient of edge force.
+        /// </summary>
         private double edgeForceParam;
+
+        /// <summary>
+        /// Linear coefficient of friction.
+        /// </summary>
+        private double frictionParam;
+
+        /// <summary>
+        /// Condition for executing simulation in nonStopSimulation.
+        /// </summary>
         private bool simulate;
 
         /* properties */
 
         /// <summary>
-        /// Gets or sets the vertex force.
+        /// Gets or sets the vertex force parameter.
         /// </summary>
         /// <value>
-        /// The vertex force.
+        /// The vertex force parameter.
         /// </value>
-        public double VertexForce
+        public double VertexForceParam
         {
             set
             {
@@ -182,12 +300,12 @@ namespace ChrumGraph
         }
 
         /// <summary>
-        /// Gets or sets the edge force.
+        /// Gets or sets the edge force parameter.
         /// </summary>
         /// <value>
-        /// The edge force.
+        /// The edge force parameter.
         /// </value>
-        public double EdgeForce
+        public double EdgeForceParam
         {
             set
             {
@@ -208,6 +326,39 @@ namespace ChrumGraph
             }
         }
 
+        /// <summary>
+        /// Gets or sets the friction parameter.
+        /// </summary>
+        /// <value>
+        /// The friction parameter.
+        /// </value>
+        public double FrictionParam
+        {
+            set
+            {
+                lock(frictionParamGuard)
+                {
+                    frictionParam = value;
+                }
+            }
+
+            get
+            {
+                double returnValue;
+                lock(frictionParamGuard)
+                {
+                    returnValue = frictionParam;
+                }
+                return returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the simualte.
+        /// </summary>
+        /// <value>
+        /// The simulate.
+        /// </value>
         private bool Simulate
         {
             set

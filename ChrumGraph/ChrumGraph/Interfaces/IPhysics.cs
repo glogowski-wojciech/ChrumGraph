@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ChrumGraph
 {
-    /// <summary>
-    /// Interface of Physics for Core.
-    /// </summary>
+	/// <summary>
+	/// Interface of Physics for Core.
+	/// </summary>
     interface IPhysics
     {
-        double VertexForce { get; set; }
-        double EdgeForce { get; set; }
-
+        double VertexForceParam { get; set; }
+        double EdgeForceParam { get; set; }
+        double FrictionParam { get; set; }
         void StartSimulation(double fps);
         void StartSimulation(int ms);
         void StopSimulation();
