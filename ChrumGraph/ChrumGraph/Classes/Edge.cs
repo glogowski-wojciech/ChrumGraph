@@ -33,7 +33,7 @@ namespace ChrumGraph
         public Vertex V2 { get; set; }
 
         /// <summary>
-        /// Returns other than given end of edge.
+        /// Returns other than given endpoint of an edge.
         /// </summary>
         /// <param name="one">The given vertex.</param>
         /// <returns>The other vertex if the first one was valid, null otherwise.</returns>

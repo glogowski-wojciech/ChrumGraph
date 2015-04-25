@@ -13,7 +13,6 @@ namespace ChrumGraph
     /// </summary>
     public class Physics : IPhysics
     {
-
         /// <summary>
         /// Reference to global Core.
         /// </summary>
