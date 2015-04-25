@@ -11,7 +11,7 @@ namespace ChrumGraph
     /// </summary>
     public interface IVisualCore
     {
-        void CreateVertex(double x, double y);
+        void CreateVertex(double x, double y, string label="");
         void RemoveVertex(Vertex v);
         void CreateEdge(Vertex v1, Vertex v2);
         void RemoveEdge(Edge e);
