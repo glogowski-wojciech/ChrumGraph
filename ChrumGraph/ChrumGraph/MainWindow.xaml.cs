@@ -24,6 +24,9 @@ namespace ChrumGraph
     {
         Core core;
 
+        /// <summary>
+        /// Initialize window.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();

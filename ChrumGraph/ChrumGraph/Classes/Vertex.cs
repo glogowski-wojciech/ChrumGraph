@@ -65,6 +65,9 @@ namespace ChrumGraph
             get { return Pinned || Clicked; }
         }
 
+        /// <summary>
+        /// Gets or sets the label of the vertex.
+        /// </summary>
         public string Label { get; set; }
     }
 }

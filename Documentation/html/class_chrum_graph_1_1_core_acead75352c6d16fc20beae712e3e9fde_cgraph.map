@@ -1,0 +1,6 @@
+<map id="ChrumGraph.Core.LoadFromFile" name="ChrumGraph.Core.LoadFromFile">
+<area shape="rect" id="node2" href="$class_chrum_graph_1_1_core.html#a023f217ddb9942a9b79675451221a705" title="Creates Core vertex and releted Visual vertex. " alt="" coords="263,17,469,43"/>
+<area shape="rect" id="node4" href="$class_chrum_graph_1_1_core.html#a4794441f2c87378bd386b24aed016baf" title="Creates Core edge and related Visual edge. " alt="" coords="267,71,465,98"/>
+<area shape="rect" id="node3" href="$interface_chrum_graph_1_1_i_visual.html#a00637634aaaee8aa3f0ed8bcb802e4b5" title="Creates visual representation of a given Core vertex. " alt="" coords="517,5,697,47"/>
+<area shape="rect" id="node5" href="$interface_chrum_graph_1_1_i_visual.html#a62d50b28cd251e9b486cd3fd4b7165b9" title="Creates visual representation of a given Core edge. " alt="" coords="517,71,697,112"/>
+</map>

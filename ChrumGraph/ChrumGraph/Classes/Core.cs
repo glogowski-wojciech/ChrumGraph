@@ -39,10 +39,6 @@ namespace ChrumGraph
                 {
                     if (visual.Visible)
                     {
-                        lock(this)
-                        {
-                            visual.Refresh();
-                        }
                     }
                 };
         }

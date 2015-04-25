@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
 
-/* Interface of Core for Physics */
-
 namespace ChrumGraph
 {
-
+    /// <summary>
+    /// Performs physical simulation on a graph.
+    /// </summary>
     public class Physics : IPhysics
     {
 
