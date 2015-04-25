@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
+using System.IO;
 
 namespace ChrumGraph
 {
@@ -213,12 +214,46 @@ namespace ChrumGraph
         }
 
         /// <summary>
-        /// Loads graph from file represenation, that ignores vertex position.
+        /// Loads graph from file ASD represenation, that ignores vertex position.
         /// </summary>
         /// <param name="filename">File being read.</param>
         public void LoadFromFile(string filename)
         {
-            //TODO
+            try
+            {
+                //TODO: Check representation correctness
+                using (StreamReader sr = new StreamReader(filename))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        String nWord = sr.ReadLine();
+                        String mWord = sr.ReadLine();
+                        int n = Int32.Parse(nWord);
+                        int m = Int32.Parse(mWord);
+                        double angle = 2 * Math.PI / n;
+                        for (int i = 0; i < n; ++i)
+                        {
+                            double alpha = angle * i;
+                            double x = Math.Sin(alpha);
+                            double y = Math.Cos(alpha);
+                            CreateVertex(x, y, i.ToString());
+                        }
+                        for (int i = 0; i < m; ++i)
+                        {
+                            String line = sr.ReadLine();
+                            string[] edgeEndpoints = line.Split();
+                            Vertex v1 = verticesDict[edgeEndpoints[0]];
+                            Vertex v2 = verticesDict[edgeEndpoints[1]];
+                            CreateEdge(v1, v2);
+                        }
+                    }
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
         }
 
         /// <summary>
@@ -227,7 +262,16 @@ namespace ChrumGraph
         /// <param name="filename">File for saved graph.</param>
         public void SaveGraph(string filename)
         {
-            //TODO
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(filename))
+            {
+                file.WriteLine(Vertices.Count);
+                file.WriteLine(Edges.Count);
+                foreach (Edge e in Edges)
+                {
+                    String edgeLine = e.V1.Label + " " + e.V2.Label;
+                    file.WriteLine(edgeLine);
+                }
+            }
         }
 
         /// <summary>
