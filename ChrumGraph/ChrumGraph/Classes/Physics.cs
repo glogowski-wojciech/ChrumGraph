@@ -89,6 +89,15 @@ namespace ChrumGraph
         }
 
         /// <summary>
+        /// Stops the simulation after time.
+        /// </summary>
+        /// <param name="ms">The ms.</param>
+        private void StopSimulationAfterTime(int ms)
+        {
+
+        }
+        
+        /// <summary>
         /// Iterations that can be stopped only by switching Simulate to false.
         /// </summary>
         private void nonStopSimulation()
