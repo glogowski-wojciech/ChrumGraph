@@ -133,6 +133,7 @@ namespace ChrumGraph
             {
                 IterateSimulation();
             }
+            this.physicsCore.SimulationFinished();
         }
 
         /* Simulation step and auxiliary methods */
