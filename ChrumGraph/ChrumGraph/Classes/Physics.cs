@@ -156,7 +156,10 @@ namespace ChrumGraph
                 });
                 Parallel.For(0, n, (int i) =>
                 {
-                    updateForces(i);
+                    if (!vertices[i].PositionForced)
+                    {
+                        updateForces(i);
+                    }
                 });
                 Parallel.For(0, n, (int i) =>
                 {
