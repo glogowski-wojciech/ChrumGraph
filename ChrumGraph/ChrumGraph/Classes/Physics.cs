@@ -143,7 +143,8 @@ namespace ChrumGraph
         /// <summary>
         /// Updates the movement vector of given vertex.
         /// </summary>
-        /// <param name="k">Index of vertex which movement vector is to be updated.</param>
+        /// <param name="k">Index of vertex which movement vector is to be
+        /// updated.</param>
         private void updateForces(int k)
         {
             int n = vertices.Count;
@@ -165,7 +166,8 @@ namespace ChrumGraph
         /* physical forces */
 
         /// <summary>
-        /// Counts the movement vector of 'current' vertex that comes from vertical influence of 'other'.
+        /// Counts the movement vector of 'current' vertex that comes from
+        /// vertical influence of 'other'.
         /// </summary>
         /// <param name="current">The current vertex.</param>
         /// <param name="other">The other vertex.</param>
@@ -190,7 +192,8 @@ namespace ChrumGraph
         }
 
         /// <summary>
-        /// Counts the movement vector of 'current' vertex that comes from edge influence of 'other'.
+        /// Counts the movement vector of 'current' vertex that comes from edge
+        /// influence of 'other'.
         /// </summary>
         /// <param name="current">The current vertex.</param>
         /// <param name="other">The other vertex.</param>
@@ -212,7 +215,8 @@ namespace ChrumGraph
         }
         
         /// <summary>
-        /// Returns the movement vector of force after adding friction to current vector.
+        /// Returns the movement vector of force after adding friction to
+        /// current vector.
         /// </summary>
         /// <param name="force">The given vector.</param>
         /// <returns></returns>
