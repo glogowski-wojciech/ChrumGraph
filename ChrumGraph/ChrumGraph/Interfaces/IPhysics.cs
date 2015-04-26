@@ -39,12 +39,34 @@ namespace ChrumGraph
         /// </summary>
         /// <param name="ms">Time of IPhysics simulation in miliseconds.
         /// </param>
+        /// <exception cref="SimulationAlreadyRunningException">Thrown if
+        /// simulation is already in run while StartSimulation invoked.
+        /// </exception>
         void StartSimulation(int ms);
 
         /// <summary>
         /// Stops simulation started with StartSimulation. If IPhysics
         /// simulation is not working, does nothing.
         /// </summary>
+        /// <exception cref="SimulationAlreadyStoppedException">Thrown if
+        /// simulation is not running while StopSimulation invoked.</exception>
         void StopSimulation();
     }
+
+    /// <summary>
+    /// Thrown if IPhysics simulation is being run again with StartSimulation
+    /// without StopSimulation after previous run.
+    /// </summary>
+    public class SimulationAlreadyRunningException : InvalidOperationException
+    {
+    }
+
+    /// <summary>
+    /// Thrown if IPhysics simulation is being stopped again with StopSimulation
+    /// without being run after previous stop.
+    /// </summary>
+    public class SimulationAlreadyStoppedException : InvalidOperationException
+    {
+    }
+
 }

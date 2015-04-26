@@ -54,22 +54,23 @@ namespace ChrumGraph
             vertices = physicsCore.Vertices;
             edges = physicsCore.Edges;
             dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += (sender, e) => { IterateSimulation(); };
             VertexForceParam = 1.0;
             EdgeForceParam = 1.0;
-            vertices = physicsCore.Vertices;
-            edges = physicsCore.Edges;
             Simulate = false;
         }
         
         /// <summary>
-        /// Starts the simulation.
+        /// Starts the simulation. If simulation is already in run throws , makes no effect.
         /// </summary>
         /// <param name="fps">The FPS.</param>
-        public void StartSimulation(double fps) //TODO
+        public void StartSimulation(double fps)
         {
-            dispatcherTimer.Tick += (sender, e) => { IterateSimulation(); };
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)(100.0 / fps)); // TODO
-            dispatcherTimer.Start();
+            if (!dispatcherTimer.IsEnabled)
+            {
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)(100.0 / fps));
+                dispatcherTimer.Start();
+            }
         }
         
         /// <summary>
@@ -85,7 +86,7 @@ namespace ChrumGraph
         /// </summary>
         public void StopSimulation()
         {
-            Simulate = false;
+            dispatcherTimer.Stop();
         }
 
         /// <summary>
