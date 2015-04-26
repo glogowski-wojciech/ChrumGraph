@@ -38,6 +38,9 @@ namespace ChrumGraph
         /// </summary>
         private Vector[] coordinatesArray;
 
+        /// <summary>
+        /// Timer for real-time IPhysics simulation.
+        /// </summary>
         private DispatcherTimer dispatcherTimer;
         
         /// <summary>
@@ -66,8 +69,13 @@ namespace ChrumGraph
         /// <param name="fps">The FPS.</param>
         public void StartSimulation(double fps)
         {
-            if (!dispatcherTimer.IsEnabled)
+            if (Simulate)
             {
+                throw new SimulationAlreadyRunningException();
+            }
+            else
+            {
+                Simulate = true;
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)(100.0 / fps));
                 dispatcherTimer.Start();
             }
@@ -76,9 +84,18 @@ namespace ChrumGraph
         /// <summary>
         /// Starts the simulation.
         /// </summary>
-        public void StartSimulation(int ms) //TODO
+        public void StartSimulation(int ms)
         {
-            nonStopSimulation();
+            if (Simulate)
+            {
+                throw new SimulationAlreadyRunningException();
+            }
+            else
+            {
+                Simulate = true;
+                Task.Factory.StartNew(() => StopSimulationAfterTime(ms));
+                Task.Factory.StartNew(() => NonStopSimulation());
+            }
         }
         
         /// <summary>
@@ -86,7 +103,15 @@ namespace ChrumGraph
         /// </summary>
         public void StopSimulation()
         {
-            dispatcherTimer.Stop();
+            if (!Simulate)
+            {
+                throw new SimulationAlreadyStoppedException();
+            }
+            else
+            {
+                Simulate = false;
+                dispatcherTimer.Stop();
+            }
         }
 
         /// <summary>
@@ -95,15 +120,15 @@ namespace ChrumGraph
         /// <param name="ms">The ms.</param>
         private void StopSimulationAfterTime(int ms)
         {
-
+            System.Threading.Thread.Sleep(ms);
+            Simulate = false;
         }
         
         /// <summary>
         /// Iterations that can be stopped only by switching Simulate to false.
         /// </summary>
-        private void nonStopSimulation()
+        private void NonStopSimulation()
         {
-            Simulate = true;
             while (Simulate)
             {
                 IterateSimulation();
@@ -201,8 +226,10 @@ namespace ChrumGraph
         /// <returns></returns>
         private Vector EdgeForce(ref Vector current, ref Vector other)
         {
-            Vector v = other - current;
-            return new Vector(); //TODO
+            Vector d = other - current;
+            double l = d.Length;
+            d.Normalize();
+            return d * EdgeForceFunction(l);
         }
 
         /// <summary>
@@ -224,7 +251,8 @@ namespace ChrumGraph
         private Vector Friction(Vector force)
         {
             double l = force.Length;
-            force.Normalize(); // we use the fact that Vector is passed by copy as it is structure
+            force.Normalize(); // We use the fact that Vector is passed by copy
+                               // as it is structure.
             force *= FrictionFunction(l);
             return force;
         }
@@ -236,7 +264,8 @@ namespace ChrumGraph
         /// <returns></returns>
         private double FrictionFunction(double x)
         {
-            return frictionParam / 2.0 * (x + (Math.Abs(x - frictionParam) - Math.Abs(x + frictionParam)));
+            return frictionParam / 2.0 * (x + (Math.Abs(x - frictionParam) -
+                                               Math.Abs(x + frictionParam)));
         }
 
         /* guards of fields for multithreading */

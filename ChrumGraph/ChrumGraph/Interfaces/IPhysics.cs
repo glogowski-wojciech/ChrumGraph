@@ -32,10 +32,14 @@ namespace ChrumGraph
         /// </summary>
         /// <param name="fps">Frequency of IPhysics iterations per second.
         /// </param>
+        /// <exception cref="SimulationAlreadyRunningException">Thrown if
+        /// simulation is already in run while StartSimulation invoked.
+        /// </exception>
         void StartSimulation(double fps);
 
         /// <summary>
-        /// Starts IPhysics simulation. Stops after ms miliseconds.
+        /// Starts IPhysics simulation. Stops after ms miliseconds. Then
+        /// invokes SimulationFinished method of IPhysicsCore.
         /// </summary>
         /// <param name="ms">Time of IPhysics simulation in miliseconds.
         /// </param>
