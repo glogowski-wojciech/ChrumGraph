@@ -30,50 +30,31 @@ namespace ChrumGraph
         public MainWindow()
         {
             InitializeComponent();
-
-            core = new Core();
+            core = new Core(MainCanvas);
         }
 
-        private void bOpen_Click(object sender, RoutedEventArgs e)
+        private void OpenClick(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog openDialog = new Microsoft.Win32.OpenFileDialog();
             openDialog.DefaultExt = ".graph";
+            openDialog.Filter = "Graph files (*.graph)|*.graph|All files (*.*)|*.*";
             openDialog.Title = "Open graph from a file";
             Nullable<bool> result = openDialog.ShowDialog();
-            List<Vertex> vertices = core.Vertices;
-            List<Edge> edges = core.Edges;
-            if (result == true)
-            {
-                string filePath = openDialog.FileName;
-                StreamReader reader = new StreamReader(filePath);
-                string input = reader.ReadToEnd();
-                reader.Close();
 
-            }
+            if (result == true)
+               core.LoadFromFile(openDialog.FileName);
         }
 
-        private void bSave_Click(object sender, RoutedEventArgs e)
+        private void SaveClick(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
             saveDialog.DefaultExt = ".graph";
+            saveDialog.Filter = "Graph files (*.graph)|*.graph|All files (*.*)|*.*";
             saveDialog.Title = "Save graph to a file";
-            saveDialog.ShowDialog();
-            List<Vertex> vertices = core.Vertices;
-            List<Edge> edges = core.Edges;
+            Nullable<bool> result = saveDialog.ShowDialog();
 
-            if (saveDialog.FileName != "")
-            {
-                FileStream fs = (FileStream)saveDialog.OpenFile();
-                UnicodeEncoding uniEncoding = new UnicodeEncoding();
-                string line = vertices.Count.ToString() + " " + edges.Count.ToString() + Environment.NewLine;
-                fs.Write(uniEncoding.GetBytes(line), 0, uniEncoding.GetByteCount(line));
-                foreach (Edge edge in edges)
-                {
-                    line = edge.V1.ToString() + " " + edge.V2.ToString() + Environment.NewLine;
-                    fs.Write(uniEncoding.GetBytes(line), 0, uniEncoding.GetByteCount(line));
-                }
-                fs.Close();
-            }
+            if (result == true && saveDialog.FileName != "")
+                core.SaveGraph(saveDialog.FileName);
         }
     }
 }

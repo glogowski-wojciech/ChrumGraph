@@ -29,9 +29,10 @@ namespace ChrumGraph
         /// <summary>
         /// Initializes a new instance of the Core class.
         /// </summary>
-        public Core()
+        public Core(System.Windows.Controls.Canvas canvas)
         {
-            visual = new Visual();
+            visual = new Visual(canvas, this);
+
             physics = new Physics(this);
 
             FPS = defaultFPS;
@@ -228,9 +229,9 @@ namespace ChrumGraph
                         int n = Int32.Parse(nWord);
                         int m = Int32.Parse(mWord);
                         double angle = 2 * Math.PI / n;
-                        for (int i = 0; i < n; ++i)
+                        for (int i = 1; i <= n; ++i)
                         {
-                            double alpha = angle * i;
+                            double alpha = angle * (i - 1);
                             double x = Math.Sin(alpha);
                             double y = Math.Cos(alpha);
                             CreateVertex(x, y, i.ToString());
@@ -251,6 +252,7 @@ namespace ChrumGraph
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);
             }
+            visual.Refresh();
         }
 
         /// <summary>
