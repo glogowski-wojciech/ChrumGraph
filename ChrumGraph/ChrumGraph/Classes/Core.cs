@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
 using System.IO;
+using System.Windows.Controls;
 
 namespace ChrumGraph
 {
@@ -29,7 +30,8 @@ namespace ChrumGraph
         /// <summary>
         /// Initializes a new instance of the Core class.
         /// </summary>
-        public Core(System.Windows.Controls.Canvas canvas)
+        /// <param name="canvas">Canvas on which the graph will be drawn.</param>
+        public Core(Canvas canvas)
         {
             visual = new Visual(canvas, this);
 
@@ -44,6 +46,14 @@ namespace ChrumGraph
                     }
                 };
         }
+
+        /// <summary>
+        /// Initializes a new instance of the Core class without Canvas.
+        /// </summary>
+        /// <remarks>
+        /// This constructor should only be used for testing.
+        /// </remarks>
+        public Core() : this(null) { }
 
         /// <summary>
         /// Desired graph refresh frame rate (effective frame rate can be lower, though).
@@ -148,7 +158,7 @@ namespace ChrumGraph
         }
 
         /// <summary>
-        /// Creates Core vertex and releted Visual vertex.
+        /// Creates Core vertex and related Visual vertex.
         /// </summary>
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>

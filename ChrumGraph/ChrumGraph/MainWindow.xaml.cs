@@ -37,7 +37,7 @@ namespace ChrumGraph
         {
             Microsoft.Win32.OpenFileDialog openDialog = new Microsoft.Win32.OpenFileDialog();
             openDialog.DefaultExt = ".graph";
-            openDialog.Filter = "Graph files (*.graph)|*.graph|All files (*.*)|*.*";
+            openDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
             openDialog.Title = "Open graph from a file";
             Nullable<bool> result = openDialog.ShowDialog();
 
@@ -49,7 +49,7 @@ namespace ChrumGraph
         {
             Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
             saveDialog.DefaultExt = ".graph";
-            saveDialog.Filter = "Graph files (*.graph)|*.graph|All files (*.*)|*.*";
+            saveDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
             saveDialog.Title = "Save graph to a file";
             Nullable<bool> result = saveDialog.ShowDialog();
 
