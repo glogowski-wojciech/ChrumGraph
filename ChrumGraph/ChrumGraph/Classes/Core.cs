@@ -45,7 +45,7 @@ namespace ChrumGraph
                         lock (this) { visual.Refresh(); }
                     }
                 };
-            simulationStopTimer.Interval = 1000;
+            simulationStopTimer.Interval = 10000;
             simulationStopTimer.Elapsed += (sender, e) =>
                 {
                     physics.StopSimulation();
@@ -284,7 +284,7 @@ namespace ChrumGraph
             physics.StartSimulation(FPS);
             visual.Visible = true;
             refreshTimer.Start();
-            simulationStopTimer.Start();
+            //simulationStopTimer.Start();
         }
 
         /// <summary>

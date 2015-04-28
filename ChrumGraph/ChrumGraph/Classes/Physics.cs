@@ -71,7 +71,7 @@ namespace ChrumGraph
         {
             if (Simulate)
             {
-                throw new SimulationAlreadyRunningException();
+                //throw new SimulationAlreadyRunningException();
             }
             else
             {
@@ -105,7 +105,7 @@ namespace ChrumGraph
         {
             if (!Simulate)
             {
-                throw new SimulationAlreadyStoppedException();
+                //throw new SimulationAlreadyStoppedException();
             }
             else
             {
