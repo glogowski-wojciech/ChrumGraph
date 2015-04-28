@@ -12,6 +12,16 @@ namespace ChrumGraph
     public interface IVisualCore
     {
         /// <summary>
+        /// Gets list of all of graph's vertices.
+        /// </summary>
+        List<Vertex> Vertices { get; }
+
+        /// <summary>
+        /// Gets list of all of graph's edges.
+        /// </summary>
+        List<Edge> Edges { get; }
+
+        /// <summary>
         /// Creates new vertex.
         /// </summary>
         /// <param name="x">X coordinate of a new vertex.</param>

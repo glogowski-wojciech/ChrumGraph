@@ -32,10 +32,9 @@ namespace ChrumGraph
         /// <summary>
         /// Initializes a new instance of the Core class.
         /// </summary>
-        public Core(IVisual _visual)
+        public Core(IVisual visual)
         {
-            visual = _visual;
-
+            this.visual = visual;
             physics = new Physics(this);
 
             FPS = defaultFPS;

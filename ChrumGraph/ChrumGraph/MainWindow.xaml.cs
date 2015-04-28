@@ -28,14 +28,17 @@ namespace ChrumGraph
         private bool addVertex = false;
         private Ellipse addedVertex;
         private string newLabel;
+
         /// <summary>
         /// Initialize window.
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+
             visual = new Visual(MainCanvas);
             core = new Core(visual);
+            visual.Parent = core;
         }
 
         public string NewLabel

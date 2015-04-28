@@ -20,7 +20,6 @@ namespace ChrumGraph
         private int vertexSize = 25;
         private double verticeToEdgeRatio = 5;
         private Canvas canvas;
-        private Core parent;
 
         private Color vertexColor = Colors.Red;
         private Color edgeColor = Colors.Black;
@@ -39,10 +38,7 @@ namespace ChrumGraph
             edgeBrush = new SolidColorBrush(edgeColor);
         }
 
-        public Core Parent
-        {
-            set { parent = value; }
-        }
+        public IVisualCore Parent { get; set; }
 
         public int VertexSize
         {
@@ -109,7 +105,7 @@ namespace ChrumGraph
             double xMin = Double.PositiveInfinity, xMax = Double.NegativeInfinity,
                 yMin = Double.PositiveInfinity, yMax = Double.NegativeInfinity;
 
-            foreach (Vertex v in parent.Vertices)
+            foreach (Vertex v in Parent.Vertices)
             {
                 xMin = Math.Min(xMin, v.X);
                 xMax = Math.Max(xMax, v.X);
@@ -120,7 +116,7 @@ namespace ChrumGraph
             double delta = Math.Max(xMax - xMin, yMax - yMin);
             scaleFactor = 1.0 / delta;
             
-            foreach(Vertex v in parent.Vertices)
+            foreach(Vertex v in Parent.Vertices)
             {
                 Ellipse e = getVisualVertex();
                 try
@@ -133,7 +129,7 @@ namespace ChrumGraph
                 ellipseLabels.Add(v.Label, e);
             }
 
-            foreach(Edge e in parent.Edges)
+            foreach(Edge e in Parent.Edges)
             {
                 Ellipse e1 = ellipseLabels[e.V1.Label];
                 Ellipse e2 = ellipseLabels[e.V2.Label];
@@ -151,7 +147,7 @@ namespace ChrumGraph
                 canvas.Children.Add(l);
             }
 
-            foreach(Vertex v in parent.Vertices)
+            foreach(Vertex v in Parent.Vertices)
             {
                 Ellipse e = ellipseLabels[v.Label];
                 e.HorizontalAlignment = HorizontalAlignment.Center;
