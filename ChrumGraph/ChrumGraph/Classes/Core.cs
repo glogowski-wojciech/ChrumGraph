@@ -52,7 +52,6 @@ namespace ChrumGraph
                     physics.StopSimulation();
                     simulationStopTimer.Stop();
                 };
-            simulationStopTimer.Interval = 100;
         }
 
         /// <summary>
@@ -282,10 +281,10 @@ namespace ChrumGraph
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);
             }
-            physics.StartSimulation(30.0);
+            physics.StartSimulation(FPS);
+            visual.Visible = true;
             refreshTimer.Start();
             simulationStopTimer.Start();
-            visual.Visible = true;
         }
 
         /// <summary>
