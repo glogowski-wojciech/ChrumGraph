@@ -22,8 +22,9 @@ namespace ChrumGraph
     /// </summary>
     public partial class MainWindow : Window
     {
-        Core core;
-
+        private Core core;
+        private bool addVertex = false;
+        private Ellipse addedVertex;
         /// <summary>
         /// Initialize window.
         /// </summary>
@@ -56,5 +57,29 @@ namespace ChrumGraph
             if (result == true && saveDialog.FileName != "")
                 core.SaveGraph(saveDialog.FileName);
         }
+
+        private void AddVertex(object sender, RoutedEventArgs e)
+        {
+            addVertex = true;
+            addedVertex = core.Visual.getVisualVertex();
+            MainCanvas.Children.Add(addedVertex);
+        }
+
+        private void AddEdge(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(addVertex)
+            {
+                double x = e.GetPosition(MainCanvas).X - 12.5;
+                double y = e.GetPosition(MainCanvas).Y - 12.5;
+                Canvas.SetLeft(addedVertex, x);
+                Canvas.SetTop(addedVertex, y);
+            }
+        }
+
     }
 }

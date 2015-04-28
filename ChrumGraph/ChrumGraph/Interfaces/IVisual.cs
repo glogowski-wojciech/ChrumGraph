@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
 
 namespace ChrumGraph
 {
@@ -12,10 +13,17 @@ namespace ChrumGraph
     public interface IVisual
     {
         /// <summary>
+        /// Creates a shape that represents a vertex in the canvas
+        /// </summary>
+        /// <returns></returns>
+        Ellipse getVisualVertex();
+
+        /// <summary>
         /// Creates visual representation of a given Core vertex.
         /// </summary>
         /// <param name="vertex">Core vertex to be expanded.</param>
         void CreateVisualVertex(Vertex vertex);
+
         /// <summary>
         /// Removes visual representation of a given vertex.
         /// </summary>

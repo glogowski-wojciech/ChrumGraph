@@ -1,7 +1,8 @@
 ﻿<Window x:Class="ChrumGraph.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Chrum graph" Height="525" Width="525" MinHeight="250" MinWidth="250">
+        Title="Chrum graph" Height="525" Width="525" MinHeight="250" MinWidth="250"
+        MouseMove="Window_MouseMove">
     <Grid>
         <DockPanel>
             <Menu>
@@ -10,16 +11,16 @@
                 <MenuItem Header="Save" Click="SaveClick">
 
                 </MenuItem>
-                <MenuItem Header="Add">
-                    <MenuItem Header="Verticle">
+                <MenuItem Header="Add" Visibility="Hidden">
+                    <MenuItem Header="Vertex" Click="AddVertex">
                         
                     </MenuItem>
-                    <MenuItem Header="Edge">
+                    <MenuItem Header="Edge" Click="AddEdge">
 
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="Remove">
-                    <MenuItem Header="Verticle">
+                <MenuItem Header="Remove" Visibility="Hidden">
+                    <MenuItem Header="Vertex">
 
                     </MenuItem>
                     <MenuItem Header="Edge">

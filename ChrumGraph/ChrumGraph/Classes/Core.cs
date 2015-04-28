@@ -222,6 +222,14 @@ namespace ChrumGraph
         }
 
         /// <summary>
+        /// Getter for the visual in the core
+        /// </summary>
+        public IVisual Visual
+        {
+            get { return visual; }
+        }
+
+        /// <summary>
         /// Loads graph from file ASD represenation, that ignores vertex position.
         /// </summary>
         /// <param name="filename">File being read.</param>
@@ -232,6 +240,10 @@ namespace ChrumGraph
                 //TODO: Check representation correctness
                 using (StreamReader sr = new StreamReader(filename))
                 {
+                    vertices.Clear();
+                    verticesDict.Clear();
+                    edges.Clear();
+
                     while (sr.Peek() >= 0)
                     {
                         String nWord = sr.ReadLine();
