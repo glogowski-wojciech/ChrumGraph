@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Forms;
 using Visual = ChrumGraph.Visual;
 
 namespace ChrumGraph
@@ -23,16 +24,26 @@ namespace ChrumGraph
     public partial class MainWindow : Window
     {
         private Core core;
+        private Visual visual;
         private bool addVertex = false;
         private Ellipse addedVertex;
+        private string newLabel;
         /// <summary>
         /// Initialize window.
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
-            core = new Core(MainCanvas);
+            visual = new Visual(MainCanvas);
+            core = new Core(visual);
         }
+
+        public string NewLabel
+        {
+            get { return newLabel; }
+            set { newLabel = value; }
+        }
+
 
         private void OpenClick(object sender, RoutedEventArgs e)
         {
@@ -60,17 +71,22 @@ namespace ChrumGraph
 
         private void AddVertex(object sender, RoutedEventArgs e)
         {
+            var addVertexForm = new AddVertexForm();
+            addVertexForm.Show();
             addVertex = true;
             addedVertex = core.Visual.getVisualVertex();
             MainCanvas.Children.Add(addedVertex);
+            Canvas.SetLeft(addedVertex, Mouse.GetPosition(MainCanvas).X - visual.VertexSize / 2);
+            Canvas.SetTop(addedVertex, Mouse.GetPosition(MainCanvas).Y - visual.VertexSize / 2);
         }
 
         private void AddEdge(object sender, RoutedEventArgs e)
         {
-
+            if (addVertex)
+                MainCanvas.Children.Remove(addedVertex);
         }
 
-        private void Window_MouseMove(object sender, MouseEventArgs e)
+        private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if(addVertex)
             {
@@ -81,5 +97,14 @@ namespace ChrumGraph
             }
         }
 
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if(addVertex)
+            {
+                addVertex = false;
+                if (Mouse.GetPosition(this).Y <= MainMenu.Height + visual.VertexSize / 2)
+                    MainCanvas.Children.Remove(addedVertex);
+            }
+        }
     }
 }

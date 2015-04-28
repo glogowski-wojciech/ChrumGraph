@@ -14,40 +14,44 @@ namespace ChrumGraph
     {
         private bool visible;
         private double scaleFactor = 0.75;
-        private int verticeSize = 25;
+        private int vertexSize = 25;
         private double verticeToEdgeRatio = 5;
         private Canvas canvas;
-        Core parent;
+        private Core parent;
 
-        Color vertexColor = Colors.Red;
-        Color edgeColor = Colors.Black;
-        SolidColorBrush vertexBrush;
-        SolidColorBrush edgeBrush;
+        private Color vertexColor = Colors.Red;
+        private Color edgeColor = Colors.Black;
+        private SolidColorBrush vertexBrush;
+        private SolidColorBrush edgeBrush;
 
 
         private List<Ellipse> ellipses = new List<Ellipse>();
         private List<Line> lines = new List<Line>();
         private Dictionary<string, Ellipse> ellipseLabels = new Dictionary<string, Ellipse>();
 
-        public Visual(Canvas _canvas, Core _parent)
+        public Visual(Canvas _canvas)
         {
             canvas = _canvas;
-            parent = _parent;
             vertexBrush = new SolidColorBrush(vertexColor);
             edgeBrush = new SolidColorBrush(edgeColor);
         }
 
+        public Core Parent
+        {
+            set { parent = value; }
+        }
+
+        public int VertexSize
+        {
+            get { return vertexSize; }
+            set { vertexSize = value; }
+        }
         public Ellipse getVisualVertex()
         {
             Ellipse e = new Ellipse();
-            e.Height = e.Width = verticeSize;
+            e.Height = e.Width = vertexSize;
             e.Fill = vertexBrush;
             return e;
-        }
-
-        public int VerticeSize
-        {
-            get { return verticeSize; }
         }
 
         private double translateCoordHor(double x)
@@ -104,8 +108,8 @@ namespace ChrumGraph
             foreach(Vertex v in parent.Vertices)
             {
                 Ellipse e = getVisualVertex();
-                Canvas.SetLeft(e, (scaleFactor * v.X + 1) * canvas.ActualWidth / 2 - verticeSize / 2);
-                Canvas.SetTop(e, (scaleFactor * v.Y + 1) * canvas.ActualHeight / 2 - verticeSize / 2);
+                Canvas.SetLeft(e, (scaleFactor * v.X + 1) * canvas.ActualWidth / 2 - vertexSize / 2);
+                Canvas.SetTop(e, (scaleFactor * v.Y + 1) * canvas.ActualHeight / 2 - vertexSize / 2);
                 ellipses.Add(e);
                 ellipseLabels.Add(v.Label, e);
             }
@@ -116,11 +120,11 @@ namespace ChrumGraph
                 Ellipse e2 = ellipseLabels[e.V2.Label];
                 Line l = new Line();
                 l.Stroke = edgeBrush;
-                l.StrokeThickness = verticeSize / verticeToEdgeRatio;
-                l.X1 = Canvas.GetLeft(e1) + verticeSize / 2;
-                l.Y1 = Canvas.GetTop(e1) + verticeSize / 2;
-                l.X2 = Canvas.GetLeft(e2) + verticeSize / 2;
-                l.Y2 = Canvas.GetTop(e2) + verticeSize / 2;
+                l.StrokeThickness = vertexSize / verticeToEdgeRatio;
+                l.X1 = Canvas.GetLeft(e1) + vertexSize / 2;
+                l.Y1 = Canvas.GetTop(e1) + vertexSize / 2;
+                l.X2 = Canvas.GetLeft(e2) + vertexSize / 2;
+                l.Y2 = Canvas.GetTop(e2) + vertexSize / 2;
                 canvas.Children.Add(l);
             }
 
@@ -135,14 +139,14 @@ namespace ChrumGraph
                 t.FontWeight = FontWeights.Bold;
                 t.HorizontalAlignment = HorizontalAlignment.Center;
                 t.VerticalAlignment = VerticalAlignment.Center;
-                t.Width = t.Height = verticeSize;
-                t.FontSize = verticeSize * 0.75;
+                t.Width = t.Height = vertexSize;
+                t.FontSize = vertexSize * 0.75;
 
                 t.Text = v.Label;
-                t.Margin = new Thickness(verticeSize / 4, 0, 0, verticeSize / 10);
+                t.Margin = new Thickness(vertexSize / 4, 0, 0, vertexSize / 10);
 
-                Canvas.SetLeft(t, (scaleFactor * v.X + 1) * canvas.ActualWidth / 2 - verticeSize / 2);
-                Canvas.SetTop(t, (scaleFactor * v.Y + 1) * canvas.ActualHeight / 2 - verticeSize / 2);
+                Canvas.SetLeft(t, (scaleFactor * v.X + 1) * canvas.ActualWidth / 2 - vertexSize / 2);
+                Canvas.SetTop(t, (scaleFactor * v.Y + 1) * canvas.ActualHeight / 2 - vertexSize / 2);
                 canvas.Children.Add(e);
                 canvas.Children.Add(t);
             }

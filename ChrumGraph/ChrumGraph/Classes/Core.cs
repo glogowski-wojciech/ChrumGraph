@@ -30,10 +30,9 @@ namespace ChrumGraph
         /// <summary>
         /// Initializes a new instance of the Core class.
         /// </summary>
-        /// <param name="canvas">Canvas on which the graph will be drawn.</param>
-        public Core(Canvas canvas)
+        public Core(IVisual _visual)
         {
-            visual = new Visual(canvas, this);
+            visual = _visual;
 
             physics = new Physics(this);
 
