@@ -10,10 +10,13 @@ using System.Windows;
 
 namespace ChrumGraph
 {
+    /// <summary>
+    /// Visual representation of a graph.
+    /// </summary>
     class Visual : IVisual
     {
         private bool visible;
-        private double scaleFactor = 0.75;
+        private double scaleFactor = 0.01;
         private int verticeSize = 25;
         private double verticeToEdgeRatio = 5;
         private Canvas canvas;
@@ -99,13 +102,29 @@ namespace ChrumGraph
             lines.Clear();
             ellipseLabels.Clear();
 
+            double xMin = Double.PositiveInfinity, xMax = Double.NegativeInfinity,
+                yMin = Double.PositiveInfinity, yMax = Double.NegativeInfinity;
 
+            foreach (Vertex v in parent.Vertices)
+            {
+                xMin = Math.Min(xMin, v.X);
+                xMax = Math.Max(xMax, v.X);
+                yMin = Math.Min(yMin, v.Y);
+                yMax = Math.Max(yMax, v.Y);
+            }
 
+            double delta = Math.Max(xMax - xMin, yMax - yMin);
+            scaleFactor = 1.0 / delta;
+            
             foreach(Vertex v in parent.Vertices)
             {
                 Ellipse e = getVisualVertex();
-                Canvas.SetLeft(e, (scaleFactor * v.X + 1) * canvas.ActualWidth / 2 - verticeSize / 2);
-                Canvas.SetTop(e, (scaleFactor * v.Y + 1) * canvas.ActualHeight / 2 - verticeSize / 2);
+                try
+                {
+                    Canvas.SetLeft(e, (scaleFactor * v.X + 1) * canvas.ActualWidth / 2 - verticeSize / 2);
+                    Canvas.SetTop(e, (scaleFactor * v.Y + 1) * canvas.ActualHeight / 2 - verticeSize / 2);
+                }
+                catch (ArgumentException) { }
                 ellipses.Add(e);
                 ellipseLabels.Add(v.Label, e);
             }
@@ -117,10 +136,14 @@ namespace ChrumGraph
                 Line l = new Line();
                 l.Stroke = edgeBrush;
                 l.StrokeThickness = verticeSize / verticeToEdgeRatio;
-                l.X1 = Canvas.GetLeft(e1) + verticeSize / 2;
-                l.Y1 = Canvas.GetTop(e1) + verticeSize / 2;
-                l.X2 = Canvas.GetLeft(e2) + verticeSize / 2;
-                l.Y2 = Canvas.GetTop(e2) + verticeSize / 2;
+                try
+                {
+                    l.X1 = Canvas.GetLeft(e1) + verticeSize / 2;
+                    l.Y1 = Canvas.GetTop(e1) + verticeSize / 2;
+                    l.X2 = Canvas.GetLeft(e2) + verticeSize / 2;
+                    l.Y2 = Canvas.GetTop(e2) + verticeSize / 2;
+                }
+                catch (ArgumentException) { }
                 canvas.Children.Add(l);
             }
 

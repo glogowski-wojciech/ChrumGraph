@@ -72,10 +72,10 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface of <a class="el" href="class_chrum_graph_1_1_core.html" title="Graph logic. ">Core</a> for <a class="el" href="class_chrum_graph_1_1_physics.html" title="Performs physical simulation on a graph. ">Physics</a>.  <a href="interface_chrum_graph_1_1_i_physics_core.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_chrum_graph_1_1_i_visual.html">IVisual</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface of <a class="el" href="class_chrum_graph_1_1_visual.html">Visual</a> for <a class="el" href="class_chrum_graph_1_1_core.html" title="Graph logic. ">Core</a>.  <a href="interface_chrum_graph_1_1_i_visual.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface of <a class="el" href="class_chrum_graph_1_1_visual.html" title="Visual representation of a graph. ">Visual</a> for <a class="el" href="class_chrum_graph_1_1_core.html" title="Graph logic. ">Core</a>.  <a href="interface_chrum_graph_1_1_i_visual.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">interface &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_chrum_graph_1_1_i_visual_core.html">IVisualCore</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface of <a class="el" href="class_chrum_graph_1_1_core.html" title="Graph logic. ">Core</a> for <a class="el" href="class_chrum_graph_1_1_visual.html">Visual</a>.  <a href="interface_chrum_graph_1_1_i_visual_core.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface of <a class="el" href="class_chrum_graph_1_1_core.html" title="Graph logic. ">Core</a> for <a class="el" href="class_chrum_graph_1_1_visual.html" title="Visual representation of a graph. ">Visual</a>.  <a href="interface_chrum_graph_1_1_i_visual_core.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrum_graph_1_1_main_window.html">MainWindow</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interaction logic for MainWindow.xaml  <a href="class_chrum_graph_1_1_main_window.html#details">More...</a><br /></td></tr>
@@ -83,10 +83,17 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrum_graph_1_1_physics.html">Physics</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs physical simulation on a graph.  <a href="class_chrum_graph_1_1_physics.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrum_graph_1_1_simulation_already_running_exception.html">SimulationAlreadyRunningException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thrown if <a class="el" href="interface_chrum_graph_1_1_i_physics.html" title="Interface of Physics for Core. ">IPhysics</a> simulation is being run again with StartSimulation without StopSimulation after previous run.  <a href="class_chrum_graph_1_1_simulation_already_running_exception.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrum_graph_1_1_simulation_already_stopped_exception.html">SimulationAlreadyStoppedException</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thrown if <a class="el" href="interface_chrum_graph_1_1_i_physics.html" title="Interface of Physics for Core. ">IPhysics</a> simulation is being stopped again with StopSimulation without being run after previous stop.  <a href="class_chrum_graph_1_1_simulation_already_stopped_exception.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrum_graph_1_1_vertex.html">Vertex</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graph vertex.  <a href="class_chrum_graph_1_1_vertex.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_chrum_graph_1_1_visual.html">Visual</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_chrum_graph_1_1_visual.html" title="Visual representation of a graph. ">Visual</a> representation of a graph.  <a href="class_chrum_graph_1_1_visual.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
@@ -98,7 +105,7 @@ Classes</h2></td></tr>
 </div>
 </div>
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Apr 25 2015 16:38:03 for ChrumGraph by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Apr 28 2015 07:25:07 for ChrumGraph by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

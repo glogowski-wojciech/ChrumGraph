@@ -7,6 +7,7 @@ using System.Windows.Threading;
 using System.Windows;
 using System.IO;
 using System.Windows.Controls;
+using System.Timers;
 
 namespace ChrumGraph
 {
@@ -18,6 +19,7 @@ namespace ChrumGraph
         private const double defaultFPS = 30.0;
 
         private DispatcherTimer refreshTimer = new DispatcherTimer();
+        private Timer simulationStopTimer = new Timer();
         private double fps;
 
         private IVisual visual;
@@ -45,6 +47,12 @@ namespace ChrumGraph
                         lock (this) { visual.Refresh(); }
                     }
                 };
+            simulationStopTimer.Elapsed += (sender, e) =>
+                {
+                    physics.StopSimulation();
+                    simulationStopTimer.Stop();
+                };
+            simulationStopTimer.Interval = 100;
         }
 
         /// <summary>
@@ -274,7 +282,10 @@ namespace ChrumGraph
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);
             }
-            visual.Refresh();
+            physics.StartSimulation(30.0);
+            refreshTimer.Start();
+            simulationStopTimer.Start();
+            visual.Visible = true;
         }
 
         /// <summary>

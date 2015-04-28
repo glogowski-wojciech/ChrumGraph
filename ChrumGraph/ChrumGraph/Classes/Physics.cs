@@ -163,6 +163,7 @@ namespace ChrumGraph
                 });
                 Parallel.For(0, n, (int i) =>
                 {
+                    
                     vertices[i].X += netForces[i].X;
                     vertices[i].Y += netForces[i].Y;
                 });
@@ -184,6 +185,7 @@ namespace ChrumGraph
             {
                 netForces[k] += VertexForce(ref currentCoordinates, ref coordinatesArray[i]);
             }
+
             foreach (Edge e in currentVertex.Edges)
             {
                 Vertex other = e.Other(currentVertex);
@@ -207,7 +209,13 @@ namespace ChrumGraph
             Vector d = other - current;
             double l = d.Length;
             d.Normalize();
-            return d * VertexForceFunction(l);
+            
+            if (!Double.IsNaN(d.X) && !Double.IsNaN(d.Y)) return d * VertexForceFunction(l);
+            else
+            {
+                d.X = d.Y = 0;
+                return d;
+            }
         }
 
         /// <summary>
@@ -420,7 +428,7 @@ namespace ChrumGraph
                 bool returnValue;
                 lock(simulateGuard)
                 {
-                    returnValue = Simulate;
+                    returnValue = simulate;
                 }
                 return returnValue;
             }
