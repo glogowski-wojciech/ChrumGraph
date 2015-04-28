@@ -251,7 +251,7 @@ namespace ChrumGraph
         /// <returns></returns>
         private double EdgeForceFunction(double x)
         {
-            return -edgeForceParam * x;
+            return edgeForceParam * (x - 1.0);
         }
         
         /// <summary>
