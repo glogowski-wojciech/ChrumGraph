@@ -53,7 +53,7 @@ namespace ChrumGraph
                     simulationStopTimer.Stop();
                 };
         }
-
+        
         /// <summary>
         /// Initializes a new instance of the Core class without Canvas.
         /// </summary>
