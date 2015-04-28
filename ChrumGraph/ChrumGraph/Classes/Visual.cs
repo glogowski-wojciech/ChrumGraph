@@ -17,7 +17,7 @@ namespace ChrumGraph
     {
         private bool visible;
         private double scaleFactor = 0.01;
-        private int verticeSize = 25;
+        private int vertexSize = 25;
         private double verticeToEdgeRatio = 5;
         private Canvas canvas;
         private Core parent;
@@ -125,8 +125,8 @@ namespace ChrumGraph
                 Ellipse e = getVisualVertex();
                 try
                 {
-                    Canvas.SetLeft(e, (scaleFactor * v.X + 1) * canvas.ActualWidth / 2 - verticeSize / 2);
-                    Canvas.SetTop(e, (scaleFactor * v.Y + 1) * canvas.ActualHeight / 2 - verticeSize / 2);
+                    Canvas.SetLeft(e, (scaleFactor * v.X + 1) * canvas.ActualWidth / 2 - vertexSize / 2);
+                    Canvas.SetTop(e, (scaleFactor * v.Y + 1) * canvas.ActualHeight / 2 - vertexSize / 2);
                 }
                 catch (ArgumentException) { }
                 ellipses.Add(e);
@@ -139,13 +139,13 @@ namespace ChrumGraph
                 Ellipse e2 = ellipseLabels[e.V2.Label];
                 Line l = new Line();
                 l.Stroke = edgeBrush;
-                l.StrokeThickness = verticeSize / verticeToEdgeRatio;
+                l.StrokeThickness = vertexSize / verticeToEdgeRatio;
                 try
                 {
-                    l.X1 = Canvas.GetLeft(e1) + verticeSize / 2;
-                    l.Y1 = Canvas.GetTop(e1) + verticeSize / 2;
-                    l.X2 = Canvas.GetLeft(e2) + verticeSize / 2;
-                    l.Y2 = Canvas.GetTop(e2) + verticeSize / 2;
+                    l.X1 = Canvas.GetLeft(e1) + vertexSize / 2;
+                    l.Y1 = Canvas.GetTop(e1) + vertexSize / 2;
+                    l.X2 = Canvas.GetLeft(e2) + vertexSize / 2;
+                    l.Y2 = Canvas.GetTop(e2) + vertexSize / 2;
                 }
                 catch (ArgumentException) { }
                 canvas.Children.Add(l);
