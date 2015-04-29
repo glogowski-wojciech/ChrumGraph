@@ -58,8 +58,9 @@ namespace ChrumGraph
             edges = physicsCore.Edges;
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += (sender, e) => { IterateSimulation(); };
-            VertexForceParam = 1.0;
+            VertexForceParam = 9.0;
             EdgeForceParam = 1.0;
+            frictionParam = 0.00;
             Simulate = false;
         }
         
@@ -185,7 +186,6 @@ namespace ChrumGraph
             {
                 netForces[k] += VertexForce(ref currentCoordinates, ref coordinatesArray[i]);
             }
-
             foreach (Edge e in currentVertex.Edges)
             {
                 Vertex other = e.Other(currentVertex);
@@ -193,6 +193,10 @@ namespace ChrumGraph
                 netForces[k] += EdgeForce(ref currentCoordinates, ref otherCoordinates);
             }
             netForces[k] += Friction(netForces[k]);
+            if (Double.IsNaN(netForces[k].X) || Double.IsNaN(netForces[k].Y))
+            {
+                throw new InvalidOperationException();
+            }
         }
        
         /* physical forces */
@@ -209,12 +213,14 @@ namespace ChrumGraph
             Vector d = other - current;
             double l = d.Length;
             d.Normalize();
-            
-            if (!Double.IsNaN(d.X) && !Double.IsNaN(d.Y)) return d * VertexForceFunction(l);
+            Vector retVal = d * VertexForceFunction(l);
+            if (!Double.IsNaN(retVal.X) && !Double.IsNaN(retVal.Y))
+            {
+                return retVal;
+            }
             else
             {
-                d.X = d.Y = 0;
-                return d;
+                return new Vector(0.0, 0.0);
             }
         }
 
@@ -241,7 +247,15 @@ namespace ChrumGraph
             Vector d = other - current;
             double l = d.Length;
             d.Normalize();
-            return d * EdgeForceFunction(l);
+            Vector retVal = d * EdgeForceFunction(l);
+            if (!Double.IsNaN(retVal.X) && !Double.IsNaN(retVal.X))
+            {
+                return retVal;
+            }
+            else
+            {
+                return new Vector(0.0, 0.0);
+            }
         }
 
         /// <summary>
@@ -266,7 +280,14 @@ namespace ChrumGraph
             force.Normalize(); // We use the fact that Vector is passed by copy
                                // as it is structure.
             force *= FrictionFunction(l);
-            return force;
+            if (!Double.IsNaN(force.X) && !Double.IsNaN(force.Y))
+            {
+                return force;
+            }
+            else
+            {
+                return new Vector(0.0, 0.0);
+            }
         }
 
         /// <summary>
@@ -276,8 +297,8 @@ namespace ChrumGraph
         /// <returns></returns>
         private double FrictionFunction(double x)
         {
-            return frictionParam / 2.0 * (x + (Math.Abs(x - frictionParam) -
-                                               Math.Abs(x + frictionParam)));
+            return 1.0 / 2.0 * (Math.Abs(x - frictionParam) -
+                                Math.Abs(x + frictionParam));
         }
 
         /* guards of fields for multithreading */
