@@ -27,7 +27,6 @@ namespace ChrumGraphTest
             IPhysicsCore c = new Core();
             IPhysics p = new Physics(c);
             double v = p.VertexForceParam;
-            double e = p.EdgeForceParam;
             double f = p.FrictionParam;
         }
     }

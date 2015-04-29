@@ -50,7 +50,6 @@ namespace ChrumGraph
         public Physics(IPhysicsCore physicsCore)
         {
             vertexForceParamGuard = new object();
-            edgeForceParamGuard = new object();
             frictionParamGuard = new object();
             simulateGuard = new object();
             this.physicsCore = physicsCore;
@@ -58,7 +57,7 @@ namespace ChrumGraph
             edges = physicsCore.Edges;
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += (sender, e) => { IterateSimulation(); };
-            VertexForceParam = 1.0;
+            VertexForceParam = 4.0;
             frictionParam = 0.0;
             Simulate = false;
         }
@@ -243,8 +242,7 @@ namespace ChrumGraph
         /// <returns></returns>
         private double VertexForceFunction(double x)
         {
-            return vertexForceParam * (x >= 0.0 ? (x <= 1.0 ? -1.0 : -1.0 / x)
-                                                : (x >= -1.0 ? 1.0 : -1.0 / x));
+            return vertexForceParam * (x <= 0.5 ? -2.0 : -1.0 / x);
         }
 
         /// <summary>
@@ -278,7 +276,7 @@ namespace ChrumGraph
         /// <returns></returns>
         private double EdgeForceFunction(double x)
         {
-            return edgeForceParam * (x - 1.0);
+            return 0.3 * edgeForceParam * (x - 1.0);
         }
         
         /// <summary>
@@ -310,8 +308,8 @@ namespace ChrumGraph
         /// <returns></returns>
         private double FrictionFunction(double x)
         {
-            return 1.0 / 2.0 * (Math.Abs(x - frictionParam) -
-                                Math.Abs(x + frictionParam));
+            return 0.5 * (Math.Abs(x - frictionParam) -
+                          Math.Abs(x + frictionParam));
         }
 
         /* guards of fields for multithreading */
@@ -320,11 +318,6 @@ namespace ChrumGraph
         /// The guard of vertexForceParam.
         /// </summary>
         private object vertexForceParamGuard;
-
-        /// <summary>
-        /// The guard of edgeForceParam.
-        /// </summary>
-        private object edgeForceParamGuard;
 
         /// <summary>
         /// The guard of frictionParam.
