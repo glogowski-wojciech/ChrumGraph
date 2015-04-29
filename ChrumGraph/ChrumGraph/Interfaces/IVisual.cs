@@ -21,7 +21,7 @@ namespace ChrumGraph
         /// <summary>
         /// Creates visual representation of a given Core vertex.
         /// </summary>
-        /// <param name="vertex">Core vertex to be expanded.</param>
+        /// <param name="vertex">Core vertex.</param>
         void CreateVisualVertex(Vertex vertex);
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace ChrumGraph
         /// <summary>
         /// Creates visual representation of a given Core edge.
         /// </summary>
-        /// <param name="edge">Core edge to be expanded.</param>
+        /// <param name="edge">Core edge.</param>
         void CreateVisualEdge(Edge edge);
 
         /// <summary>
@@ -51,5 +51,10 @@ namespace ChrumGraph
         /// Redraws graph. If graph was not visible, the Visible property is set to true.
         /// </summary>
         void Refresh();
+
+        /// <summary>
+        /// Removes all vertices and edges from Visual graph.
+        /// </summary>
+        void Clear();
     }
 }

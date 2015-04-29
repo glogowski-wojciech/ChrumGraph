@@ -246,6 +246,7 @@ namespace ChrumGraph
                 //TODO: Check representation correctness
                 using (StreamReader sr = new StreamReader(filename))
                 {
+                    visual.Clear();
                     vertices.Clear();
                     verticesDict.Clear();
                     edges.Clear();
