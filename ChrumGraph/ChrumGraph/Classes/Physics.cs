@@ -58,9 +58,8 @@ namespace ChrumGraph
             edges = physicsCore.Edges;
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += (sender, e) => { IterateSimulation(); };
-            VertexForceParam = 9.0;
-            EdgeForceParam = 1.0;
-            frictionParam = 0.00;
+            VertexForceParam = 1.0;
+            frictionParam = 0.0;
             Simulate = false;
         }
         
@@ -149,12 +148,25 @@ namespace ChrumGraph
                 int n = vertices.Count;
                 coordinatesArray = new Vector[n];
                 netForces = new Vector[n];
+                int maxDegree = 0;
                 Parallel.For(0, n, (int i) =>
                 {
                     Vertex v = vertices[i];
                     coordinatesArray[i] = new Vector(v.X, v.Y);
                     netForces[i] = new Vector(0.0, 0.0);
                 });
+                for (int i = 0; i < n; ++i)
+                {
+                    maxDegree = Math.Max(maxDegree, vertices[i].Edges.Count);
+                }
+                if (maxDegree == 0.0)
+                {
+                    edgeForceParam = 1.0;
+                }
+                else
+                {
+                    edgeForceParam = 1.0 / ((double)maxDegree);
+                }
                 Parallel.For(0, n, (int i) =>
                 {
                     if (!vertices[i].PositionForced)
@@ -164,7 +176,6 @@ namespace ChrumGraph
                 });
                 Parallel.For(0, n, (int i) =>
                 {
-                    
                     vertices[i].X += netForces[i].X;
                     vertices[i].Y += netForces[i].Y;
                 });
@@ -190,7 +201,8 @@ namespace ChrumGraph
             {
                 Vertex other = e.Other(currentVertex);
                 Vector otherCoordinates = new Vector(other.X, other.Y);
-                netForces[k] += EdgeForce(ref currentCoordinates, ref otherCoordinates);
+                
+                netForces[k] += EdgeForce(ref currentCoordinates, ref otherCoordinates, n);
             }
             netForces[k] += Friction(netForces[k]);
             if (Double.IsNaN(netForces[k].X) || Double.IsNaN(netForces[k].Y))
@@ -241,8 +253,9 @@ namespace ChrumGraph
         /// </summary>
         /// <param name="current">The current vertex.</param>
         /// <param name="other">The other vertex.</param>
+        /// <param name="n">Number of vertices in graph.</param>
         /// <returns></returns>
-        private Vector EdgeForce(ref Vector current, ref Vector other)
+        private Vector EdgeForce(ref Vector current, ref Vector other, int n)
         {
             Vector d = other - current;
             double l = d.Length;
@@ -369,33 +382,6 @@ namespace ChrumGraph
                 lock(vertexForceParamGuard)
                 {
                     returnValue = vertexForceParam;
-                }
-                return returnValue;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the edge force parameter.
-        /// </summary>
-        /// <value>
-        /// The edge force parameter.
-        /// </value>
-        public double EdgeForceParam
-        {
-            set
-            {
-                lock(edgeForceParamGuard)
-                {
-                    edgeForceParam = value;
-                }
-            }
-
-            get
-            {
-                double returnValue;
-                lock(edgeForceParamGuard)
-                {
-                    returnValue = edgeForceParam;
                 }
                 return returnValue;
             }

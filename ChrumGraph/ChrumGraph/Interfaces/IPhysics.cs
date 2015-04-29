@@ -17,11 +17,6 @@ namespace ChrumGraph
         double VertexForceParam { get; set; }
 
         /// <summary>
-        /// Coefficient of vertices connected by edge interaction.
-        /// </summary>
-        double EdgeForceParam { get; set; }
-
-        /// <summary>
         /// Coefficient of friction between vertices and background.
         /// </summary>
         double FrictionParam { get; set; }

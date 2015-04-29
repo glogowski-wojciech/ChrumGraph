@@ -45,7 +45,7 @@ namespace ChrumGraph
                         lock (this) { visual.Refresh(); }
                     }
                 };
-            simulationStopTimer.Interval = 5000;
+            simulationStopTimer.Interval = 100000;
             simulationStopTimer.Elapsed += (sender, e) =>
                 {
                     physics.StopSimulation();
@@ -280,7 +280,6 @@ namespace ChrumGraph
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e.Message);
             }
-            physics.EdgeForceParam = 0.1;
             physics.StartSimulation(FPS);
             visual.Visible = true;
             refreshTimer.Start();
