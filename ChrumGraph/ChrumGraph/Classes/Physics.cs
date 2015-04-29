@@ -201,7 +201,7 @@ namespace ChrumGraph
                 Vertex other = e.Other(currentVertex);
                 Vector otherCoordinates = new Vector(other.X, other.Y);
                 
-                netForces[k] += EdgeForce(ref currentCoordinates, ref otherCoordinates, n);
+                netForces[k] += EdgeForce(ref currentCoordinates, ref otherCoordinates);
             }
             netForces[k] += Friction(netForces[k]);
             if (Double.IsNaN(netForces[k].X) || Double.IsNaN(netForces[k].Y))
@@ -251,9 +251,8 @@ namespace ChrumGraph
         /// </summary>
         /// <param name="current">The current vertex.</param>
         /// <param name="other">The other vertex.</param>
-        /// <param name="n">Number of vertices in graph.</param>
         /// <returns></returns>
-        private Vector EdgeForce(ref Vector current, ref Vector other, int n)
+        private Vector EdgeForce(ref Vector current, ref Vector other)
         {
             Vector d = other - current;
             double l = d.Length;
