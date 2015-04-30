@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ChrumGraph
 {
@@ -12,6 +13,7 @@ namespace ChrumGraph
     public partial class Vertex
     {
         private List<Edge> edges = new List<Edge>();
+        private Point position;
 
         /// <summary>
         /// Initializes a new instance of the Vertex class;
@@ -21,22 +23,38 @@ namespace ChrumGraph
         /// <param name="label">Label of the vertex.</param>
         public Vertex(double x, double y, string label="")
         {
-            X = x;
-            Y = y;
+            Position = new Point(x, y);
             Label = label;
             Pinned = false;
             Clicked = false;
         }
 
         /// <summary>
+        /// Gets or sets position of the vertex.
+        /// </summary>
+        public Point Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
+        /// <summary>
         /// Position of a vertex (X coordinate).
         /// </summary>
-        public double X { get; set; }
+        public double X
+        {
+            get { return Position.X; }
+            set { position.X = value; }
+        }
 
         /// <summary>
         /// Position of a vertex (Y coordinate).
         /// </summary>
-        public double Y { get; set; }
+        public double Y
+        {
+            get { return Position.Y; }
+            set { position.Y = value; }
+        }
 
         /// <summary>
         /// Gets list of edges whose one of endpoints is specified vertex.

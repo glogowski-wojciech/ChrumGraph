@@ -38,7 +38,7 @@ namespace ChrumGraph
 
             visual = new Visual(MainCanvas);
             core = new Core(visual);
-            visual.Parent = core;
+            visual.Core = core;
         }
 
         public string NewLabel
