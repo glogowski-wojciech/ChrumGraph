@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows.Threading;
 using System.IO;
-using System.Timers;
 
 namespace ChrumGraph
 {

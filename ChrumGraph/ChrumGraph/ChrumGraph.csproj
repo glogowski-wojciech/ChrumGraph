@@ -73,6 +73,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Core.cs" />
+    <Compile Include="Classes\ViewWindow.cs" />
     <Compile Include="Classes\Visual.cs" />
     <Compile Include="Interfaces\IPhysics.cs" />
     <Compile Include="Interfaces\IPhysicsCore.cs" />

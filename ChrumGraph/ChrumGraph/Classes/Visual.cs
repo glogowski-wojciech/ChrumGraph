@@ -25,7 +25,6 @@ namespace ChrumGraph
     /// </summary>
     public class Visual : IVisual
     {
-        private double scaleFactor;
         private double verticeToEdgeRatio = 5;
         private Canvas canvas;
 
@@ -38,13 +37,16 @@ namespace ChrumGraph
         private Vertex clickedVertex;
         private Point previousMousePosition;
 
-        public Visual(Canvas canvas)
+        public Visual(MainWindow mainWindow)
         {
             VertexSize = 25.0;
 
-            this.canvas = canvas;
+            canvas = mainWindow.MainCanvas;
+            
             vertexBrush = new SolidColorBrush(vertexColor);
             edgeBrush = new SolidColorBrush(edgeColor);
+            ViewWindow = new ViewWindow(this);
+            ViewWindow.Canvas = canvas;
 
             canvas.MouseUp += MouseLeft;
             canvas.MouseMove += MouseMove;
@@ -52,6 +54,8 @@ namespace ChrumGraph
         }
 
         public IVisualCore Core { get; set; }
+
+        public ViewWindow ViewWindow { get; set; }
 
         public double VertexSize { get; set; }
 
@@ -90,6 +94,8 @@ namespace ChrumGraph
             {
                 clickedVertex.Clicked = true;
                 previousMousePosition = e.GetPosition(canvas);
+
+                ViewWindow.Static = true;
             }
         }
 
@@ -98,7 +104,8 @@ namespace ChrumGraph
             if (clickedVertex == null) return;
 
             Point mousePosition = e.GetPosition(canvas);
-            Point coreShift = (Point)(VisualToCorePosition(mousePosition) - VisualToCorePosition(previousMousePosition));
+            Point coreShift = (Point)(ViewWindow.VisualToCorePosition(mousePosition) -
+                ViewWindow.VisualToCorePosition(previousMousePosition));
             clickedVertex.X += coreShift.X;
             clickedVertex.Y += coreShift.Y;
             previousMousePosition = mousePosition;
@@ -159,7 +166,7 @@ namespace ChrumGraph
         }
         public void CreateVisualEdge(Edge edge)
         {
-            Line l = new Line()
+            Line l = new Line
             {
                 Stroke = edgeBrush,
                 StrokeThickness = VertexSize / verticeToEdgeRatio,
@@ -176,46 +183,20 @@ namespace ChrumGraph
 
         public bool Visible { get; set; }
 
-        private Point CoreToVisualPosition(Point corePosition)
-        {
-            return new Point(
-                (scaleFactor * corePosition.X + 1) * canvas.ActualWidth / 2.0 - VertexSize / 2.0,
-                (scaleFactor * corePosition.Y + 1) * canvas.ActualHeight / 2.0 - VertexSize / 2.0);
-        }
-
-        private Point VisualToCorePosition(Point visualPosition)
-        {
-            return new Point(
-                (2.0 / canvas.ActualWidth * (visualPosition.X + VertexSize / 2.0) - 1) / scaleFactor,
-                (2.0 / canvas.ActualHeight * (visualPosition.Y + VertexSize / 2.0) - 1) / scaleFactor);
-        }
-
         public void Refresh()
         {
             if (!Visible) Visible = true;
 
-            double xMin = Double.PositiveInfinity, xMax = Double.NegativeInfinity,
-                yMin = Double.PositiveInfinity, yMax = Double.NegativeInfinity;
-
-            foreach (Vertex v in Core.Vertices)
-            {
-                xMin = Math.Min(xMin, v.X);
-                xMax = Math.Max(xMax, v.X);
-                yMin = Math.Min(yMin, v.Y);
-                yMax = Math.Max(yMax, v.Y);
-            }
-
-            double delta = Math.Max(xMax - xMin, yMax - yMin);
-            scaleFactor = 1.0 / delta;
+            if (!ViewWindow.Static) ViewWindow.Adjust();
             
             foreach(Vertex v in Core.Vertices)
             {
-                Point visualPosition = CoreToVisualPosition(v.Position);
-                Canvas.SetLeft(v.Ellipse, visualPosition.X);
-                Canvas.SetTop(v.Ellipse, visualPosition.Y);
+                Point visualPosition = ViewWindow.CoreToVisualPosition(v.Position);
+                Canvas.SetLeft(v.Ellipse, visualPosition.X - VertexSize / 2.0);
+                Canvas.SetTop(v.Ellipse, visualPosition.Y - VertexSize / 2.0);
 
-                Canvas.SetLeft(v.VisualLabel, (scaleFactor * v.X + 1) * canvas.ActualWidth / 2.0 - VertexSize / 2.0);
-                Canvas.SetTop(v.VisualLabel, (scaleFactor * v.Y + 1) * canvas.ActualHeight / 2.0 - VertexSize / 2.0);
+                Canvas.SetLeft(v.VisualLabel, visualPosition.X - VertexSize / 2.0);
+                Canvas.SetTop(v.VisualLabel, visualPosition.Y - VertexSize / 2.0);
             }
 
             foreach(Edge e in Core.Edges)
@@ -240,6 +221,7 @@ namespace ChrumGraph
             {
                 RemoveVisualEdge(e);
             }
+            ViewWindow.Static = false;
         }
     }
 }

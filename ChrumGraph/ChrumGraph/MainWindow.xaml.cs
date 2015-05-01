@@ -24,7 +24,7 @@ namespace ChrumGraph
         {
             InitializeComponent();
 
-            visual = new Visual(MainCanvas);
+            visual = new Visual(this);
             core = new Core(visual);
             visual.Core = core;
         }
@@ -34,7 +34,6 @@ namespace ChrumGraph
             get { return newLabel; }
             set { newLabel = value; }
         }
-
 
         private void OpenClick(object sender, RoutedEventArgs e)
         {
@@ -77,7 +76,7 @@ namespace ChrumGraph
                 MainCanvas.Children.Remove(addedVertex);
         }
 
-        private void Window_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Window_MouseMove(object sender, MouseEventArgs e)
         {
             if(addVertex)
             {
@@ -88,7 +87,7 @@ namespace ChrumGraph
             }
         }
 
-        private void Window_MouseDown(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Window_MouseDown(object sender, MouseEventArgs e)
         {
             if(addVertex)
             {
@@ -96,6 +95,11 @@ namespace ChrumGraph
                 if (Mouse.GetPosition(this).Y <= MainMenu.Height + visual.VertexSize / 2)
                     MainCanvas.Children.Remove(addedVertex);
             }
+        }
+
+        private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            visual.ViewWindow.Static = false;
         }
     }
 }

@@ -9,7 +9,6 @@ namespace ChrumGraph
     public partial class Vertex
     {
         private List<Edge> edges = new List<Edge>();
-        private Point position;
 
         /// <summary>
         /// Initializes a new instance of the Vertex class;
@@ -28,11 +27,7 @@ namespace ChrumGraph
         /// <summary>
         /// Gets or sets position of the vertex.
         /// </summary>
-        public Point Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
+        public Point Position { get; set; }
 
         /// <summary>
         /// Position of a vertex (X coordinate).
@@ -40,7 +35,7 @@ namespace ChrumGraph
         public double X
         {
             get { return Position.X; }
-            set { position.X = value; }
+            set { Position = new Point(value, Y); }
         }
 
         /// <summary>
@@ -49,7 +44,7 @@ namespace ChrumGraph
         public double Y
         {
             get { return Position.Y; }
-            set { position.Y = value; }
+            set { Position = new Point(X, value); }
         }
 
         /// <summary>
