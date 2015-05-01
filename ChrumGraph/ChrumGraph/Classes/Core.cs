@@ -14,7 +14,6 @@ namespace ChrumGraph
         private const double defaultFPS = 30.0;
 
         private DispatcherTimer refreshTimer = new DispatcherTimer();
-        private Timer simulationStopTimer = new Timer();
         private double fps;
 
         private IVisual visual;
@@ -39,12 +38,6 @@ namespace ChrumGraph
                     {
                         lock (this) { visual.Refresh(); }
                     }
-                };
-            simulationStopTimer.Interval = 100000;
-            simulationStopTimer.Elapsed += (sender, e) =>
-                {
-                    physics.StopSimulation();
-                    simulationStopTimer.Stop();
                 };
         }
         
@@ -279,7 +272,6 @@ namespace ChrumGraph
             physics.StartSimulation(FPS);
             visual.Visible = true;
             refreshTimer.Start();
-            //simulationStopTimer.Start();
         }
 
         /// <summary>

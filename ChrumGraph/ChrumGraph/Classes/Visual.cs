@@ -115,25 +115,31 @@ namespace ChrumGraph
 
         public void CreateVisualVertex(Vertex vertex)
         {
-            Ellipse e = new Ellipse();
-            e.Height = e.Width = VertexSize;
-            e.Fill = vertexBrush;
-            e.HorizontalAlignment = HorizontalAlignment.Center;
-            e.VerticalAlignment = VerticalAlignment.Center;
+            Ellipse e = new Ellipse
+            {
+                Height = VertexSize,
+                Width = VertexSize,
+                Fill = vertexBrush,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+            };
             canvas.Children.Add(e);
             Canvas.SetZIndex(e, 2);
 
             AddEventHandlers(e, vertex);
             vertex.Ellipse = e;
 
-            TextBlock t = new TextBlock();
-            t.FontWeight = FontWeights.Bold;
-            t.HorizontalAlignment = HorizontalAlignment.Center;
-            t.VerticalAlignment = VerticalAlignment.Center;
-            t.Width = t.Height = VertexSize;
-            t.FontSize = VertexSize * 0.75;
-            t.Text = vertex.Label;
-            t.Margin = new Thickness(VertexSize / 4, 0, 0, VertexSize / 10.0);
+            TextBlock t = new TextBlock
+            {
+                FontWeight = FontWeights.Bold,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Width = VertexSize,
+                Height = VertexSize,
+                FontSize = VertexSize * 0.75,
+                Text = vertex.Label,
+                Margin = new Thickness(VertexSize / 4, 0, 0, VertexSize / 10.0),
+            };
             canvas.Children.Add(t);
             Canvas.SetZIndex(t, 3);
 
@@ -153,9 +159,11 @@ namespace ChrumGraph
         }
         public void CreateVisualEdge(Edge edge)
         {
-            Line l = new Line();
-            l.Stroke = edgeBrush;
-            l.StrokeThickness = VertexSize / verticeToEdgeRatio;
+            Line l = new Line()
+            {
+                Stroke = edgeBrush,
+                StrokeThickness = VertexSize / verticeToEdgeRatio,
+            };
             canvas.Children.Add(l);
             Canvas.SetZIndex(l, 1);
             edge.Line = l;
