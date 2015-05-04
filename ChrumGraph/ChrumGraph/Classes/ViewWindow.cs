@@ -29,6 +29,8 @@ namespace ChrumGraph
             MarginLength = 5.0;
         }
 
+        public double ScaleFactor { get; set; }
+
         /// <summary>
         /// Adjusts the viewing field.
         /// </summary>
@@ -68,6 +70,9 @@ namespace ChrumGraph
 
             startPoint = new Point(xMin, yMin);
         }
+
+        public double Width { get; set; }
+        public double Height { get; set; }
 
         /// <summary>
         /// Converts Core position to Visual position.

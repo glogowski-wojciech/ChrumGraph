@@ -35,8 +35,18 @@ namespace ChrumGraph
             set { newLabel = value; }
         }
 
+        private void MenuButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if(addVertex)
+            {
+                MainCanvas.Children.Remove(addedVertex);
+                addVertex = false;
+            }
+        }
+
         private void OpenClick(object sender, RoutedEventArgs e)
         {
+            MenuButtonClicked(sender, e);
             Microsoft.Win32.OpenFileDialog openDialog = new Microsoft.Win32.OpenFileDialog();
             openDialog.DefaultExt = ".graph";
             openDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
@@ -49,6 +59,7 @@ namespace ChrumGraph
 
         private void SaveClick(object sender, RoutedEventArgs e)
         {
+            MenuButtonClicked(sender, e);
             Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
             saveDialog.DefaultExt = ".graph";
             saveDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
@@ -61,8 +72,13 @@ namespace ChrumGraph
 
         private void AddVertex(object sender, RoutedEventArgs e)
         {
-            var addVertexForm = new AddVertexForm();
-            addVertexForm.Show();
+            MenuButtonClicked(sender, e);
+            var addVertexForm = new AddVertexForm(core);
+            var result = addVertexForm.ShowDialog();
+            addVertexForm.Close();
+            if (result == System.Windows.Forms.DialogResult.Cancel)
+                return;
+            newLabel = addVertexForm.GetNewLabel();
             addVertex = true;
             addedVertex = core.Visual.getVisualVertex();
             MainCanvas.Children.Add(addedVertex);
@@ -80,10 +96,14 @@ namespace ChrumGraph
         {
             if(addVertex)
             {
-                double x = e.GetPosition(MainCanvas).X - 12.5;
-                double y = e.GetPosition(MainCanvas).Y - 12.5;
+                double x = e.GetPosition(MainCanvas).X - visual.VertexSize / 2;
+                double y = e.GetPosition(MainCanvas).Y - visual.VertexSize / 2;
                 Canvas.SetLeft(addedVertex, x);
                 Canvas.SetTop(addedVertex, y);
+                if (Mouse.GetPosition(this).Y <= MainMenu.Height)
+                    addedVertex.Visibility = System.Windows.Visibility.Hidden;
+                else
+                    addedVertex.Visibility = System.Windows.Visibility.Visible;
             }
         }
 
@@ -94,6 +114,18 @@ namespace ChrumGraph
                 addVertex = false;
                 if (Mouse.GetPosition(this).Y <= MainMenu.Height + visual.VertexSize / 2)
                     MainCanvas.Children.Remove(addedVertex);
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine(visual.ViewWindow.Width);
+                    System.Diagnostics.Debug.WriteLine(visual.ViewWindow.Height);
+                    System.Diagnostics.Debug.WriteLine(e.GetPosition(MainCanvas).X);
+                    System.Diagnostics.Debug.WriteLine(e.GetPosition(MainCanvas).Y);
+
+                    Point corePosition = visual.ViewWindow.VisualToCorePosition(e.GetPosition(MainCanvas));
+                    core.CreateVertex(corePosition.X, corePosition.Y, newLabel);
+
+
+                }
             }
         }
 

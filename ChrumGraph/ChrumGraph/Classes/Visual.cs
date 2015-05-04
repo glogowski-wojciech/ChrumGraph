@@ -183,6 +183,25 @@ namespace ChrumGraph
 
         public bool Visible { get; set; }
 
+
+        public void RedrawVertex(Vertex v)
+        {
+            Point visualPosition = ViewWindow.CoreToVisualPosition(v.Position);
+            Canvas.SetLeft(v.Ellipse, visualPosition.X - VertexSize / 2.0);
+            Canvas.SetTop(v.Ellipse, visualPosition.Y - VertexSize / 2.0);
+
+            Canvas.SetLeft(v.VisualLabel, visualPosition.X - VertexSize / 2.0);
+            Canvas.SetTop(v.VisualLabel, visualPosition.Y - VertexSize / 2.0);
+        }
+
+        public void RedrawEdge(Edge e)
+        {
+            e.Line.X1 = Canvas.GetLeft(e.V1.Ellipse) + VertexSize / 2.0;
+            e.Line.Y1 = Canvas.GetTop(e.V1.Ellipse) + VertexSize / 2.0;
+            e.Line.X2 = Canvas.GetLeft(e.V2.Ellipse) + VertexSize / 2.0;
+            e.Line.Y2 = Canvas.GetTop(e.V2.Ellipse) + VertexSize / 2.0;
+        }
+
         public void Refresh()
         {
             if (!Visible) Visible = true;
@@ -190,22 +209,10 @@ namespace ChrumGraph
             if (!ViewWindow.Static) ViewWindow.Adjust();
             
             foreach(Vertex v in Core.Vertices)
-            {
-                Point visualPosition = ViewWindow.CoreToVisualPosition(v.Position);
-                Canvas.SetLeft(v.Ellipse, visualPosition.X - VertexSize / 2.0);
-                Canvas.SetTop(v.Ellipse, visualPosition.Y - VertexSize / 2.0);
+                RedrawVertex(v);
 
-                Canvas.SetLeft(v.VisualLabel, visualPosition.X - VertexSize / 2.0);
-                Canvas.SetTop(v.VisualLabel, visualPosition.Y - VertexSize / 2.0);
-            }
-
-            foreach(Edge e in Core.Edges)
-            {
-                e.Line.X1 = Canvas.GetLeft(e.V1.Ellipse) + VertexSize / 2.0;
-                e.Line.Y1 = Canvas.GetTop(e.V1.Ellipse) + VertexSize / 2.0;
-                e.Line.X2 = Canvas.GetLeft(e.V2.Ellipse) + VertexSize / 2.0;
-                e.Line.Y2 = Canvas.GetTop(e.V2.Ellipse) + VertexSize / 2.0;
-            }
+            foreach (Edge e in Core.Edges)
+                RedrawEdge(e);
         }
 
         /// <summary>
