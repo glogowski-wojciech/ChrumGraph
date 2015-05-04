@@ -27,9 +27,9 @@ namespace ChrumGraph
             this.visual = visual;
             Static = false;
             MarginLength = 5.0;
+            startPoint = new Point(0.0, 0.0);
+            scaleFactor = 1.0;
         }
-
-        public double ScaleFactor { get; set; }
 
         /// <summary>
         /// Adjusts the viewing field.
@@ -37,6 +37,7 @@ namespace ChrumGraph
         public void Adjust()
         {
             if (Static) Static = false;
+            if (visual.Core.Vertices.Count == 0) return;
 
             double xMin, xMax, yMin, yMax;
             xMin = yMin = double.PositiveInfinity;

@@ -30,6 +30,7 @@ namespace ChrumGraph
             this.visual = visual;
             physics = new Physics(this);
 
+            visual.Visible = true;
             FPS = defaultFPS;
             refreshTimer.Tick += (sender, e) =>
                 {
@@ -38,6 +39,7 @@ namespace ChrumGraph
                         lock (this) { visual.Refresh(); }
                     }
                 };
+            refreshTimer.Start();
         }
         
         /// <summary>
@@ -269,8 +271,6 @@ namespace ChrumGraph
                 Console.WriteLine(e.Message);
             }
             physics.StartSimulation(FPS);
-            visual.Visible = true;
-            refreshTimer.Start();
         }
 
         /// <summary>

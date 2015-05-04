@@ -121,10 +121,10 @@ namespace ChrumGraph
                     System.Diagnostics.Debug.WriteLine(e.GetPosition(MainCanvas).X);
                     System.Diagnostics.Debug.WriteLine(e.GetPosition(MainCanvas).Y);
 
+                    visual.ViewWindow.Static = true;
                     Point corePosition = visual.ViewWindow.VisualToCorePosition(e.GetPosition(MainCanvas));
                     core.CreateVertex(corePosition.X, corePosition.Y, newLabel);
-
-
+                    MainCanvas.Children.Remove(addedVertex);
                 }
             }
         }
