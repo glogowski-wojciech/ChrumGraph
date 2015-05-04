@@ -31,12 +31,13 @@
             this.OKbutton = new System.Windows.Forms.Button();
             this.labelMain = new System.Windows.Forms.Label();
             this.labelInput = new System.Windows.Forms.TextBox();
-            this.labelError = new System.Windows.Forms.Label();
+            this.labelErrorStringEmpty = new System.Windows.Forms.Label();
+            this.labelErrorLabelExists = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // OKbutton
             // 
-            this.OKbutton.Location = new System.Drawing.Point(85, 79);
+            this.OKbutton.Location = new System.Drawing.Point(90, 69);
             this.OKbutton.Name = "OKbutton";
             this.OKbutton.Size = new System.Drawing.Size(75, 23);
             this.OKbutton.TabIndex = 1;
@@ -61,23 +62,36 @@
             this.labelInput.Size = new System.Drawing.Size(100, 20);
             this.labelInput.TabIndex = 0;
             // 
-            // labelError
+            // labelErrorStringEmpty
             // 
-            this.labelError.AutoSize = true;
-            this.labelError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.labelError.Location = new System.Drawing.Point(115, 52);
-            this.labelError.Name = "labelError";
-            this.labelError.Size = new System.Drawing.Size(0, 13);
-            this.labelError.TabIndex = 3;
-            this.labelError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelError.Click += new System.EventHandler(this.label2_Click);
+            this.labelErrorStringEmpty.AutoSize = true;
+            this.labelErrorStringEmpty.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelErrorStringEmpty.Location = new System.Drawing.Point(72, 44);
+            this.labelErrorStringEmpty.Name = "labelErrorStringEmpty";
+            this.labelErrorStringEmpty.Size = new System.Drawing.Size(115, 13);
+            this.labelErrorStringEmpty.TabIndex = 3;
+            this.labelErrorStringEmpty.Text = "Label cannot be empty";
+            this.labelErrorStringEmpty.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelErrorStringEmpty.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // labelErrorLabelExists
+            // 
+            this.labelErrorLabelExists.AutoSize = true;
+            this.labelErrorLabelExists.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.labelErrorLabelExists.Location = new System.Drawing.Point(49, 44);
+            this.labelErrorLabelExists.Name = "labelErrorLabelExists";
+            this.labelErrorLabelExists.Size = new System.Drawing.Size(169, 13);
+            this.labelErrorLabelExists.TabIndex = 4;
+            this.labelErrorLabelExists.Text = "Vertex with this label already exists";
+            this.labelErrorLabelExists.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // AddVertexForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 114);
-            this.Controls.Add(this.labelError);
+            this.ClientSize = new System.Drawing.Size(254, 95);
+            this.Controls.Add(this.labelErrorLabelExists);
+            this.Controls.Add(this.labelErrorStringEmpty);
             this.Controls.Add(this.labelMain);
             this.Controls.Add(this.OKbutton);
             this.Controls.Add(this.labelInput);
@@ -95,6 +109,7 @@
         private System.Windows.Forms.Button OKbutton;
         private System.Windows.Forms.Label labelMain;
         private System.Windows.Forms.TextBox labelInput;
-        private System.Windows.Forms.Label labelError;
+        private System.Windows.Forms.Label labelErrorStringEmpty;
+        private System.Windows.Forms.Label labelErrorLabelExists;
     }
 }

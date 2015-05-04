@@ -23,6 +23,8 @@ namespace ChrumGraph
         {
             this.core = core;
             InitializeComponent();
+            labelErrorStringEmpty.Visible = false;
+            labelErrorLabelExists.Visible = false;
         }
 
         public string GetNewLabel()
@@ -43,12 +45,14 @@ namespace ChrumGraph
         {
             if(labelInput.Text == "")
             {
-                labelError.Text = "Label cannot be empty";
+                labelErrorLabelExists.Visible = false;
+                labelErrorStringEmpty.Visible = true;
                 return;
             }
             if(core.VerticesDict.ContainsKey(labelInput.Text))
             {
-                labelError.Text = "Vertex with this label already exists";
+                labelErrorStringEmpty.Visible = false;
+                labelErrorLabelExists.Visible = true;
                 return;
             }
             DialogResult = System.Windows.Forms.DialogResult.OK;
