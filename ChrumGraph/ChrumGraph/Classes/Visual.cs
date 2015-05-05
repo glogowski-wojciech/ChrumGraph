@@ -20,6 +20,8 @@ namespace ChrumGraph
         public Line Line { get; set; }
     }
 
+    enum MouseState { Normal, MovingVertex, MovingGraph, }
+
     /// <summary>
     /// Visual representation of a graph.
     /// </summary>
@@ -37,6 +39,8 @@ namespace ChrumGraph
         private Vertex clickedVertex;
         private Point previousMousePosition;
 
+        private MouseState mouseState = MouseState.Normal;
+
         public Visual(MainWindow mainWindow)
         {
             VertexSize = 25.0;
@@ -47,10 +51,12 @@ namespace ChrumGraph
             edgeBrush = new SolidColorBrush(edgeColor);
             ViewWindow = new ViewWindow(this);
             ViewWindow.Canvas = canvas;
+            ViewWindow.MarginLength = 4.0 * VertexSize;
 
-            canvas.MouseUp += MouseLeft;
+            canvas.MouseDown += CanvasMouseDown;
+            canvas.MouseUp += MouseUp;
             canvas.MouseMove += MouseMove;
-            canvas.MouseLeave += MouseLeft;
+            canvas.MouseLeave += MouseUp;
         }
 
         public IVisualCore Core { get; set; }
@@ -82,42 +88,56 @@ namespace ChrumGraph
             VertexDict.Add(element, v);
 
             element.MouseLeftButtonDown += MouseDown;
-            element.MouseLeftButtonUp += MouseLeft;
+            element.MouseLeftButtonUp += MouseUp;
             element.MouseMove += MouseMove;
+        }
+
+        private void CanvasMouseDown(object sender, MouseEventArgs e)
+        {
+            if (mouseState != MouseState.Normal) return;
+
+            ViewWindow.Static = true;
+            previousMousePosition = e.GetPosition(canvas);
+            mouseState = MouseState.MovingGraph;
         }
 
         private void MouseDown(object sender, MouseEventArgs e)
         {
             UIElement element = sender as UIElement;
             clickedVertex = VertexDict[element];
-            if (clickedVertex != null)
-            {
-                clickedVertex.Clicked = true;
-                previousMousePosition = e.GetPosition(canvas);
-
-                ViewWindow.Static = true;
-            }
+            clickedVertex.Clicked = true;
+            previousMousePosition = e.GetPosition(canvas);
+            mouseState = MouseState.MovingVertex;
+            ViewWindow.Static = true;
         }
 
         private void MouseMove(object sender, MouseEventArgs e)
         {
-            if (clickedVertex == null) return;
+            if (mouseState == MouseState.Normal) return;
 
             Point mousePosition = e.GetPosition(canvas);
-            Point coreShift = (Point)(ViewWindow.VisualToCorePosition(mousePosition) -
-                ViewWindow.VisualToCorePosition(previousMousePosition));
-            clickedVertex.X += coreShift.X;
-            clickedVertex.Y += coreShift.Y;
+            Vector coreShift = ViewWindow.VisualToCorePosition(mousePosition) -
+                ViewWindow.VisualToCorePosition(previousMousePosition);
             previousMousePosition = mousePosition;
+
+            if (mouseState == MouseState.MovingVertex)
+            {
+                clickedVertex.Shift(coreShift);
+            }
+            else if (mouseState == MouseState.MovingGraph)
+            {
+                ViewWindow.Shift(coreShift);
+            }
         }
 
-        private void MouseLeft(object sender, MouseEventArgs e)
+        private void MouseUp(object sender, MouseEventArgs e)
         {
-            if (clickedVertex != null)
+            if (mouseState == MouseState.MovingVertex)
             {
                 clickedVertex.Clicked = false;
                 clickedVertex = null;
             }
+            mouseState = MouseState.Normal;
         }
 
         public void CreateVisualVertex(Vertex vertex)
@@ -206,7 +226,7 @@ namespace ChrumGraph
         {
             if (!Visible) Visible = true;
 
-            if (!ViewWindow.Static) ViewWindow.Adjust();
+            ViewWindow.Adjust();
             
             foreach(Vertex v in Core.Vertices)
                 RedrawVertex(v);

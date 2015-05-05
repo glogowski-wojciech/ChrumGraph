@@ -26,7 +26,7 @@ namespace ChrumGraph
         {
             this.visual = visual;
             Static = false;
-            MarginLength = 5.0;
+            MarginLength = 10.0;
             startPoint = new Point(0.0, 0.0);
             scaleFactor = 1.0;
         }
@@ -36,10 +36,9 @@ namespace ChrumGraph
         /// </summary>
         public void Adjust()
         {
-            if (Static) Static = false;
-            if (visual.Core.Vertices.Count == 0) return;
+            if (Static || visual.Core.Vertices.Count == 0) return;
 
-            double xMin, xMax, yMin, yMax;
+            double xMin, xMax, yMin, yMax, coreWidth, coreHeight;
             xMin = yMin = double.PositiveInfinity;
             xMax = yMax = double.NegativeInfinity;
 
@@ -51,25 +50,21 @@ namespace ChrumGraph
                 yMax = Math.Max(yMax, v.Y);
             }
 
-            width = xMax - xMin + 2 * MarginLength;
-            height = yMax - yMin + 2 * MarginLength;
-            xMin -= MarginLength;
-            yMin -= MarginLength;
-            scaleFactor = Math.Min(Canvas.ActualWidth / width, Canvas.ActualHeight / height);
+            coreWidth = xMax - xMin;
+            coreHeight = yMax - yMin;
+            scaleFactor = Math.Min(
+                (Canvas.ActualWidth - 2.0 * MarginLength) / coreWidth,
+                (Canvas.ActualHeight - 2.0 * MarginLength) / coreHeight);
 
-            double canvasRatio, coreRatio;
-            canvasRatio = Canvas.ActualWidth / Canvas.ActualHeight;
-            coreRatio = width / height;
-            if (canvasRatio < coreRatio)
-            {
-                yMin += (height - Canvas.ActualHeight / scaleFactor) / 2.0;
-            }
-            else if (canvasRatio > coreRatio)
-            {
-                xMin += (width - Canvas.ActualWidth / scaleFactor) / 2.0;
-            }
-
-            startPoint = new Point(xMin, yMin);
+            Point coreMiddle, visualMiddle, visualStartPoint;
+            coreMiddle = new Point(
+                (xMin + xMax) / 2.0,
+                (yMin + yMax) / 2.0);
+            visualMiddle = CoreToVisualPosition(coreMiddle);
+            visualStartPoint = new Point(
+                visualMiddle.X - Canvas.ActualWidth / 2.0,
+                visualMiddle.Y - Canvas.ActualHeight / 2.0);
+            startPoint = VisualToCorePosition(visualStartPoint);
         }
 
         public double Width { get; set; }
@@ -100,10 +95,18 @@ namespace ChrumGraph
         }
 
         /// <summary>
+        /// Shifts viewing windows by a specified vector.
+        /// </summary>
+        /// <param name="shift">Core shift</param>
+        public void Shift(Vector shift)
+        {
+            startPoint = startPoint - shift;
+        }
+
+        /// <summary>
         /// Canvas on which the graph is drawn.
         /// </summary>
         public Canvas Canvas { get; set; }
-
 
         /// <summary>
         /// Specifies whether the viewing window should be adjusted or not.

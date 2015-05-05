@@ -48,6 +48,15 @@ namespace ChrumGraph
         }
 
         /// <summary>
+        /// Moves vector by a specified vector.
+        /// </summary>
+        /// <param name="shift">Core shift</param>
+        public void Shift(Vector shift)
+        {
+            Position = Position + shift;
+        }
+
+        /// <summary>
         /// Gets list of edges whose one of endpoints is specified vertex.
         /// </summary>
         public List<Edge> Edges
