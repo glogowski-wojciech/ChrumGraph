@@ -15,7 +15,6 @@ namespace ChrumGraph
     public class ViewWindow
     {
         private Point startPoint;
-        private double scaleFactor, width, height;
         private Visual visual;
 
         /// <summary>
@@ -28,8 +27,13 @@ namespace ChrumGraph
             Static = false;
             MarginLength = 10.0;
             startPoint = new Point(0.0, 0.0);
-            scaleFactor = 1.0;
+            ScaleFactor = 1.0;
         }
+
+        /// <summary>
+        /// Scale factor of Visual graph relative to Core.
+        /// </summary>
+        public double ScaleFactor { get; set; }
 
         /// <summary>
         /// Adjusts the viewing field.
@@ -52,7 +56,7 @@ namespace ChrumGraph
 
             coreWidth = xMax - xMin;
             coreHeight = yMax - yMin;
-            scaleFactor = Math.Min(
+            ScaleFactor = Math.Min(
                 (Canvas.ActualWidth - 2.0 * MarginLength) / coreWidth,
                 (Canvas.ActualHeight - 2.0 * MarginLength) / coreHeight);
 
@@ -78,8 +82,8 @@ namespace ChrumGraph
         public Point CoreToVisualPosition(Point corePosition)
         {
             return new Point(
-                (corePosition.X - startPoint.X) * scaleFactor,
-                (corePosition.Y - startPoint.Y) * scaleFactor);
+                (corePosition.X - startPoint.X) * ScaleFactor,
+                (corePosition.Y - startPoint.Y) * ScaleFactor);
         }
 
         /// <summary>
@@ -90,8 +94,8 @@ namespace ChrumGraph
         public Point VisualToCorePosition(Point visualPosition)
         {
             return new Point(
-                startPoint.X + visualPosition.X / scaleFactor,
-                startPoint.Y + visualPosition.Y / scaleFactor);
+                startPoint.X + visualPosition.X / ScaleFactor,
+                startPoint.Y + visualPosition.Y / ScaleFactor);
         }
 
         /// <summary>

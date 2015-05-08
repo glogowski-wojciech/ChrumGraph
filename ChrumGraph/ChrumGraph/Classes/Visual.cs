@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace ChrumGraph
 {
@@ -57,10 +58,14 @@ namespace ChrumGraph
             canvas.MouseUp += MouseUp;
             canvas.MouseMove += MouseMove;
             canvas.MouseLeave += MouseUp;
+            canvas.MouseWheel += MouseZoom;
         }
 
         public IVisualCore Core { get; set; }
 
+        /// <summary>
+        /// Instance of ViewWindow class.
+        /// </summary>
         public ViewWindow ViewWindow { get; set; }
 
         public double VertexSize { get; set; }
@@ -138,6 +143,11 @@ namespace ChrumGraph
                 clickedVertex = null;
             }
             mouseState = MouseState.Normal;
+        }
+
+        private void MouseZoom(object sender, MouseWheelEventArgs e)
+        {
+            Debug.WriteLine(e.Delta);
         }
 
         public void CreateVisualVertex(Vertex vertex)

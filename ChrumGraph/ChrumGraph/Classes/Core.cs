@@ -62,7 +62,7 @@ namespace ChrumGraph
                 int ms = (int)(1000.0 / value);
                 if (ms > 0)
                 {
-                    refreshTimer.Interval = new TimeSpan(0, 0, 0, 0, ms);
+                    refreshTimer.Interval = TimeSpan.FromMilliseconds(ms);
                     fps = value;
                 }
             }
