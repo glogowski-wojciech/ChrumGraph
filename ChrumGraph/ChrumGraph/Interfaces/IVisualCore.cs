@@ -18,6 +18,12 @@ namespace ChrumGraph
         List<Edge> Edges { get; }
 
         /// <summary>
+        /// Indicates whether the graph is empty.
+        /// </summary>
+        /// <returns>true if there are no vertices in graph; otherwise false</returns>
+        bool IsEmpty();
+
+        /// <summary>
         /// Creates new vertex.
         /// </summary>
         /// <param name="x">X coordinate of a new vertex.</param>

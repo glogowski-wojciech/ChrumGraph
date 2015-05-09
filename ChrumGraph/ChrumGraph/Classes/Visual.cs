@@ -147,7 +147,8 @@ namespace ChrumGraph
 
         private void MouseZoom(object sender, MouseWheelEventArgs e)
         {
-            Debug.WriteLine(e.Delta);
+            Point position = ViewWindow.VisualToCorePosition(e.GetPosition(canvas));
+            ViewWindow.SetZoom(e.Delta / 120.0, position);
         }
 
         public void CreateVisualVertex(Vertex vertex)

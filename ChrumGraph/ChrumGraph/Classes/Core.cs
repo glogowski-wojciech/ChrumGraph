@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Threading;
 using System.IO;
+using System.Diagnostics;
 
 namespace ChrumGraph
 {
@@ -66,6 +67,15 @@ namespace ChrumGraph
                     fps = value;
                 }
             }
+        }
+
+        /// <summary>
+        /// Indicates whether the graph is empty.
+        /// </summary>
+        /// <returns>true if there are no vertices in graph; otherwise false</returns>
+        public bool IsEmpty()
+        {
+            return Vertices.Count == 0;
         }
 
         /// <summary>
