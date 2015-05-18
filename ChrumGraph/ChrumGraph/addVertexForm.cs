@@ -16,6 +16,7 @@ namespace ChrumGraph
     public partial class AddVertexForm : Form
     {
         private Core core;
+
         /// <summary>
         /// Standard constructor
         /// </summary>
