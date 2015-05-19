@@ -75,6 +75,7 @@
     <Compile Include="Classes\Core.cs" />
     <Compile Include="Classes\ViewWindow.cs" />
     <Compile Include="Classes\Visual.cs" />
+    <Compile Include="Classes\VisualConstants.cs" />
     <Compile Include="Interfaces\IPhysics.cs" />
     <Compile Include="Interfaces\IPhysicsCore.cs" />
     <Compile Include="Interfaces\IVisual.cs" />

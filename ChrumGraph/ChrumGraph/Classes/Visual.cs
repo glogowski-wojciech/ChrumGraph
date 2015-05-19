@@ -22,13 +22,13 @@ namespace ChrumGraph
     }
 
     enum MouseState { Normal, MovingVertex, MovingGraph, }
+    enum GraphMode { DraggingMode, InsertingMode, }
 
     /// <summary>
     /// Visual representation of a graph.
     /// </summary>
-    public class Visual : IVisual
+    public partial class Visual : IVisual
     {
-        private double verticeToEdgeRatio = 5;
         private Canvas canvas;
 
         private Color vertexColor = Colors.Red;
