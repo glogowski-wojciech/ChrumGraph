@@ -20,8 +20,8 @@ namespace ChrumGraph
 
         //for zooming
         private const double
-            zoomingTime = 0.15, //zooming time in seconds
-            zoomFactor = 0.5;
+            zoomingTime = 0.2, //zooming time in seconds
+            zoomFactor = 0.2;
         private bool zooming = false;
         private double desiredScaleFactor, v0 = 0.0;
         private double[] c = {0, 0, 0, 0};
@@ -102,12 +102,11 @@ namespace ChrumGraph
         {
             lock (this)
             {
-                Static = true;
-                zooming = true;
                 v0 = getVelocity();
                 zoomChangedTime = DateTime.Now;
 
-                desiredScaleFactor = ScaleFactor * Math.Exp(delta * zoomFactor);
+                if (!zooming) desiredScaleFactor = ScaleFactor;
+                desiredScaleFactor *= Math.Exp(delta * zoomFactor);
                 double scaleFactorDelta = desiredScaleFactor - ScaleFactor;
 
                 c[0] = (v0 * zoomingTime - 2 * scaleFactorDelta) / Math.Pow(zoomingTime, 3);
@@ -117,6 +116,9 @@ namespace ChrumGraph
 
                 constantPointCore = constantPoint;
                 constantPointVisual = CoreToVisualPosition(constantPoint);
+
+                Static = true;
+                zooming = true;
             }
         }
 
