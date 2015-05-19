@@ -24,7 +24,10 @@ namespace ChrumGraph
         {
             InitializeComponent();
 
-            visual = new Visual(this);
+            visual = new Visual(this) 
+            {
+                Visible = true,
+            };
             core = new Core(visual);
             visual.Core = core;
         }

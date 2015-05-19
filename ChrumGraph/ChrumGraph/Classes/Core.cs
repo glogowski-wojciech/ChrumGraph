@@ -31,7 +31,6 @@ namespace ChrumGraph
             this.visual = visual;
             physics = new Physics(this);
 
-            visual.Visible = true;
             FPS = defaultFPS;
             refreshTimer.Tick += (sender, e) =>
                 {
