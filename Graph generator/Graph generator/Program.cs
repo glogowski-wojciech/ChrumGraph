@@ -133,6 +133,54 @@ namespace Graph_generator
                     }
                 }
             }
+            else if (input[0] == "rp")
+            {
+                if (input.Count() < 3)
+                {
+                    Console.WriteLine("Usage: rp n k");
+                    return;
+                }
+                int n, k;
+                try
+                {
+                    n = Convert.ToInt32(input[1]);
+                    k = Convert.ToInt32(input[2]);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Incorrect value.");
+                    return;
+                }
+                Console.WriteLine(n * k);
+                Console.WriteLine(n * k * 2  - 2);
+                int v;
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 1; j < k; j++)
+                    {
+                        v = i * k + j;
+                        Console.WriteLine(v.ToString() + " " + (v + 1).ToString());
+                    }
+                }
+                for (int i = 0; i < n - 1; i++)
+                {
+                    for (int j = 1; j <= k; j++)
+                    {
+                        v = i * k + j;
+                        Console.WriteLine(v.ToString() + " " + (v + k).ToString());
+                    }
+                }
+                for (int j = 1; j <= k; j++)
+                {
+                    v = (n - 1) * k + j;
+                    Console.WriteLine(v.ToString() + " " + (k + 1 - j).ToString());
+                }
+                for (int i = 1; i < n - 1; i++)
+                {
+                    v = i * k + k;
+                    Console.WriteLine(v.ToString() + " " + ((n - i - 1) * k + 1).ToString());
+                }
+            }
         }
     }
 }
