@@ -40,7 +40,7 @@ namespace ChrumGraph
         /// Timer for real-time IPhysics simulation.
         /// </summary>
         private DispatcherTimer dispatcherTimer;
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Physics"/> class.
         /// </summary>
@@ -48,6 +48,8 @@ namespace ChrumGraph
         public Physics(IPhysicsCore physicsCore)
         {
             vertexForceParamGuard = new object();
+            edgeForceParamGuard = new object();
+            edgeLengthGuard = new object();
             frictionParamGuard = new object();
             simulateGuard = new object();
             this.physicsCore = physicsCore;
@@ -56,10 +58,12 @@ namespace ChrumGraph
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += (sender, e) => { IterateSimulation(); };
             VertexForceParam = 4.0;
+            EdgeForceParam = 0.9;
+            EdgeLength = 1.0;
             frictionParam = 0.0;
             Simulate = false;
         }
-        
+
         /// <summary>
         /// Starts the simulation. If simulation is already in run throws , makes no effect.
         /// </summary>
@@ -77,7 +81,7 @@ namespace ChrumGraph
                 dispatcherTimer.Start();
             }
         }
-        
+
         /// <summary>
         /// Starts the simulation.
         /// </summary>
@@ -94,7 +98,7 @@ namespace ChrumGraph
                 Task.Factory.StartNew(() => NonStopSimulation());
             }
         }
-        
+
         /// <summary>
         /// Stops the simulation.
         /// </summary>
@@ -120,7 +124,7 @@ namespace ChrumGraph
             System.Threading.Thread.Sleep(ms);
             Simulate = false;
         }
-        
+
         /// <summary>
         /// Iterations that can be stopped only by switching Simulate to false.
         /// </summary>
@@ -158,11 +162,11 @@ namespace ChrumGraph
                 }
                 if (maxDegree == 0.0)
                 {
-                    edgeForceParam = 1.0;
+                    internalEdgeForceParam = 1.0;
                 }
                 else
                 {
-                    edgeForceParam = 1.0 / ((double)maxDegree);
+                    internalEdgeForceParam = 1.0 / ((double)maxDegree);
                 }
                 Parallel.For(0, n, (int i) =>
                 {
@@ -198,7 +202,6 @@ namespace ChrumGraph
             {
                 Vertex other = e.Other(currentVertex);
                 Vector otherCoordinates = new Vector(other.X, other.Y);
-                
                 netForces[k] += EdgeForce(ref currentCoordinates, ref otherCoordinates);
             }
             netForces[k] += Friction(netForces[k]);
@@ -207,7 +210,7 @@ namespace ChrumGraph
                 throw new InvalidOperationException();
             }
         }
-       
+
         /* physical forces */
 
         /// <summary>
@@ -273,9 +276,9 @@ namespace ChrumGraph
         /// <returns></returns>
         private double EdgeForceFunction(double x)
         {
-            return 0.3 * edgeForceParam * (x - 1.0);
+            return internalEdgeForceParam * edgeForceParam * (x - edgeLength);
         }
-        
+
         /// <summary>
         /// Returns the movement vector of force after adding friction to
         /// current vector.
@@ -317,6 +320,16 @@ namespace ChrumGraph
         private object vertexForceParamGuard;
 
         /// <summary>
+        /// The guard of edgeForceParam.
+        /// </summary>
+        private object edgeForceParamGuard;
+
+        /// <summary>
+        /// The guard of edgeLength.
+        /// </summary>
+        private object edgeLengthGuard;
+
+        /// <summary>
         /// The guard of frictionParam.
         /// </summary>
         private object frictionParamGuard;
@@ -325,7 +338,7 @@ namespace ChrumGraph
         /// The guard of simulate.
         /// </summary>
         private object simulateGuard;
-       
+
         /* fields accesed by properties */
 
         /// <summary>
@@ -334,9 +347,19 @@ namespace ChrumGraph
         private double vertexForceParam;
 
         /// <summary>
+        /// Linear coefficient of edge force controlled automatically.
+        /// </summary>
+        private double internalEdgeForceParam;
+
+        /// <summary>
         /// Linear coefficient of edge force.
         /// </summary>
         private double edgeForceParam;
+
+        /// <summary>
+        /// Length of edge in graph.
+        /// </summary>
+        private double edgeLength;
 
         /// <summary>
         /// Linear coefficient of friction.
@@ -372,6 +395,60 @@ namespace ChrumGraph
                 lock(vertexForceParamGuard)
                 {
                     returnValue = vertexForceParam;
+                }
+                return returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the edge force parameter.
+        /// </summary>
+        /// <value>
+        /// The edge force parameter.
+        /// </value>
+        public double EdgeForceParam
+        {
+            set
+            {
+                lock(edgeForceParamGuard)
+                {
+                    edgeForceParam = value;
+                }
+            }
+
+            get
+            {
+                double returnValue;
+                lock(edgeForceParamGuard)
+                {
+                    returnValue = edgeForceParam;
+                }
+                return returnValue;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the edge length.
+        /// </summary>
+        /// <value>
+        /// The edge length.
+        /// </value>
+        public double EdgeLength
+        {
+            set
+            {
+                lock(edgeLengthGuard)
+                {
+                    edgeLength = value;
+                }
+            }
+
+            get
+            {
+                double returnValue;
+                lock(edgeLengthGuard)
+                {
+                    returnValue = edgeLength;
                 }
                 return returnValue;
             }
