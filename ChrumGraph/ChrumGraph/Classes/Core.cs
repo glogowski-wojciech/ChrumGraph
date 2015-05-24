@@ -51,6 +51,14 @@ namespace ChrumGraph
         public Core() : this(null) { }
 
         /// <summary>
+        /// Gets Physics object created by Core instance.
+        /// </summary>
+        public IPhysics Physics
+        {
+            get { return physics; }
+        }
+
+        /// <summary>
         /// Desired graph refresh frame rate (effective frame rate can be lower, though).
         /// </summary>
         public double FPS
