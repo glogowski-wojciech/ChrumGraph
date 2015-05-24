@@ -58,7 +58,7 @@ namespace ChrumGraph
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += (sender, e) => { IterateSimulation(); };
             VertexForceParam = 4.0;
-            EdgeForceParam = 0.9;
+            EdgeForceParam = 1.0;
             EdgeLength = 1.0;
             frictionParam = 0.0;
             Simulate = false;
@@ -162,11 +162,11 @@ namespace ChrumGraph
                 }
                 if (maxDegree == 0.0)
                 {
-                    internalEdgeForceParam = 1.0;
+                    internalForceParam = 1.0;
                 }
                 else
                 {
-                    internalEdgeForceParam = 1.0 / ((double)maxDegree);
+                    internalForceParam = 1.0 / ((double)maxDegree);
                 }
                 Parallel.For(0, n, (int i) =>
                 {
@@ -243,7 +243,7 @@ namespace ChrumGraph
         /// <returns></returns>
         private double VertexForceFunction(double x)
         {
-            return vertexForceParam * (x <= 0.5 ? -2.0 : -1.0 / x);
+            return internalForceParam * vertexForceParam * (x <= 0.5 ? -2.0 : -1.0 / x);
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace ChrumGraph
         /// <returns></returns>
         private double EdgeForceFunction(double x)
         {
-            return internalEdgeForceParam * edgeForceParam * (x - edgeLength);
+            return 0.9 * internalForceParam * edgeForceParam * (x - edgeLength);
         }
 
         /// <summary>
@@ -308,8 +308,8 @@ namespace ChrumGraph
         /// <returns></returns>
         private double FrictionFunction(double x)
         {
-            return 0.5 * (Math.Abs(x - frictionParam) -
-                          Math.Abs(x + frictionParam));
+            return internalForceParam * 0.5 * (Math.Abs(x - frictionParam) -
+                                               Math.Abs(x + frictionParam));
         }
 
         /* guards of fields for multithreading */
@@ -347,9 +347,9 @@ namespace ChrumGraph
         private double vertexForceParam;
 
         /// <summary>
-        /// Linear coefficient of edge force controlled automatically.
+        /// Linear coefficient of force controlled automatically.
         /// </summary>
-        private double internalEdgeForceParam;
+        private double internalForceParam;
 
         /// <summary>
         /// Linear coefficient of edge force.

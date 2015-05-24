@@ -30,6 +30,11 @@ namespace ChrumGraph
             };
             core = new Core(visual);
             visual.Core = core;
+            ForcesMultiplierTextBox.Text = Convert.ToString(1.0);
+            VertexForceTextBox.Text = Convert.ToString(core.Physics.VertexForceParam);
+            EdgeForceTextBox.Text = Convert.ToString(core.Physics.EdgeForceParam);
+            EdgeLengthTextBox.Text = Convert.ToString(core.Physics.EdgeLength);
+            FrictionTextBox.Text = Convert.ToString(core.Physics.FrictionParam);
         }
 
         public string NewLabel
@@ -145,23 +150,46 @@ namespace ChrumGraph
             }
         }
 
+        private void SetForcesMultiplier(object sender, RoutedEventArgs e)
+        {
+            double fm = Convert.ToDouble(ForcesMultiplierTextBox.Text);
+            double ef = Convert.ToDouble(EdgeForceTextBox.Text);
+            if (fm * ef > 1.0)
+            {
+                fm = 1.0 / ef;
+                ForcesMultiplierTextBox.Text = Convert.ToString(1.0 / ef);
+            }
+            SetVertexForce(sender, e);
+            SetEdgeForce(sender, e);
+            SetEdgeLength(sender, e);
+            SetFriction(sender, e);
+        }
+
         private void SetVertexForce(object sender, RoutedEventArgs e)
         {
             try
             {
-                //core.physics.VertexForceParam = Convert.ToDouble(VertexForceTextBox.Text);
+                core.Physics.VertexForceParam = Convert.ToDouble(VertexForceTextBox.Text)
+                        * Convert.ToDouble(ForcesMultiplierTextBox.Text);
             }
-            catch (FormatException)
+            catch (Exception)
             {}
         }
 
         private void SetEdgeForce(object sender, RoutedEventArgs e)
         {
+            double fm = Convert.ToDouble(ForcesMultiplierTextBox.Text);
+            double ef = Convert.ToDouble(EdgeForceTextBox.Text);
+            if (fm * ef > 1.0)
+            {
+                ef = 1.0 / fm;
+                EdgeForceTextBox.Text = Convert.ToString(ef);
+            }
             try
             {
-                //core.physics.EdgeForceParam = Convert.ToDouble(EdgeForceTextBox.Text);
+                core.Physics.EdgeForceParam = ef * fm;
             }
-            catch (FormatException)
+            catch (Exception)
             {}
         }
 
@@ -169,9 +197,10 @@ namespace ChrumGraph
         {
             try
             {
-                //core.physics.EdgeLength = Convert.ToDouble(EdgeLengthTextBox.Text);
+                core.Physics.EdgeLength = Convert.ToDouble(EdgeLengthTextBox.Text)
+                        * Convert.ToDouble(ForcesMultiplierTextBox.Text);
             }
-            catch (FormatException)
+            catch (Exception)
             {}
         }
 
@@ -179,9 +208,10 @@ namespace ChrumGraph
         {
             try
             {
-                //core.physics.FrictionParam = Convert.ToDouble(FrictionTextBox.Text);
+                core.Physics.FrictionParam = Convert.ToDouble(FrictionTextBox.Text)
+                        * Convert.ToDouble(ForcesMultiplierTextBox.Text);
             }
-            catch (FormatException)
+            catch (Exception)
             {}
         }
 

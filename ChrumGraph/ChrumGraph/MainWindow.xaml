@@ -25,15 +25,19 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <TextBlock Text="Mode:" Margin="4,30,0,0" Height="25" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Select" Margin="4,50,0,0" Height="25" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Move" Margin="44,50,0,0" Height="25" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <CheckBox Content="Pinned" Margin="4,90,0,0" Height="25" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock Text="Label:" Margin="4,110,0,0" Height="25" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Margin="4,130,0,0" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Set" Margin="64,130,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetVertexLabel"/>
-        <Expander Header="Symulation&#10;Options" Margin="4,170,0,0" Width="86" HorizontalAlignment="Left" VerticalAlignment="Top" IsExpanded="False">
+        <TextBlock Text="Mode:" Margin="5,30,0,0" Height="25" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Select" Margin="5,50,0,0" Height="25" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Move" Margin="45,50,0,0" Height="25" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <CheckBox Content="Pinned" Margin="5,90,0,0" Height="25" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock Text="Label:" Margin="5,110,0,0" Height="25" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Margin="5,130,0,0" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Set" Margin="65,130,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetVertexLabel"/>
+        <Expander Header="Symulation&#10;Options" Margin="5,170,0,0" Width="88" HorizontalAlignment="Left" VerticalAlignment="Top" IsExpanded="False">
             <StackPanel>
+                <TextBlock Text="Forces Factor" Height="15" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <TextBox Name="ForcesMultiplierTextBox" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetForcesMultiplier"/>
+
                 <TextBlock Text="Vertex Force" Height="15" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <TextBox Name="VertexForceTextBox" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetVertexForce"/>
