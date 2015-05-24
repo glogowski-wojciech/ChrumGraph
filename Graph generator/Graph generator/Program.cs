@@ -181,6 +181,67 @@ namespace Graph_generator
                     Console.WriteLine(v.ToString() + " " + ((n - i - 1) * k + 1).ToString());
                 }
             }
+            else if (input[0] == "tree")
+            {
+                if (input.Count() < 2)
+                {
+                    Console.WriteLine("Usage: tree n");
+                    return;
+                }
+                int n;
+                try
+                {
+                    n = Convert.ToInt32(input[1]);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Incorrect value.");
+                    return;
+                }
+                Console.WriteLine(n);
+                Console.WriteLine(n - 1);
+                Random r = new Random();
+                for (int i = 2; i <= n; i++)
+                    Console.WriteLine(i.ToString() + " " + (r.Next(i - 1) + 1).ToString());
+            }
+            else if (input[0] == "cube")
+            {
+                if (input.Count() < 2)
+                {
+                    Console.WriteLine("Usage: cube n");
+                    return;
+                }
+                int n;
+                try
+                {
+                    n = Convert.ToInt32(input[1]);
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Incorrect value.");
+                    return;
+                }
+                edges.Clear();
+                printCube(n, 1);
+                Console.WriteLine(2 << (n - 1));
+                Console.WriteLine(edges.Count);
+                foreach (var e in edges)
+                    Console.WriteLine(e.Item1 + " " + e.Item2);
+            }
+        }
+        static List<Tuple<int, int>> edges = new List<Tuple<int, int>>();
+        static int printCube(int n, int nr)
+        {
+            if (n > 0)
+            {
+                int k;
+                k = printCube(n - 1, nr);
+                printCube(n - 1, nr + k);
+                for (int i = nr; i < nr + k; i++)
+                    edges.Add(new Tuple<int, int>(i, i + k));
+                return 2 * k;
+            }
+            else return 1;
         }
     }
 }
