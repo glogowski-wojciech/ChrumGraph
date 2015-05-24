@@ -62,6 +62,7 @@
     <Compile Include="AddVertexForm.Designer.cs">
       <DependentUpon>AddVertexForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\CoreLoadSave.cs" />
     <Compile Include="Classes\Edge.cs" />
     <Compile Include="Classes\Vertex.cs" />
     <Page Include="MainWindow.xaml">
