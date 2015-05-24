@@ -79,7 +79,7 @@ namespace ChrumGraph
             Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
             saveDialog.DefaultExt = ".graph";
             saveDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            saveDialog.Title = "Save graph to a file";
+            saveDialog.Title = "Save graph project to a file";
             Nullable<bool> result = saveDialog.ShowDialog();
 
             if (result == true && saveDialog.FileName != "")
@@ -143,6 +143,51 @@ namespace ChrumGraph
                     MainCanvas.Children.Remove(addedVertex);
                 }
             }
+        }
+
+        private void SetVertexForce(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //core.physics.VertexForceParam = Convert.ToDouble(VertexForceTextBox.Text);
+            }
+            catch (FormatException)
+            {}
+        }
+
+        private void SetEdgeForce(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //core.physics.EdgeForceParam = Convert.ToDouble(EdgeForceTextBox.Text);
+            }
+            catch (FormatException)
+            {}
+        }
+
+        private void SetEdgeLength(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //core.physics.EdgeLength = Convert.ToDouble(EdgeLengthTextBox.Text);
+            }
+            catch (FormatException)
+            {}
+        }
+
+        private void SetFriction(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //core.physics.FrictionParam = Convert.ToDouble(FrictionTextBox.Text);
+            }
+            catch (FormatException)
+            {}
+        }
+
+        void SetVertexLabel(object sender, RoutedEventArgs e) // TODO
+        {
+
         }
 
         private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
