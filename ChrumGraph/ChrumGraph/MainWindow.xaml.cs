@@ -73,6 +73,19 @@ namespace ChrumGraph
                 core.SaveGraph(saveDialog.FileName);
         }
 
+        private void SaveProjectClick(object sender, RoutedEventArgs e)
+        {
+            MenuButtonClicked(sender, e);
+            Microsoft.Win32.SaveFileDialog saveDialog = new Microsoft.Win32.SaveFileDialog();
+            saveDialog.DefaultExt = ".graph";
+            saveDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveDialog.Title = "Save graph to a file";
+            Nullable<bool> result = saveDialog.ShowDialog();
+
+            if (result == true && saveDialog.FileName != "")
+                core.SaveVisualGraph(saveDialog.FileName);
+        }
+
         private void AddVertex(object sender, RoutedEventArgs e)
         {
             MenuButtonClicked(sender, e);

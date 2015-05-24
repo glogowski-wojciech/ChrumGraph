@@ -3,34 +3,52 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Chrum graph" Height="525" Width="525" MinHeight="250" MinWidth="250"
         MouseMove="Window_MouseMove" MouseDown="Window_MouseDown" SizeChanged="WindowSizeChanged">
-    <Grid>
-        <DockPanel>
-            <Menu Name="MainMenu" Height="20" VerticalAlignment="Top">
-                <MenuItem Header="Open" Click="OpenClick">
-                </MenuItem>
-                <MenuItem Header="Save" Click="SaveClick">
+    <Page>
+        <Grid>
+            <DockPanel>
 
-                </MenuItem>
-                <MenuItem Header="Add">
-                    <MenuItem Header="Vertex" Click="AddVertex">
-                        
+                <Menu Name="MainMenu" Height="20" VerticalAlignment="Top">
+                    <MenuItem Header="File">
+                        <MenuItem Header="Open" Click="OpenClick"/>
+                        <MenuItem Header="Save" Click="SaveClick"/>
+                        <MenuItem Header="Open Project" Click="OpenClick"/>
+                        <MenuItem Header="Save Project" Click="SaveClick"/>
+                        <!--="SaveProjectClick"-->
                     </MenuItem>
-                    <MenuItem Header="Edge" Click="AddEdge">
-
+                    <MenuItem Header="Options">
                     </MenuItem>
-                </MenuItem>
-                <MenuItem Header="Remove" Visibility="Hidden">
-                    <MenuItem Header="Vertex">
-
+                    <MenuItem Header="(Add -> menu item to be removed)">
+                        <MenuItem Header="Vertex" Click="AddVertex"/>
+                        <MenuItem Header="Edge" Click="AddEdge"/>
                     </MenuItem>
-                    <MenuItem Header="Edge">
-
+                    <MenuItem Header="Remove" Visibility="Hidden">
+                        <MenuItem Header="Vertex"/>
+                        <MenuItem Header="Edge"/>
                     </MenuItem>
-                </MenuItem>
-            </Menu>
-        </DockPanel>
-        
-        <Canvas Name="MainCanvas" HorizontalAlignment="Stretch" Margin="0,20,0,0" VerticalAlignment="Stretch" Background="#AAAAAA"/>
-
-    </Grid>
+                </Menu>
+            </DockPanel>
+            <TextBlock Text="Mode:" Margin="5,30,0,0" Height="25" Width="80" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Center"/>
+            <Button Content="Select" Margin="5,50,0,0" Height="25" Width="40" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Content="Move" Margin="45,50,0,0" Height="25" Width="40" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Content="Pin" Margin="5,90,0,0" Height="25" Width="80" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Button Content="Change Label" Margin="5,130,0,0" Height="25" Width="80" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Expander Header="Symulation&#10;Options" Margin="5,200,0,0" Width="85" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" IsExpanded="False">
+                    <StackPanel>
+                        <TextBlock Text="Vertex Force" Height="15" Width="80" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Height="20" Width="60" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Text="Edge Force" Height="15" Width="80" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Height="20" Width="60" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Text="Edge Length" Height="15" Width="80" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Height="20" Width="60" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBlock Text="Friction" Height="15" Width="80" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <TextBox Height="20" Width="60" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
+            </Expander>
+            <Canvas Name="MainCanvas" HorizontalAlignment="Stretch" Margin="90,20,0,0" VerticalAlignment="Stretch" Background="#AAAAAA"/>
+        </Grid>
+    </Page>
 </Window>
