@@ -17,6 +17,9 @@ namespace ChrumGraph
 
         public TextBlock VisualLabel { get; set; }
 
+        /// <summary>
+        /// If Vertex is selected.
+        /// </summary>
         public Boolean Selected { get; set; }
 
         /// <summary>
@@ -49,7 +52,9 @@ namespace ChrumGraph
         private SolidColorBrush edgeBrush;
 
         private Dictionary<UIElement, Vertex> VertexDict = new Dictionary<UIElement, Vertex>();
+        private Dictionary<UIElement, Edge> EdgeDict = new Dictionary<UIElement, Edge>(); //TODO
         private Vertex clickedVertex;
+        private Edge clickedEdge; //TODO
         private Point previousMousePosition;
 
         private MouseState mouseState = MouseState.Normal;
