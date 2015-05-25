@@ -30,11 +30,11 @@ namespace ChrumGraph
             };
             core = new Core(visual);
             visual.Core = core;
-            ForcesMultiplierTextBox.Text = Convert.ToString(1.0);
-            VertexForceTextBox.Text = Convert.ToString(core.Physics.VertexForceParam);
-            EdgeForceTextBox.Text = Convert.ToString(core.Physics.EdgeForceParam);
-            EdgeLengthTextBox.Text = Convert.ToString(core.Physics.EdgeLength);
-            FrictionTextBox.Text = Convert.ToString(core.Physics.FrictionParam);
+            ForcesMultiplierTextBlock.Text = Convert.ToString(1.0);
+            VertexForceTextBlock.Text = Convert.ToString(core.Physics.VertexForceParam);
+            EdgeForceTextBlock.Text = Convert.ToString(core.Physics.EdgeForceParam);
+            EdgeLengthTextBlock.Text = Convert.ToString(core.Physics.EdgeLength);
+            FrictionTextBlock.Text = Convert.ToString(core.Physics.FrictionParam);
         }
 
         public string NewLabel
@@ -152,25 +152,31 @@ namespace ChrumGraph
 
         private void SetForcesMultiplier(object sender, RoutedEventArgs e)
         {
-            double fm = Convert.ToDouble(ForcesMultiplierTextBox.Text);
-            double ef = Convert.ToDouble(EdgeForceTextBox.Text);
-            if (fm * ef > 1.0)
+            try
             {
-                fm = 1.0 / ef;
-                ForcesMultiplierTextBox.Text = Convert.ToString(1.0 / ef);
+                SetVertexForce(sender, e);
+                SetEdgeForce(sender, e);
+                SetEdgeLength(sender, e);
+                SetFriction(sender, e);
+                if (ForcesMultiplierTextBlock != null)
+                {
+                    ForcesMultiplierTextBlock.Text = Convert.ToString(ForcesMultiplierSlider.Value / 50.0);
+                }
             }
-            SetVertexForce(sender, e);
-            SetEdgeForce(sender, e);
-            SetEdgeLength(sender, e);
-            SetFriction(sender, e);
+            catch
+            {}
         }
 
         private void SetVertexForce(object sender, RoutedEventArgs e)
         {
             try
             {
-                core.Physics.VertexForceParam = Convert.ToDouble(VertexForceTextBox.Text)
-                        * Convert.ToDouble(ForcesMultiplierTextBox.Text);
+                core.Physics.VertexForceParam = 4 * VertexForceSlider.Value / 50.0
+                        * ForcesMultiplierSlider.Value / 50.0;
+                if (VertexForceTextBlock != null)
+                {
+                    VertexForceTextBlock.Text = Convert.ToString(4 * VertexForceSlider.Value / 50.0);
+                }
             }
             catch (Exception)
             {}
@@ -178,16 +184,14 @@ namespace ChrumGraph
 
         private void SetEdgeForce(object sender, RoutedEventArgs e)
         {
-            double fm = Convert.ToDouble(ForcesMultiplierTextBox.Text);
-            double ef = Convert.ToDouble(EdgeForceTextBox.Text);
-            if (fm * ef > 1.0)
-            {
-                ef = 1.0 / fm;
-                EdgeForceTextBox.Text = Convert.ToString(ef);
-            }
             try
             {
-                core.Physics.EdgeForceParam = ef * fm;
+                core.Physics.EdgeForceParam = EdgeForceSlider.Value / 50.0
+                        * ForcesMultiplierSlider.Value / 50.0;
+                if (EdgeForceTextBlock != null)
+                {
+                    EdgeForceTextBlock.Text = Convert.ToString(EdgeForceSlider.Value / 50.0);
+                }
             }
             catch (Exception)
             {}
@@ -197,8 +201,11 @@ namespace ChrumGraph
         {
             try
             {
-                core.Physics.EdgeLength = Convert.ToDouble(EdgeLengthTextBox.Text)
-                        * Convert.ToDouble(ForcesMultiplierTextBox.Text);
+                core.Physics.EdgeLength = EdgeLengthSlider.Value / 50.0;
+                if (EdgeLengthTextBlock != null)
+                {
+                    EdgeLengthTextBlock.Text = Convert.ToString(EdgeLengthSlider.Value / 50.0);
+                }
             }
             catch (Exception)
             {}
@@ -208,14 +215,18 @@ namespace ChrumGraph
         {
             try
             {
-                core.Physics.FrictionParam = Convert.ToDouble(FrictionTextBox.Text)
-                        * Convert.ToDouble(ForcesMultiplierTextBox.Text);
+                core.Physics.FrictionParam = FrictionSlider.Value / 50.0
+                        * ForcesMultiplierSlider.Value / 50.0;
+                if (FrictionTextBlock != null)
+                {
+                    FrictionTextBlock.Text = Convert.ToString(FrictionSlider.Value / 50.0);
+                }
             }
             catch (Exception)
             {}
         }
 
-        void SetVertexLabel(object sender, RoutedEventArgs e) // TODO
+        private void SetVertexLabel(object sender, RoutedEventArgs e) // TODO
         {
 
         }

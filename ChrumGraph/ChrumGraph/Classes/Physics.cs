@@ -6,6 +6,7 @@ using System.Windows;
 
 namespace ChrumGraph
 {
+
     /// <summary>
     /// Performs physical simulation on a graph.
     /// </summary>
@@ -25,6 +26,11 @@ namespace ChrumGraph
         /// Reference to physicsCore's Edges.
         /// </summary>
         private List<Edge> edges;
+
+        /// <summary>
+        /// Number of vertices.
+        /// </summary>
+        private int n;
 
         /// <summary>
         /// Movement vectors for updating vertices' coordinates.
@@ -146,7 +152,7 @@ namespace ChrumGraph
         {
             lock (physicsCore)
             {
-                int n = vertices.Count;
+                n = vertices.Count;
                 coordinatesArray = new Vector[n];
                 netForces = new Vector[n];
                 int maxDegree = 0;
@@ -191,7 +197,6 @@ namespace ChrumGraph
         /// updated.</param>
         private void updateForces(int k)
         {
-            int n = vertices.Count;
             Vector currentCoordinates = coordinatesArray[k];
             Vertex currentVertex = vertices[k];
             for (int i = 0; i < n; ++i)
@@ -243,7 +248,11 @@ namespace ChrumGraph
         /// <returns></returns>
         private double VertexForceFunction(double x)
         {
-            return internalForceParam * vertexForceParam * (x <= 0.5 ? -2.0 : -1.0 / x);
+            return internalForceParam * vertexForceParam
+                    * ((x <= edgeLength / 2 ? -2.0 : -1.0 / x)
+                    + 1.0 / (1024.0 * Math.Sqrt(n // 0.5 This coefficient may
+                                                    // depend on graph type.
+                    )* edgeLength) * x);
         }
 
         /// <summary>
@@ -308,8 +317,8 @@ namespace ChrumGraph
         /// <returns></returns>
         private double FrictionFunction(double x)
         {
-            return internalForceParam * 0.5 * (Math.Abs(x - frictionParam) -
-                                               Math.Abs(x + frictionParam));
+            return 0.5 * (Math.Abs(x - frictionParam) -
+                    Math.Abs(x + frictionParam));
         }
 
         /* guards of fields for multithreading */

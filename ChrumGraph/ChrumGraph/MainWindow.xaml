@@ -25,36 +25,40 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <TextBlock Text="Mode:" Margin="5,30,0,0" Height="25" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Select" Margin="5,50,0,0" Height="25" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Move" Margin="45,50,0,0" Height="25" Width="40" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <CheckBox Content="Pinned" Margin="5,90,0,0" Height="25" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock Text="Label:" Margin="5,110,0,0" Height="25" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Margin="5,130,0,0" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button Content="Set" Margin="65,130,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetVertexLabel"/>
-        <Expander Header="Symulation&#10;Options" Margin="5,170,0,0" Width="88" HorizontalAlignment="Left" VerticalAlignment="Top" IsExpanded="False">
+        <TextBlock Text="Mode:" Margin="10,30,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Select" Margin="10,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button Content="Move" Margin="80,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <CheckBox Content="Pinned" Margin="10,90,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock Text="Label:" Margin="10,110,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox Margin="10,130,0,0" Height="20" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Expander Header="Symulation&#10;Options" Margin="10,170,0,0" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" IsExpanded="False">
             <StackPanel>
-                <TextBlock Text="Forces Factor" Height="15" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <TextBox Name="ForcesMultiplierTextBox" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetForcesMultiplier"/>
+                <TextBlock Text="Forces Multiplier" Height="15" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Slider Name="ForcesMultiplierSlider" Height="20" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Value="50" Minimum="0"
+                        Maximum="100" SmallChange="1" LargeChange="10" TickPlacement="BottomRight" TickFrequency="10" ValueChanged="SetForcesMultiplier"/>
+                <TextBlock Name="ForcesMultiplierTextBlock" Margin="85,-20,0,0" Height="20" Width="55" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                <TextBlock Text="Vertex Force" Height="15" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <TextBox Name="VertexForceTextBox" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetVertexForce"/>
+                <TextBlock Text="Vertex Force" Height="15" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Slider Name="VertexForceSlider" Height="20" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Value="50" Minimum="0"
+                        Maximum="100" SmallChange="1" LargeChange="10" TickPlacement="BottomRight" TickFrequency="10" ValueChanged="SetVertexForce"/>
+                <TextBlock Name="VertexForceTextBlock" Margin="85,-20,0,0" Height="20" Width="55" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                <TextBlock Text="Edge Force" Height="15" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <TextBox Name="EdgeForceTextBox" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetEdgeForce"/>
+                <TextBlock Text="Edge Force" Height="15" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Slider Name="EdgeForceSlider" Height="20" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Value="50" Minimum="0"
+                        Maximum="100" SmallChange="1" LargeChange="10" TickPlacement="BottomRight" TickFrequency="10" ValueChanged="SetEdgeForce"/>
+                <TextBlock Name="EdgeForceTextBlock" Margin="85,-20,0,0" Height="20" Width="55" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                <TextBlock Text="Edge Length" Height="15" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <TextBox Name="EdgeLengthTextBox" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetEdgeLength"/>
+                <TextBlock Text="Edge Length" Height="15" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Slider Name="EdgeLengthSlider" Height="20" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Value="50" Minimum="1"
+                        Maximum="100" SmallChange="1" LargeChange="10" TickPlacement="BottomRight" TickFrequency="10" ValueChanged="SetEdgeLength"/>
+                <TextBlock Name="EdgeLengthTextBlock" Margin="85,-20,0,0" Height="20" Width="55" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                <TextBlock Text="Friction" Height="15" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <TextBox Name="FrictionTextBox" Height="20" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button Content="Set" Margin="60,-20,0,0" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Click="SetFriction"/>
+                <TextBlock Text="Friction" Height="15" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Slider Name="FrictionSlider" Height="20" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Value="0" Minimum="0"
+                        Maximum="100" SmallChange="1" LargeChange="10" TickPlacement="BottomRight" TickFrequency="10" ValueChanged="SetFriction"/>
+                <TextBlock Name="FrictionTextBlock" Margin="85,-20,0,0" Height="20" Width="55" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
         </Expander>
-        <Canvas Name="MainCanvas" HorizontalAlignment="Stretch" Margin="90,20,0,0" VerticalAlignment="Stretch" Background="#AAAAAA"/>
+        <Canvas Name="MainCanvas" HorizontalAlignment="Stretch" Margin="160,20,0,0" VerticalAlignment="Stretch" Background="#AAAAAA"/>
     </Grid>
 </Window>
