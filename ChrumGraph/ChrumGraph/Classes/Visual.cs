@@ -31,8 +31,8 @@ namespace ChrumGraph
     {
         private Canvas canvas;
 
-        private Color vertexColor = Colors.Red;
-        private Color edgeColor = Colors.Black;
+        private Color vertexColor = vertexColorConst;
+        private Color edgeColor = edgeColorConst;
         private SolidColorBrush vertexBrush;
         private SolidColorBrush edgeBrush;
 
