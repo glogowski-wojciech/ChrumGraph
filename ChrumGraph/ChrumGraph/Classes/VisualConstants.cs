@@ -11,18 +11,18 @@ namespace ChrumGraph
     {
         private static double verticeToEdgeRatio = 5;
 
-        private static Color vertexColorConst = Color.FromRgb(39, 171, 7);
-        private static Color edgeColorConst = Color.FromRgb(15, 61, 26);
+        private static Color vertexColor = Color.FromRgb(39, 171, 7);
+        private static Color edgeColor = Color.FromRgb(15, 61, 26);
 
-        private static Color pinnedColorConst = Colors.DeepSkyBlue;
-        private static Color labelColorConst = Colors.Black;
-        private static Color clickedColorConst = Colors.YellowGreen;
+        private static Color pinnedColor = Colors.DeepSkyBlue;
+        private static Color labelColor = Colors.Black;
+        private static Color clickedColor = Colors.YellowGreen;
 
-        private static Color selectVertexColorConst = Colors.SaddleBrown;
-        private static Color selectEdgeColorConst = Color.FromRgb(102, 0, 51);
-        private static Color selectRectColorConst = Colors.MistyRose;
+        private static Color selectVertexColor = Colors.Brown;
+        private static Color selectEdgeColor = Color.FromRgb(102, 0, 51);
+        private static Color selectRectColor = Colors.MistyRose;
 
-        private static Color sidebarColorConst = Colors.CadetBlue;
-        private static Color backgroundColorV = Colors.LemonChiffon;
+        private static Color sidebarColor = Colors.CadetBlue;
+        private static Color backgroundColor = Colors.LemonChiffon;
     }
 }

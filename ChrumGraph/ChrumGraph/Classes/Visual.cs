@@ -31,8 +31,6 @@ namespace ChrumGraph
     {
         private Canvas canvas;
 
-        private Color vertexColor = vertexColorConst;
-        private Color edgeColor = edgeColorConst;
         private SolidColorBrush vertexBrush;
         private SolidColorBrush edgeBrush;
 
@@ -121,6 +119,7 @@ namespace ChrumGraph
             UIElement element = sender as UIElement;
             clickedVertex = VertexDict[element];
             clickedVertex.Clicked = true;
+            clickedVertex.Ellipse.Fill = new SolidColorBrush(selectVertexColor);
             previousMousePosition = e.GetPosition(canvas);
             mouseState = MouseState.MovingVertex;
             ViewWindow.Static = true;
