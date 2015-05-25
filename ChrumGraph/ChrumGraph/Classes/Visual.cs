@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
+using Forms = System.Windows.Forms;
+using System.Linq;
 
 namespace ChrumGraph
 {
@@ -14,6 +16,18 @@ namespace ChrumGraph
         public Ellipse Ellipse { get; set; }
 
         public TextBlock VisualLabel { get; set; }
+
+        public Boolean Selected { get; set; }
+
+        /// <summary>
+        /// Changes vertex ellipse color
+        /// </summary>
+        /// <param name="c">New color</param>
+        public void changeColor(Color c)
+        {
+            if (Ellipse != null)
+                Ellipse.Fill = new SolidColorBrush(c);
+        }
     }
 
     public partial class Edge
@@ -39,6 +53,8 @@ namespace ChrumGraph
         private Point previousMousePosition;
 
         private MouseState mouseState = MouseState.Normal;
+
+        private HashSet<Vertex> SelectedVertices = new HashSet<Vertex>();
 
         /// <summary>
         /// Constructor for the Visual class.
@@ -99,7 +115,6 @@ namespace ChrumGraph
         private void AddEventHandlers(UIElement element, Vertex v)
         {
             VertexDict.Add(element, v);
-
             element.MouseLeftButtonDown += MouseDown;
             element.MouseLeftButtonUp += MouseUp;
             element.MouseMove += MouseMove;
@@ -113,13 +128,53 @@ namespace ChrumGraph
             previousMousePosition = e.GetPosition(canvas);
             mouseState = MouseState.MovingGraph;
         }
+        private void select(Vertex v)
+        {
+            v.Selected = true;
+            v.changeColor(selectVertexColor);
+            SelectedVertices.Add(v);
+        }
+        private void unselect(Vertex v)
+        {
+            v.Selected = false;
+            v.changeColor(vertexColor); // TODO: What if there was pinn before select? Back to pinnedColor?
+            SelectedVertices.Remove(v);
+        }
+        private void cleanSelectedVertices()
+        {
+            List<Vertex> l = SelectedVertices.ToList();
+            foreach (Vertex v in l)
+                unselect(v);
+            /* DOESN'T WORK!
+            IEnumerator<Vertex> iter = SelectedVertices.GetEnumerator();
+            while (iter.MoveNext())
+                unselect(iter.Current);
+             */
+            SelectedVertices.Clear();
+        }
+
+        private void selectionProcessing()
+        {
+            if (Forms.Control.ModifierKeys == Forms.Keys.Control)
+            {
+                if (clickedVertex.Selected)
+                    unselect(clickedVertex);
+                else
+                    select(clickedVertex);
+            }
+            else
+            {
+                cleanSelectedVertices();
+                select(clickedVertex);
+            }
+        }
 
         private void MouseDown(object sender, MouseEventArgs e)
         {
             UIElement element = sender as UIElement;
             clickedVertex = VertexDict[element];
             clickedVertex.Clicked = true;
-            clickedVertex.Ellipse.Fill = new SolidColorBrush(selectVertexColor);
+            selectionProcessing();            
             previousMousePosition = e.GetPosition(canvas);
             mouseState = MouseState.MovingVertex;
             ViewWindow.Static = true;
@@ -179,6 +234,7 @@ namespace ChrumGraph
 
             AddEventHandlers(e, vertex);
             vertex.Ellipse = e;
+            vertex.Selected = false;
 
             TextBlock t = new TextBlock
             {
