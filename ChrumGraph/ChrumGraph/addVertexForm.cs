@@ -13,7 +13,7 @@ namespace ChrumGraph
     /// <summary>
     /// A dialog in which the user chooses the desired label for new Vertex
     /// </summary>
-    public partial class AddVertexForm : Form
+    /*public partial class AddVertexForm : Form
     {
         private Core core;
 
@@ -63,5 +63,5 @@ namespace ChrumGraph
         {
 
         }
-    }
+    }*/
 }

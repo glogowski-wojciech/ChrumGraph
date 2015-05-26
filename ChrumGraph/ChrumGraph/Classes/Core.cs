@@ -20,7 +20,7 @@ namespace ChrumGraph
         private IPhysics physics;
 
         private List<Vertex> vertices = new List<Vertex>();
-        private Dictionary<string, Vertex> verticesDict = new Dictionary<string, Vertex>();
+        //private Dictionary<string, Vertex> verticesDict = new Dictionary<string, Vertex>();
         private List<Edge> edges = new List<Edge>();
 
         /// <summary>
@@ -156,10 +156,10 @@ namespace ChrumGraph
         /// <summary>
         /// Gets dictionary of graph's vertices.
         /// </summary>
-        public Dictionary<string, Vertex> VerticesDict
+       /* public Dictionary<string, Vertex> VerticesDict
         {
             get { return verticesDict; }
-        }
+        }*/
 
         /// <summary>
         /// Schould be called after the simulation has finished.
@@ -202,7 +202,7 @@ namespace ChrumGraph
         {
             RemoveEdgesInVertex(v);
             Vertices.Remove(v);
-            VerticesDict.Remove(v.Label);
+            //VerticesDict.Remove(v.Label);
             visual.RemoveVisualVertex(v);
         }
 

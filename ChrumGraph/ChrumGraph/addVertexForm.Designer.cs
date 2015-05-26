@@ -1,6 +1,6 @@
 ﻿namespace ChrumGraph
 {
-    partial class AddVertexForm
+    /*partial class AddVertexForm
     {
         /// <summary>
         /// Required designer variable.
@@ -111,5 +111,5 @@
         private System.Windows.Forms.TextBox labelInput;
         private System.Windows.Forms.Label labelErrorStringEmpty;
         private System.Windows.Forms.Label labelErrorLabelExists;
-    }
+    }*/
 }

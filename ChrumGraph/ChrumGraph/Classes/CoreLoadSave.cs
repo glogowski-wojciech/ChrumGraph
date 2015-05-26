@@ -50,7 +50,6 @@ namespace ChrumGraph
         {
             visual.Clear();
             vertices.Clear();
-            verticesDict.Clear();
             edges.Clear();
         }
 

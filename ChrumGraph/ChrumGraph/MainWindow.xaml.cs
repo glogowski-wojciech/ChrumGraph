@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace ChrumGraph
 {
@@ -36,6 +37,8 @@ namespace ChrumGraph
             EdgeLengthTextBlock.Text = Convert.ToString(core.Physics.EdgeLength);
             FrictionTextBlock.Text = Convert.ToString(core.Physics.FrictionParam);
             this.KeyDown += keyHandler;
+            MainCanvas.Background = new SolidColorBrush(Visual.backgroundColor);
+            this.Background = new SolidColorBrush(Visual.sidebarColor);
         }
 
         private void keyHandler(object sender, KeyEventArgs e)
@@ -95,7 +98,7 @@ namespace ChrumGraph
                 core.SaveVisualGraph(saveDialog.FileName);
         }
 
-        private void AddVertex(object sender, RoutedEventArgs e)
+      /*  private void AddVertex(object sender, RoutedEventArgs e)
         {
             MenuButtonClicked(sender, e);
             var addVertexForm = new AddVertexForm(core);
@@ -109,7 +112,7 @@ namespace ChrumGraph
             MainCanvas.Children.Add(addedVertex);
             Canvas.SetLeft(addedVertex, Mouse.GetPosition(MainCanvas).X - visual.VertexSize / 2);
             Canvas.SetTop(addedVertex, Mouse.GetPosition(MainCanvas).Y - visual.VertexSize / 2);
-        }
+        }*/
 
         private void AddEdge(object sender, RoutedEventArgs e)
         {
@@ -240,7 +243,7 @@ namespace ChrumGraph
             visual.ViewWindow.Static = false;
         }
 
-        private void ChangeModeToSelect(object sender, RoutedEventArgs e)
+        private void ChangeModeToInsert(object sender, RoutedEventArgs e)
         {
             if(MoveButton.IsChecked == true)
             {
@@ -263,17 +266,18 @@ namespace ChrumGraph
             MoveButton.IsChecked = true;
         }
 
-        public void ShowLabelEditor(string text)
+        public void EnableVertexControls(string text)
         {
             LabelEditor.Text = text;
-            LabelEditor.Visibility = Visibility.Visible;
-            LabelEditorLabel.Visibility = Visibility.Visible;
+            LabelEditor.IsEnabled = true;
+            PinnedCheckBox.IsEnabled = true;
         }
 
-        public void HideLabelEditor()
+        public void DisableVertexControls()
         {
-            LabelEditor.Visibility = Visibility.Hidden;
-            LabelEditorLabel.Visibility = Visibility.Hidden;
+            LabelEditor.Text = "";
+            LabelEditor.IsEnabled = false;
+            PinnedCheckBox.IsEnabled = true;
         }
 
         private void LabelChanged(object sender, RoutedEventArgs e)

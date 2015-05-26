@@ -64,7 +64,7 @@ namespace ChrumGraph
         private Line addedEdge;
 
         private MouseState mouseState = MouseState.Normal;
-        private GraphMode graphMode = GraphMode.InsertingMode;
+        private GraphMode graphMode = GraphMode.DraggingMode;
 
         private HashSet<Vertex> SelectedVertices = new HashSet<Vertex>();
 
@@ -211,7 +211,6 @@ namespace ChrumGraph
         {
             v.Selected = false;
             v.changeColor(vertexColor); // TODO: What if there was pinn before select? Back to pinnedColor?
-            SelectedVertices.Remove(v);
         }
 
         public void changeSelectedLabel(string s)
@@ -226,14 +225,12 @@ namespace ChrumGraph
 
         public void cleanSelectedVertices()
         {
-            List<Vertex> l = SelectedVertices.ToList();
-            foreach (Vertex v in l)
-                unselect(v);
-            /* DOESN'T WORK!
+            //List<Vertex> l = SelectedVertices.ToList();
+            //foreach (Vertex v in l)
+            //    unselect(v);
             IEnumerator<Vertex> iter = SelectedVertices.GetEnumerator();
             while (iter.MoveNext())
-                unselect(iter.Current);
-             */
+                 unselect(iter.Current);
             SelectedVertices.Clear();
         }
 
@@ -263,9 +260,9 @@ namespace ChrumGraph
             }
 
             if (SelectedVertices.Count == 1)
-                mainWindow.ShowLabelEditor(SelectedVertices.First().Label);
+                mainWindow.EnableVertexControls(SelectedVertices.First().Label);
             else
-                mainWindow.HideLabelEditor();
+                mainWindow.DisableVertexControls();
         }
 
         private void MouseDown(object sender, MouseEventArgs e)

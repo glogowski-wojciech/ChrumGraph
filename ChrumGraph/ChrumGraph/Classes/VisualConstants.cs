@@ -22,7 +22,7 @@ namespace ChrumGraph
         private static Color selectEdgeColor = Color.FromRgb(102, 0, 51);
         private static Color selectRectColor = Colors.MistyRose;
 
-        private static Color sidebarColor = Colors.CadetBlue;
-        private static Color backgroundColor = Colors.LemonChiffon;
+        public static Color sidebarColor = Colors.CadetBlue;
+        public static Color backgroundColor = Colors.LemonChiffon;
     }
 }

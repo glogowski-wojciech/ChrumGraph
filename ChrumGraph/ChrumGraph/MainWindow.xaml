@@ -18,11 +18,11 @@
             </Menu>
         </DockPanel>
         <TextBlock Text="Mode:" Margin="10,30,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <ToggleButton x:Name="SelectButton" IsChecked="True" Content="Select" Margin="10,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToSelect"/>
-        <ToggleButton x:Name="MoveButton" IsChecked="False" Content="Move" Margin="80,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToMove"/>
-                <CheckBox Content="Pinned" Margin="10,90,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock Visibility="Hidden" x:Name="LabelEditorLabel" Text="Label:" Margin="10,110,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox Visibility="Hidden" x:Name="LabelEditor" TextChanged="LabelChanged" Margin="10,130,0,0" Height="20" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ToggleButton x:Name="MoveButton" IsChecked="True" Content="Move" Margin="10,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToMove"/>
+        <ToggleButton x:Name="SelectButton" IsChecked="False" Content="Insert" Margin="80,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToInsert"/>
+        <CheckBox x:Name="PinnedCheckBox" IsEnabled="False" Content="Pinned" Margin="10,90,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock x:Name="LabelEditorLabel" Text="Label:" Margin="10,110,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBox IsEnabled="False" x:Name="LabelEditor" TextChanged="LabelChanged" Margin="10,130,0,0" Height="22" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Expander Header="Symulation&#10;Options" Margin="10,170,0,0" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" IsExpanded="False">
             <StackPanel>
                 <TextBlock Text="Forces Multiplier" Height="15" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
