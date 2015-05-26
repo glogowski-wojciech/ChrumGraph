@@ -42,7 +42,7 @@ namespace ChrumGraph
         /// </summary>
         /// <param name="v1">First vertex to be connected by a new edge.</param>
         /// <param name="v2">Second vertex to be connected by a new edge.</param>
-        void CreateEdge(Vertex v1, Vertex v2);
+        Edge CreateEdge(Vertex v1, Vertex v2);
 
         /// <summary>
         /// Removes edge.

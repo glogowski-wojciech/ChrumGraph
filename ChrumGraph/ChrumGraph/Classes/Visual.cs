@@ -36,6 +36,11 @@ namespace ChrumGraph
     public partial class Edge
     {
         public Line Line { get; set; }
+        public void changeColor(Color c)
+        {
+            if (Line != null)
+                Line.Fill = new SolidColorBrush(c);
+        }
     }
 
     enum MouseState { Normal, MovingVertex, MovingGraph, }
@@ -56,7 +61,7 @@ namespace ChrumGraph
         private SolidColorBrush edgeBrush;
 
         private Dictionary<UIElement, Vertex> VertexDict = new Dictionary<UIElement, Vertex>();
-        private Dictionary<UIElement, Edge> EdgeDict = new Dictionary<UIElement, Edge>(); //TODO
+        private Dictionary<Line, Edge> EdgeDict = new Dictionary<Line, Edge>(); //TODO
         private Vertex clickedVertex;
         private Edge clickedEdge; //TODO
         private Point previousMousePosition;
@@ -330,7 +335,7 @@ namespace ChrumGraph
                 Vertex currentVertex = VertexDict[element];
                 addedEdge.Visibility = Visibility.Hidden;
                 if (currentVertex != clickedVertex)
-                    Core.CreateEdge(currentVertex, clickedVertex);   
+                    clickedEdge = Core.CreateEdge(currentVertex, clickedVertex);   
             }
         }
 

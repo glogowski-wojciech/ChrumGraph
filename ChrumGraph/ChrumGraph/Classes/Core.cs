@@ -211,13 +211,14 @@ namespace ChrumGraph
         /// </summary>
         /// <param name="v1">Endpoint of creating edge.</param>
         /// <param name="v2">Endpoint of creating edge.</param>
-        public void CreateEdge(Vertex v1, Vertex v2)
+        public Edge CreateEdge(Vertex v1, Vertex v2)
         {
             Edge e = new Edge(v1, v2);
             Edges.Add(e);
             v1.Edges.Add(e);
             v2.Edges.Add(e);
             visual.CreateVisualEdge(e);
+            return e;
         }
 
         /// <summary>
