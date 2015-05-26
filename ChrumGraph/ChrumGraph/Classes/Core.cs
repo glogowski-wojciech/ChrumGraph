@@ -175,12 +175,13 @@ namespace ChrumGraph
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         /// <param name="label">label of vertex</param>
-        public void CreateVertex(double x, double y, string label = "")
+        public Vertex CreateVertex(double x, double y, string label = "")
         {
             Vertex v = new Vertex(x, y, label);
             Vertices.Add(v);
-            VerticesDict.Add(label, v);
+            //VerticesDict.Add(label, v);
             visual.CreateVisualVertex(v);
+            return v;
         }
 
         /// <summary>
@@ -189,10 +190,8 @@ namespace ChrumGraph
         /// <param name="v">Vertex intended to be removed.</param>
         private void RemoveEdgesInVertex(Vertex v)
         {
-            foreach (Edge e in v.Edges)
-            {
-                RemoveEdge(e);
-            }
+            while (v.Edges.Count > 0)
+                RemoveEdge(v.Edges[0]);
         }
 
         /// <summary>

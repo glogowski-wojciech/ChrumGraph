@@ -16,6 +16,9 @@
             V2 = v2;
         }
 
+        public Edge()
+        {}
+
         /// <summary>
         /// First vertex that is connected by an edge.
         /// </summary>

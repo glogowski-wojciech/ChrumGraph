@@ -29,7 +29,7 @@ namespace ChrumGraph
         /// <param name="x">X coordinate of a new vertex.</param>
         /// <param name="y">Y coordinate of a new vertex.</param>
         /// <param name="label">Label of a new vertex.</param>
-        void CreateVertex(double x, double y, string label="");
+        Vertex CreateVertex(double x, double y, string label="");
 
         /// <summary>
         /// Removes vertex.

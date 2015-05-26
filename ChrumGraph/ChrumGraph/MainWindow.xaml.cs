@@ -35,12 +35,16 @@ namespace ChrumGraph
             EdgeForceTextBlock.Text = Convert.ToString(core.Physics.EdgeForceParam);
             EdgeLengthTextBlock.Text = Convert.ToString(core.Physics.EdgeLength);
             FrictionTextBlock.Text = Convert.ToString(core.Physics.FrictionParam);
+            this.KeyDown += keyHandler;
         }
 
-        public string NewLabel
+        private void keyHandler(object sender, KeyEventArgs e)
         {
-            get { return newLabel; }
-            set { newLabel = value; }
+            if(e.Key == Key.Delete)
+                visual.deleteSelected();
+
+            if(e.Key == Key.Escape)
+                visual.cleanSelectedVertices();
         }
 
         private void MenuButtonClicked(object sender, RoutedEventArgs e)
@@ -234,6 +238,41 @@ namespace ChrumGraph
         private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
             visual.ViewWindow.Static = false;
+        }
+
+        private void ChangeModeToSelect(object sender, RoutedEventArgs e)
+        {
+            if(MoveButton.IsChecked == true)
+            {
+                visual.GraphMode = GraphMode.InsertingMode;
+               // visual.setEventHandlersSelect();
+                MoveButton.IsChecked = false;
+            }
+            SelectButton.IsChecked = true;
+        }
+
+        private void ChangeModeToMove(object sender, RoutedEventArgs e)
+        {
+            if (SelectButton.IsChecked == true)
+            {
+                visual.GraphMode = GraphMode.DraggingMode;
+                Console.WriteLine(visual.GraphMode);
+               // visual.setEventHandlersMove();
+                SelectButton.IsChecked = false;
+            }
+            MoveButton.IsChecked = true;
+        }
+
+        public void ShowLabelEditor()
+        {
+            LabelEditor.Visibility = Visibility.Visible;
+            LabelEditorLabel.Visibility = Visibility.Visible;
+        }
+
+        public void HideLabelEditor()
+        {
+            LabelEditor.Visibility = Visibility.Hidden;
+            LabelEditorLabel.Visibility = Visibility.Hidden;
         }
     }
 }
