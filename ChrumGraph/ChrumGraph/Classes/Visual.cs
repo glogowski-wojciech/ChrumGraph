@@ -340,7 +340,7 @@ namespace ChrumGraph
             }
             else //adding new edge
             {
-                addedEdge.X1 = addedEdge.X2 = Canvas.GetLeft(clickedVertex.Ellipse) + VertexSize / 2.0;
+                addedEdge.X1 = addedEdge.X2 = Canvas.GetLeft(clickedVertex.Ellipse) + VertexSize / 2.0; // TODO: Null reference after selecting edge in insert mode
                 addedEdge.Y1 = addedEdge.Y2 = Canvas.GetTop(clickedVertex.Ellipse) + VertexSize / 2.0;
                 addedEdge.Visibility = Visibility.Visible;
             }
