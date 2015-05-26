@@ -263,8 +263,9 @@ namespace ChrumGraph
             MoveButton.IsChecked = true;
         }
 
-        public void ShowLabelEditor()
+        public void ShowLabelEditor(string text)
         {
+            LabelEditor.Text = text;
             LabelEditor.Visibility = Visibility.Visible;
             LabelEditorLabel.Visibility = Visibility.Visible;
         }
@@ -273,6 +274,11 @@ namespace ChrumGraph
         {
             LabelEditor.Visibility = Visibility.Hidden;
             LabelEditorLabel.Visibility = Visibility.Hidden;
+        }
+
+        private void LabelChanged(object sender, RoutedEventArgs e)
+        {
+            visual.changeSelectedLabel(LabelEditor.Text);
         }
     }
 }

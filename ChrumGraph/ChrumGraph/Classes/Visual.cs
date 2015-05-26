@@ -214,6 +214,16 @@ namespace ChrumGraph
             SelectedVertices.Remove(v);
         }
 
+        public void changeSelectedLabel(string s)
+        {
+            if(SelectedVertices.Count == 1)
+            {
+                Vertex v = SelectedVertices.First();
+                v.Label = s;
+                v.VisualLabel.Text = s;
+            }
+        }
+
         public void cleanSelectedVertices()
         {
             List<Vertex> l = SelectedVertices.ToList();
@@ -253,7 +263,7 @@ namespace ChrumGraph
             }
 
             if (SelectedVertices.Count == 1)
-                mainWindow.ShowLabelEditor();
+                mainWindow.ShowLabelEditor(SelectedVertices.First().Label);
             else
                 mainWindow.HideLabelEditor();
         }
