@@ -36,10 +36,13 @@ namespace ChrumGraph
     public partial class Edge
     {
         public Line Line { get; set; }
+
+        public bool Selected { get; set; }
+        
         public void changeColor(Color c)
         {
             if (Line != null)
-                Line.Fill = new SolidColorBrush(c);
+                Line.Stroke = new SolidColorBrush(c);
         }
     }
 
@@ -61,9 +64,9 @@ namespace ChrumGraph
         private SolidColorBrush edgeBrush;
 
         private Dictionary<UIElement, Vertex> VertexDict = new Dictionary<UIElement, Vertex>();
-        private Dictionary<Line, Edge> EdgeDict = new Dictionary<Line, Edge>(); //TODO
+        private Dictionary<Line, Edge> EdgeDict = new Dictionary<Line, Edge>();
         private Vertex clickedVertex;
-        private Edge clickedEdge; //TODO
+        private Edge clickedEdge;
         private Point previousMousePosition;
 
         private Line addedEdge;
@@ -72,6 +75,7 @@ namespace ChrumGraph
         private GraphMode graphMode = GraphMode.DraggingMode;
 
         private HashSet<Vertex> SelectedVertices = new HashSet<Vertex>();
+        private HashSet<Edge> SelectedEdges = new HashSet<Edge>();
 
         /// <summary>
         /// Constructor for the Visual class.
@@ -179,6 +183,15 @@ namespace ChrumGraph
             element.MouseMove += MouseMove;
         }
 
+        private void AddEventHandlers(Line line, Edge e)
+        {
+            EdgeDict.Add(line, e);
+            line.MouseLeftButtonDown += MouseDown;
+            line.MouseLeftButtonUp += VertexMouseUp;
+            line.MouseLeftButtonUp += MouseUp;
+            line.MouseMove += MouseMove;
+        }
+        
         private void CanvasMouseDown(object sender, MouseEventArgs e)
         {
             if (graphMode == GraphMode.DraggingMode)
@@ -208,6 +221,7 @@ namespace ChrumGraph
 
         private void select(Vertex v)
         {
+            if (v == null) return;
             v.Selected = true;
             v.changeColor(selectVertexColor);
             SelectedVertices.Add(v);
@@ -215,7 +229,7 @@ namespace ChrumGraph
         private void unselect(Vertex v)
         {
             v.Selected = false;
-            v.changeColor(vertexColor); // TODO: What if there was pinn before select? Back to pinnedColor?
+            v.changeColor(vertexColor); // TODO: What if there was pinned before select? Back to pinnedColor?
         }
 
         public void changeSelectedLabel(string s)
@@ -230,9 +244,6 @@ namespace ChrumGraph
 
         public void cleanSelectedVertices()
         {
-            //List<Vertex> l = SelectedVertices.ToList();
-            //foreach (Vertex v in l)
-            //    unselect(v);
             IEnumerator<Vertex> iter = SelectedVertices.GetEnumerator();
             while (iter.MoveNext())
                  unselect(iter.Current);
@@ -249,19 +260,52 @@ namespace ChrumGraph
             }
         }
 
+        private void select(Edge e)
+        {
+            if (e == null) return;
+            e.Selected = true;
+            e.changeColor(selectEdgeColor);
+            SelectedEdges.Add(e);
+        }
+        private void unselect(Edge e)
+        {
+            e.Selected = false;
+            e.changeColor(edgeColor); // TODO: What if there was pinn before select? Back to pinnedColor?
+        }
+
+        public void cleanSelectedEdges()
+        {
+            IEnumerator<Edge> iter = SelectedEdges.GetEnumerator();
+            while (iter.MoveNext())
+                 unselect(iter.Current);
+            SelectedVertices.Clear();
+        }
+        
         private void selectionProcessing()
         {
             if (Forms.Control.ModifierKeys == Forms.Keys.Control)
             {
-                if (clickedVertex.Selected)
-                    unselect(clickedVertex);
-                else
-                    select(clickedVertex);
+                if (clickedVertex != null)
+                {
+                    if (clickedVertex.Selected)
+                        unselect(clickedVertex);
+                    else
+                        select(clickedVertex);
+                }
+                if (clickedEdge != null)
+                {
+                    if (clickedEdge.Selected)
+                        unselect(clickedEdge);
+                    else
+                        select(clickedEdge);
+                }
             }
             else
             {
                 cleanSelectedVertices();
+                cleanSelectedEdges();
                 select(clickedVertex);
+                select(clickedEdge);
             }
 
             if (SelectedVertices.Count == 1)
@@ -273,8 +317,19 @@ namespace ChrumGraph
         private void MouseDown(object sender, MouseEventArgs e)
         {
             UIElement element = sender as UIElement;
-            clickedVertex = VertexDict[element];
-            clickedVertex.Clicked = true;
+            Line line = sender as Line;
+            if (line == null)
+            {
+                clickedVertex = VertexDict[element];
+                clickedVertex.Clicked = true;
+                clickedEdge = null;
+            }
+            if (line != null)
+            {
+                clickedEdge = EdgeDict[line];
+                clickedVertex = null;
+            }
+
             selectionProcessing();
             previousMousePosition = e.GetPosition(canvas);
 
@@ -302,7 +357,7 @@ namespace ChrumGraph
                     ViewWindow.VisualToCorePosition(previousMousePosition);
                 previousMousePosition = mousePosition;
 
-                if (mouseState == MouseState.MovingVertex)
+                if (mouseState == MouseState.MovingVertex && clickedVertex != null)
                 {
                     clickedVertex.Shift(coreShift);
                 }
@@ -343,7 +398,7 @@ namespace ChrumGraph
         {
             if (graphMode == GraphMode.DraggingMode)
             {
-                if (mouseState == MouseState.MovingVertex)
+                if (mouseState == MouseState.MovingVertex && clickedVertex != null)
                 {
                     clickedVertex.Clicked = false;
                     clickedVertex = null;
@@ -434,6 +489,7 @@ namespace ChrumGraph
             canvas.Children.Add(l);
             Canvas.SetZIndex(l, 1);
             edge.Line = l;
+            AddEventHandlers(edge.Line, edge);
         }
 
         /// <summary>
