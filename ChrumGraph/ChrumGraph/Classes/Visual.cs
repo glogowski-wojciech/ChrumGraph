@@ -219,7 +219,6 @@ namespace ChrumGraph
             if (line == null)
             {
                 clickedVertex = VertexDict[element];
-                clickedVertex.Selected = true;
                 clickedEdge = null;
             }
             if (line != null)
@@ -434,12 +433,6 @@ namespace ChrumGraph
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
             };
-
-            /*
-            Point visualPosition = ViewWindow.CoreToVisualPosition(vertex.Position);
-            Canvas.SetLeft(e, visualPosition.X - VertexSize / 2.0);
-            Canvas.SetTop(e, visualPosition.Y - VertexSize / 2.0);
-            */
 
             canvas.Children.Add(e);
             Canvas.SetZIndex(e, 2);
