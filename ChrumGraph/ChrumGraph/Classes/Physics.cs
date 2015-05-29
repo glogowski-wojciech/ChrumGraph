@@ -175,6 +175,7 @@ namespace ChrumGraph
                 {
                     internalForceParam = 1.0 / ((double)maxDegree);
                 }
+                internalVertexForceParam = 1.0 / (256.0 * n * edgeLength);
                 Parallel.For(0, n, (int i) =>
                 {
                     if (!vertices[i].PositionForced)
@@ -255,9 +256,7 @@ namespace ChrumGraph
         {
             return internalForceParam * vertexForceParam
                     * ((x <= edgeLength / 2 ? -2.0 : -1.0 / x)
-                    + 1.0 / (1024.0 * Math.Sqrt(n // 0.5 This coefficient may
-                                                    // depend on graph type.
-                    )* edgeLength) * x);
+                    + internalVertexForceParam * x);
         }
 
         /// <summary>
@@ -359,6 +358,11 @@ namespace ChrumGraph
         /// Linear coefficient of vertical force.
         /// </summary>
         private double vertexForceParam;
+
+        /// <summary>
+        /// Linear coefficient of vertical force.
+        /// </summary>
+        private double internalVertexForceParam;
 
         /// <summary>
         /// Linear coefficient of force controlled automatically.

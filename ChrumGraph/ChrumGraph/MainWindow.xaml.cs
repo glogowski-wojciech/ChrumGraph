@@ -93,7 +93,7 @@ namespace ChrumGraph
                 SetFriction(sender, e);
                 if (ForcesMultiplierTextBlock != null)
                 {
-                    ForcesMultiplierTextBlock.Text = Convert.ToString(ForcesMultiplierSlider.Value / 50.0);
+                    ForcesMultiplierTextBlock.Text = Convert.ToString(Math.Round(ForcesMultiplierSlider.Value / 50.0, 2));
                 }
             }
             catch
@@ -108,7 +108,7 @@ namespace ChrumGraph
                         * ForcesMultiplierSlider.Value / 50.0;
                 if (VertexForceTextBlock != null)
                 {
-                    VertexForceTextBlock.Text = Convert.ToString(4 * VertexForceSlider.Value / 50.0);
+                    VertexForceTextBlock.Text = Convert.ToString(Math.Round(4 * VertexForceSlider.Value / 50.0, 2));
                 }
             }
             catch (Exception)
@@ -123,7 +123,7 @@ namespace ChrumGraph
                         * ForcesMultiplierSlider.Value / 50.0;
                 if (EdgeForceTextBlock != null)
                 {
-                    EdgeForceTextBlock.Text = Convert.ToString(EdgeForceSlider.Value / 50.0);
+                    EdgeForceTextBlock.Text = Convert.ToString(Math.Round(EdgeForceSlider.Value / 50.0, 2));
                 }
             }
             catch (Exception)
@@ -137,7 +137,7 @@ namespace ChrumGraph
                 core.Physics.EdgeLength = EdgeLengthSlider.Value / 50.0;
                 if (EdgeLengthTextBlock != null)
                 {
-                    EdgeLengthTextBlock.Text = Convert.ToString(EdgeLengthSlider.Value / 50.0);
+                    EdgeLengthTextBlock.Text = Convert.ToString(Math.Round(EdgeLengthSlider.Value / 50.0, 2));
                 }
             }
             catch (Exception)
@@ -152,7 +152,7 @@ namespace ChrumGraph
                         * ForcesMultiplierSlider.Value / 50.0;
                 if (FrictionTextBlock != null)
                 {
-                    FrictionTextBlock.Text = Convert.ToString(FrictionSlider.Value / 50.0);
+                    FrictionTextBlock.Text = Convert.ToString(Math.Round(FrictionSlider.Value / 50.0, 2));
                 }
             }
             catch (Exception)
