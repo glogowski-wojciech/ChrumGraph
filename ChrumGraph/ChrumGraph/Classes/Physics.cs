@@ -185,12 +185,8 @@ namespace ChrumGraph
                 });
                 Parallel.For(0, n, (int i) =>
                 {
-                    if (!vertices[i].Selected)
-                    {
-                        //if ( i == 1) Debug.WriteLine(DateTime.Now.ToString());
-                        vertices[i].X += netForces[i].X;
-                        vertices[i].Y += netForces[i].Y;
-                    }
+                    vertices[i].X += netForces[i].X;
+                    vertices[i].Y += netForces[i].Y;
                 });
             }
 

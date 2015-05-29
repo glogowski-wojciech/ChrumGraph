@@ -189,15 +189,15 @@ namespace ChrumGraph
             if (!(e.OriginalSource is Canvas)) return;
             if (mouseState != MouseState.Normal) return;
 
+            Point mousePosition = e.GetPosition(canvas);
             if (GraphMode == GraphMode.DraggingMode)
             {
-                ViewWindow.Static = true;
-                previousMousePosition = e.GetPosition(canvas);
+                previousMousePosition = mousePosition;
                 mouseState = MouseState.MovingGraph;
+                ViewWindow.Static = true;
             }
             else if (GraphMode == GraphMode.InsertingMode)
             {
-                Point mousePosition = e.GetPosition(canvas);
                 Point corePos = ViewWindow.VisualToCorePosition(mousePosition);
                 clickedVertex = Core.CreateVertex(corePos.X, corePos.Y);
                 SelectionProcessing();
@@ -446,7 +446,6 @@ namespace ChrumGraph
 
             AddEventHandlers(e, vertex);
             vertex.Ellipse = e;
-            //vertex.Selected = false;
 
             TextBlock t = new TextBlock
             {
@@ -465,6 +464,8 @@ namespace ChrumGraph
 
             AddEventHandlers(t, vertex);
             vertex.VisualLabel = t;
+
+            RedrawVertex(vertex);
         }
 
         /// <summary>
