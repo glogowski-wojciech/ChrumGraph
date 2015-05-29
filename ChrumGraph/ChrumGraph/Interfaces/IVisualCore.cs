@@ -63,18 +63,6 @@ namespace ChrumGraph
         void Unpin(Vertex vertex);
 
         /// <summary>
-        /// To be called when user clicks on a vertex.
-        /// </summary>
-        /// <param name="vertex">Vertex that was clicked.</param>
-        void VertexClicked(Vertex vertex);
-
-        /// <summary>
-        /// To be called when user unclicks a vertex.
-        /// </summary>
-        /// <param name="vertex">Vertex that was unclicked.</param>
-        void VertexUnclicked(Vertex vertex);
-
-        /// <summary>
         /// Sets position of a given vertex.
         /// </summary>
         /// <param name="vertex">Vertex whose position should be set.</param>

@@ -21,7 +21,7 @@ namespace ChrumGraph
             Position = new Point(x, y);
             Label = label;
             Pinned = false;
-            Clicked = false;
+            Selected = false;
         }
 
         /// <summary>
@@ -70,9 +70,9 @@ namespace ChrumGraph
         public bool Pinned { get; set; }
 
         /// <summary>
-        /// Specifies whether a vertex is being clicked by user.
+        /// Specifies whether vertex is selected.
         /// </summary>
-        public bool Clicked { get; set; }
+        public bool Selected { get; set; }
 
         /// <summary>
         /// Specifies whether position of a vertex is forced,
@@ -80,7 +80,7 @@ namespace ChrumGraph
         /// </summary>
         public bool PositionForced
         {
-            get { return Pinned || Clicked; }
+            get { return Pinned || Selected; }
         }
 
         /// <summary>

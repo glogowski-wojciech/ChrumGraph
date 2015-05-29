@@ -8,12 +8,6 @@ namespace ChrumGraph
     public interface IVisual
     {
         /// <summary>
-        /// Creates a shape that represents a vertex in the canvas
-        /// </summary>
-        /// <returns></returns>
-        Ellipse getVisualVertex();
-
-        /// <summary>
         /// Creates visual representation of a given Core vertex.
         /// </summary>
         /// <param name="vertex">Core vertex.</param>

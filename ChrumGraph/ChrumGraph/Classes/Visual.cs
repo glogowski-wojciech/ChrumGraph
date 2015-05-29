@@ -13,14 +13,15 @@ namespace ChrumGraph
 {
     public partial class Vertex
     {
+        /// <summary>
+        /// Gets or sets Ellipse object of a vertex.
+        /// </summary>
         public Ellipse Ellipse { get; set; }
 
-        public TextBlock VisualLabel { get; set; }
-
         /// <summary>
-        /// If Vertex is selected.
+        /// Gets or sets Visual label of a vertex.
         /// </summary>
-        public Boolean Selected { get; set; }
+        public TextBlock VisualLabel { get; set; }
 
         /// <summary>
         /// Changes vertex ellipse color
@@ -35,10 +36,20 @@ namespace ChrumGraph
 
     public partial class Edge
     {
+        /// <summary>
+        /// Gets or sets Line object of an edge.
+        /// </summary>
         public Line Line { get; set; }
 
+        /// <summary>
+        /// Specifies whether edge is currently selected.
+        /// </summary>
         public bool Selected { get; set; }
         
+        /// <summary>
+        /// Changes color of an edge.
+        /// </summary>
+        /// <param name="c">New color</param>
         public void changeColor(Color c)
         {
             if (Line != null)
@@ -46,51 +57,46 @@ namespace ChrumGraph
         }
     }
 
-    enum MouseState { Normal, MovingVertex, MovingGraph, }
-    public enum GraphMode { DraggingMode, InsertingMode, }
+    /// <summary>
+    /// Specifies mouse state.
+    /// </summary>
+    public enum MouseState
+    {
+        /// <summary>Standard mouse state</summary>
+        Normal,
+        /// <summary>Mouse is currently moving vertex</summary>
+        MovingVertex,
+        /// <summary>Mouse is currently moving graph</summary>
+        MovingGraph,
+    }
+    /// <summary>
+    /// Specifies graph mode.
+    /// </summary>
+    public enum GraphMode
+    {
+        /// <summary>Mode oriented on dragging</summary>
+        DraggingMode,
+        /// <summary>Mode oriented on adding new vertices and edges</summary>
+        InsertingMode,
+    }
 
     /// <summary>
     /// Visual representation of a graph.
     /// </summary>
     public partial class Visual : IVisual
     {
-        private Canvas canvas;
-
-        private Core core;
-
-        private MainWindow mainWindow;
-
-        private SolidColorBrush vertexBrush;
-        private SolidColorBrush edgeBrush;
-
-        private Dictionary<UIElement, Vertex> VertexDict = new Dictionary<UIElement, Vertex>();
-        private Dictionary<Line, Edge> EdgeDict = new Dictionary<Line, Edge>();
-        private Vertex clickedVertex;
-        private Edge clickedEdge;
-        private Point previousMousePosition;
-
-        private Line addedEdge;
-
-        private MouseState mouseState = MouseState.Normal;
-        private GraphMode graphMode = GraphMode.DraggingMode;
-
-        private HashSet<Vertex> SelectedVertices = new HashSet<Vertex>();
-        private HashSet<Edge> SelectedEdges = new HashSet<Edge>();
-
         /// <summary>
         /// Constructor for the Visual class.
         /// </summary>
         /// <param name="mainWindow">Application's main window</param>
         public Visual(MainWindow mainWindow)
         {
-            VertexSize = 25.0;
-
+            this.mainWindow = mainWindow;
             canvas = mainWindow.MainCanvas;
 
-            this.mainWindow = mainWindow;
+            VertexSize = 25.0;
+            GraphMode = GraphMode.DraggingMode;
             
-            vertexBrush = new SolidColorBrush(vertexColor);
-            edgeBrush = new SolidColorBrush(edgeColor);
             ViewWindow = new ViewWindow(this);
             ViewWindow.Canvas = canvas;
             ViewWindow.MarginLength = 4.0 * VertexSize;
@@ -112,6 +118,27 @@ namespace ChrumGraph
             canvas.MouseWheel += MouseZoom;
         }
 
+        #region Fields
+        private MainWindow mainWindow;
+        private Canvas canvas;
+
+        private SolidColorBrush vertexBrush = new SolidColorBrush(vertexColor);
+        private SolidColorBrush edgeBrush = new SolidColorBrush(edgeColor);
+
+        private Dictionary<UIElement, Vertex> VertexDict = new Dictionary<UIElement, Vertex>();
+        private Dictionary<Line, Edge> EdgeDict = new Dictionary<Line, Edge>();
+        private Vertex clickedVertex;
+        private Edge clickedEdge;
+        private Point previousMousePosition;
+
+        private Line addedEdge;
+
+        private MouseState mouseState = MouseState.Normal;
+
+        private HashSet<Vertex> SelectedVertices = new HashSet<Vertex>();
+        private HashSet<Edge> SelectedEdges = new HashSet<Edge>();
+        #endregion
+        #region Properties
         /// <summary>
         /// Instance of Core class.
         /// </summary>
@@ -122,58 +149,23 @@ namespace ChrumGraph
         /// </summary>
         public ViewWindow ViewWindow { get; set; }
 
-        public GraphMode GraphMode
-        {
-            get { return graphMode; }
-            set { graphMode = value; }
-        }
+        /// <summary>
+        /// Gets or sets graph mode.
+        /// </summary>
+        public GraphMode GraphMode { get; set; }
 
         /// <summary>
         /// Defines the vertices' size on the main canvas.
         /// </summary>
         public double VertexSize { get; set; }
-        /*
-        public void setEventHandlersMove()
-        {
-            canvas.MouseDown += CanvasMouseDown;
-            foreach(var element in VertexDict)
-            {
-                element.Key.MouseLeftButtonDown += MouseDown;
-                element.Key.MouseLeftButtonUp += MouseUp;
-                element.Key.MouseMove += MouseMove;
-            }
-        }
 
-        public void setEventHandlersSelect()
-        {
-            canvas.MouseDown -= CanvasMouseDown;
-            foreach (var element in VertexDict)
-            {
-                Console.WriteLine("no i co");
-                element.Key.MouseLeftButtonDown -= MouseDown;
-                element.Key.MouseLeftButtonUp -= MouseUp;
-                element.Key.MouseMove -= MouseMove;
-            }
-        }
-        */
-        public Ellipse getVisualVertex()
-        {
-            Ellipse e = new Ellipse();
-            e.Height = e.Width = VertexSize;
-            e.Fill = vertexBrush;
-            return e;
-        }
+        /// <summary>
+        /// Standard getter and setter for the "Visual" booolean.
+        /// </summary>
+        public bool Visible { get; set; }
+        #endregion
 
-        private double translateCoordHor(double x)
-        {
-            return x + canvas.Width / 2.0;
-        }
-
-        private double translateCoordVert(double y)
-        {
-            return y + canvas.Height / 2.0;
-        }
-
+        #region Event Handlers
         private void AddEventHandlers(UIElement element, Vertex v)
         {
             VertexDict.Add(element, v);
@@ -191,127 +183,33 @@ namespace ChrumGraph
             line.MouseLeftButtonUp += MouseUp;
             line.MouseMove += MouseMove;
         }
-        
+
         private void CanvasMouseDown(object sender, MouseEventArgs e)
         {
-            if (graphMode == GraphMode.DraggingMode)
-            {
-                if (mouseState != MouseState.Normal) return;
+            if (!(e.OriginalSource is Canvas)) return;
+            if (mouseState != MouseState.Normal) return;
 
+            if (GraphMode == GraphMode.DraggingMode)
+            {
                 ViewWindow.Static = true;
                 previousMousePosition = e.GetPosition(canvas);
                 mouseState = MouseState.MovingGraph;
             }
-            else if (e.OriginalSource is Canvas) //that means we did not click any object on the canvas
+            else if (GraphMode == GraphMode.InsertingMode)
             {
                 Point mousePosition = e.GetPosition(canvas);
                 Point corePos = ViewWindow.VisualToCorePosition(mousePosition);
                 clickedVertex = Core.CreateVertex(corePos.X, corePos.Y);
-                selectionProcessing();
+                SelectionProcessing();
             }
         }
 
         private void CanvasMouseUp(object sender, MouseEventArgs e)
         {
-            if (graphMode == GraphMode.InsertingMode)
+            if (GraphMode == GraphMode.InsertingMode)
             {
                 addedEdge.Visibility = Visibility.Hidden;
             }
-        }
-
-        private void select(Vertex v)
-        {
-            if (v == null) return;
-            v.Selected = true;
-            v.changeColor(selectVertexColor);
-            SelectedVertices.Add(v);
-        }
-        private void unselect(Vertex v)
-        {
-            v.Selected = false;
-            v.changeColor(vertexColor); // TODO: What if there was pinned before select? Back to pinnedColor?
-        }
-
-        public void changeSelectedLabel(string s)
-        {
-            if(SelectedVertices.Count == 1)
-            {
-                Vertex v = SelectedVertices.First();
-                v.Label = s;
-                v.VisualLabel.Text = s;
-            }
-        }
-
-        public void cleanSelectedVertices()
-        {
-            IEnumerator<Vertex> iter = SelectedVertices.GetEnumerator();
-            while (iter.MoveNext())
-                 unselect(iter.Current);
-            SelectedVertices.Clear();
-        }
-
-        public void deleteSelected()
-        {
-            List<Vertex> l = SelectedVertices.ToList();
-            foreach (Vertex v in l)
-            {
-                unselect(v);
-                Core.RemoveVertex(v);
-            }
-        }
-
-        private void select(Edge e)
-        {
-            if (e == null) return;
-            e.Selected = true;
-            e.changeColor(selectEdgeColor);
-            SelectedEdges.Add(e);
-        }
-        private void unselect(Edge e)
-        {
-            e.Selected = false;
-            e.changeColor(edgeColor); // TODO: What if there was pinn before select? Back to pinnedColor?
-        }
-
-        public void cleanSelectedEdges()
-        {
-            IEnumerator<Edge> iter = SelectedEdges.GetEnumerator();
-            while (iter.MoveNext())
-                 unselect(iter.Current);
-            SelectedVertices.Clear();
-        }
-        
-        private void selectionProcessing()
-        {
-            if (Forms.Control.ModifierKeys == Forms.Keys.Control)
-            {
-                if (clickedVertex != null)
-                {
-                    if (clickedVertex.Selected)
-                        unselect(clickedVertex);
-                    else
-                        select(clickedVertex);
-                }
-                if (clickedEdge != null)
-                {
-                    if (clickedEdge.Selected)
-                        unselect(clickedEdge);
-                    else
-                        select(clickedEdge);
-                }
-            }
-            else
-            {
-                cleanSelectedVertices();
-                cleanSelectedEdges();
-                select(clickedVertex);
-                select(clickedEdge);
-            }
-
-            if (SelectedVertices.Count == 1)
-                mainWindow.EnableVertexControls(SelectedVertices.First().Label);
-            else
-                mainWindow.DisableVertexControls();
         }
 
         private void MouseDown(object sender, MouseEventArgs e)
@@ -321,7 +219,7 @@ namespace ChrumGraph
             if (line == null)
             {
                 clickedVertex = VertexDict[element];
-                clickedVertex.Clicked = true;
+                clickedVertex.Selected = true;
                 clickedEdge = null;
             }
             if (line != null)
@@ -330,10 +228,10 @@ namespace ChrumGraph
                 clickedVertex = null;
             }
 
-            selectionProcessing();
+            SelectionProcessing();
             previousMousePosition = e.GetPosition(canvas);
 
-            if (graphMode == GraphMode.DraggingMode)
+            if (GraphMode == GraphMode.DraggingMode)
             {
                 mouseState = MouseState.MovingVertex;
                 ViewWindow.Static = true;
@@ -348,7 +246,7 @@ namespace ChrumGraph
 
         private void MouseMove(object sender, MouseEventArgs e)
         {
-            if (graphMode == GraphMode.DraggingMode)
+            if (GraphMode == GraphMode.DraggingMode)
             {
                 if (mouseState == MouseState.Normal) return;
 
@@ -384,23 +282,23 @@ namespace ChrumGraph
 
         private void VertexMouseUp(object sender, MouseEventArgs e)
         {
-            if(graphMode == GraphMode.InsertingMode)
+            if (GraphMode == GraphMode.InsertingMode)
             {
                 UIElement element = sender as UIElement;
                 Vertex currentVertex = VertexDict[element];
                 addedEdge.Visibility = Visibility.Hidden;
                 if (currentVertex != clickedVertex)
-                    clickedEdge = Core.CreateEdge(currentVertex, clickedVertex);   
+                    clickedEdge = Core.CreateEdge(currentVertex, clickedVertex);
             }
         }
 
         private void MouseUp(object sender, MouseEventArgs e)
         {
-            if (graphMode == GraphMode.DraggingMode)
+            if (GraphMode == GraphMode.DraggingMode)
             {
                 if (mouseState == MouseState.MovingVertex && clickedVertex != null)
                 {
-                    clickedVertex.Clicked = false;
+                    clickedVertex.Selected = false;
                     clickedVertex = null;
                 }
                 mouseState = MouseState.Normal;
@@ -411,6 +309,115 @@ namespace ChrumGraph
         {
             Point position = ViewWindow.VisualToCorePosition(e.GetPosition(canvas));
             ViewWindow.SetZoom(e.Delta / 120.0, position);
+        }
+        #endregion
+
+        private void Select(Vertex v)
+        {
+            if (v == null) return;
+            v.Selected = true;
+            v.changeColor(selectVertexColor);
+            SelectedVertices.Add(v);
+        }
+        private void Unselect(Vertex v)
+        {
+            v.Selected = false;
+            v.changeColor(vertexColor); // TODO: What if there was pinned before select? Back to pinnedColor?
+        }
+
+        /// <summary>
+        /// Changes label of selected vertex if there is only one selected.
+        /// </summary>
+        /// <param name="s">New label</param>
+        public void ChangeSelectedLabel(string s)
+        {
+            if (SelectedVertices.Count == 1)
+            {
+                Vertex v = SelectedVertices.First();
+                v.Label = s;
+                v.VisualLabel.Text = s;
+            }
+        }
+
+        /// <summary>
+        /// Unselects all vertices.
+        /// </summary>
+        public void CleanSelectedVertices()
+        {
+            IEnumerator<Vertex> iter = SelectedVertices.GetEnumerator();
+            while (iter.MoveNext())
+                Unselect(iter.Current);
+            SelectedVertices.Clear();
+        }
+
+        /// <summary>
+        /// Deletes selected vertices.
+        /// </summary>
+        public void DeleteSelected()
+        {
+            List<Vertex> l = SelectedVertices.ToList();
+            foreach (Vertex v in l)
+            {
+                Unselect(v);
+                Core.RemoveVertex(v);
+            }
+        }
+
+        private void Select(Edge e)
+        {
+            if (e == null) return;
+            e.Selected = true;
+            e.changeColor(selectEdgeColor);
+            SelectedEdges.Add(e);
+        }
+        private void Unselect(Edge e)
+        {
+            e.Selected = false;
+            e.changeColor(edgeColor);
+        }
+
+        /// <summary>
+        /// Unselects all edges.
+        /// </summary>
+        public void CleanSelectedEdges()
+        {
+            IEnumerator<Edge> iter = SelectedEdges.GetEnumerator();
+            while (iter.MoveNext())
+                Unselect(iter.Current);
+            SelectedVertices.Clear();
+        }
+
+        private void SelectionProcessing()
+        {
+            if (Forms.Control.ModifierKeys == Forms.Keys.Control)
+            {
+                if (clickedVertex != null)
+                {
+                    if (clickedVertex.Selected)
+                        Unselect(clickedVertex);
+                    else
+                        Select(clickedVertex);
+                }
+                if (clickedEdge != null)
+                {
+                    if (clickedEdge.Selected)
+                        Unselect(clickedEdge);
+                    else
+                        Select(clickedEdge);
+                }
+            }
+            else
+            {
+                CleanSelectedVertices();
+                CleanSelectedEdges();
+                Select(clickedVertex);
+                Select(clickedEdge);
+            }
+
+            if (SelectedVertices.Count == 1)
+                mainWindow.EnableVertexControls(SelectedVertices.First().Label);
+            else
+                mainWindow.DisableVertexControls();
         }
 
         /// <summary>
@@ -427,7 +434,7 @@ namespace ChrumGraph
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
             };
-            
+
             /*
             Point visualPosition = ViewWindow.CoreToVisualPosition(vertex.Position);
             Canvas.SetLeft(e, visualPosition.X - VertexSize / 2.0);
@@ -439,7 +446,7 @@ namespace ChrumGraph
 
             AddEventHandlers(e, vertex);
             vertex.Ellipse = e;
-            vertex.Selected = false;
+            //vertex.Selected = false;
 
             TextBlock t = new TextBlock
             {
@@ -503,11 +510,6 @@ namespace ChrumGraph
         }
 
         /// <summary>
-        /// Standard getter and setter for the "Visual" booolean.
-        /// </summary>
-        public bool Visible { get; set; }
-
-        /// <summary>
         /// Draws a vertex on the main canvas based on its current position.
         /// </summary>
         /// <param name="v">Vertex to be redrawn</param>
@@ -542,8 +544,8 @@ namespace ChrumGraph
             if (!Visible) Visible = true;
 
             ViewWindow.Adjust();
-            
-            foreach(Vertex v in Core.Vertices)
+
+            foreach (Vertex v in Core.Vertices)
                 RedrawVertex(v);
 
             foreach (Edge e in Core.Edges)

@@ -166,9 +166,6 @@ namespace ChrumGraph
             return v;
         }
 
-        public double Width { get; set; }
-        public double Height { get; set; }
-
         /// <summary>
         /// Converts Core position to Visual position.
         /// </summary>

@@ -16,8 +16,10 @@
             V2 = v2;
         }
 
-        public Edge()
-        {}
+        /// <summary>
+        /// Creates new Edge instance.
+        /// </summary>
+        public Edge() { }
 
         /// <summary>
         /// First vertex that is connected by an edge.

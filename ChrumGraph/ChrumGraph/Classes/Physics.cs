@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
+using System.Diagnostics;
 
 namespace ChrumGraph
 {
@@ -64,7 +65,7 @@ namespace ChrumGraph
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += (sender, e) => { IterateSimulation(); };
             VertexForceParam = 4.0;
-            EdgeForceParam = 1.0;
+            EdgeForceParam = 0.8;
             EdgeLength = 1.0;
             frictionParam = 0.0;
             Simulate = false;
@@ -183,8 +184,12 @@ namespace ChrumGraph
                 });
                 Parallel.For(0, n, (int i) =>
                 {
-                    vertices[i].X += netForces[i].X;
-                    vertices[i].Y += netForces[i].Y;
+                    if (!vertices[i].Selected)
+                    {
+                        //if ( i == 1) Debug.WriteLine(DateTime.Now.ToString());
+                        vertices[i].X += netForces[i].X;
+                        vertices[i].Y += netForces[i].Y;
+                    }
                 });
             }
 

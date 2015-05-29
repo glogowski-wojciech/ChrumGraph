@@ -104,25 +104,6 @@ namespace ChrumGraph
         }
 
         /// <summary>
-        /// Sets vertex state to clicked, so its position temporarily won't be
-        /// changed by Physics.
-        /// </summary>
-        /// <param name="vertex">Vertex whose state should be changed.</param>
-        public void VertexClicked(Vertex vertex)
-        {
-            lock (this) { vertex.Clicked = true; }
-        }
-
-        /// <summary>
-        /// Sets vertex state to not clicked.
-        /// </summary>
-        /// <param name="vertex">Vertex whose position should by changed.</param>
-        public void VertexUnclicked(Vertex vertex)
-        {
-            lock (this) { vertex.Clicked = false; }
-        }
-
-        /// <summary>
         /// Sets position of a given vertex.
         /// </summary>
         /// <param name="vertex">Vertex whose position should be set.</param>
@@ -154,14 +135,6 @@ namespace ChrumGraph
         }
 
         /// <summary>
-        /// Gets dictionary of graph's vertices.
-        /// </summary>
-       /* public Dictionary<string, Vertex> VerticesDict
-        {
-            get { return verticesDict; }
-        }*/
-
-        /// <summary>
         /// Schould be called after the simulation has finished.
         /// </summary>
         public void SimulationFinished()
@@ -179,7 +152,6 @@ namespace ChrumGraph
         {
             Vertex v = new Vertex(x, y, label);
             Vertices.Add(v);
-            //VerticesDict.Add(label, v);
             visual.CreateVisualVertex(v);
             return v;
         }
@@ -202,7 +174,6 @@ namespace ChrumGraph
         {
             RemoveEdgesInVertex(v);
             Vertices.Remove(v);
-            //VerticesDict.Remove(v.Label);
             visual.RemoveVisualVertex(v);
         }
 
