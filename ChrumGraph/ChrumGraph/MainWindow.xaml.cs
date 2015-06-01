@@ -14,7 +14,7 @@ namespace ChrumGraph
     {
         private Core core;
         private Visual visual;
-
+        private bool CheckBoxCheckOverriden = false;
         /// <summary>
         /// Initialize window.
         /// </summary>
@@ -203,6 +203,46 @@ namespace ChrumGraph
             LabelEditor.Text = "";
             LabelEditor.IsEnabled = false;
             PinnedCheckBox.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Checks the PinnedCheckBox
+        /// </summary>
+        public void CheckPinnedCheckBox()
+        {
+            CheckBoxCheckOverriden = true;
+            PinnedCheckBox.IsChecked = true;
+            CheckBoxCheckOverriden = false;
+        }
+
+        /// <summary>
+        /// Unchecks the PinnedCheckBox
+        /// </summary>
+        public void UncheckPinnedCheckBox()
+        {
+            CheckBoxCheckOverriden = true;
+            PinnedCheckBox.IsChecked = false;
+            CheckBoxCheckOverriden = false;
+        }
+
+        /// <summary>
+        /// Disables the PinnedCheckBox
+        /// </summary>
+        public void DisablePinnedCheckBox()
+        {
+            PinnedCheckBox.IsEnabled = false;
+        }
+
+        private void Pinn(object sender, RoutedEventArgs e)
+        {
+            if (!CheckBoxCheckOverriden)
+                visual.PinnSelected();
+        }
+
+        private void Unpinn(object sender, RoutedEventArgs e)
+        {
+            if (!CheckBoxCheckOverriden)
+                visual.UnpinnSelected();
         }
 
         private void LabelChanged(object sender, RoutedEventArgs e)

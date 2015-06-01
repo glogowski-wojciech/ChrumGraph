@@ -4,7 +4,11 @@
         Title="Chrum graph" Height="525" Width="525" MinHeight="250" MinWidth="250"
         SizeChanged="WindowSizeChanged">
     <Grid>
-        <DockPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.ColumnSpan="2">
 
             <Menu Name="MainMenu" Height="20" VerticalAlignment="Top">
                 <MenuItem Header="File">
@@ -17,13 +21,12 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <TextBlock Text="Mode:" Margin="10,30,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <ToggleButton x:Name="MoveButton" IsChecked="True" Content="Move" Margin="10,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToMove"/>
-        <ToggleButton x:Name="SelectButton" IsChecked="False" Content="Insert" Margin="80,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToInsert"/>
-        <CheckBox x:Name="PinnedCheckBox" IsEnabled="False" Content="Pinned" Margin="10,90,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock x:Name="LabelEditorLabel" Text="Label:" Margin="10,110,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBox IsEnabled="False" x:Name="LabelEditor" TextChanged="LabelChanged" Margin="10,130,0,0" Height="22" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Expander Header="Symulation&#10;Options" Margin="10,170,0,0" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" IsExpanded="False">
+        <TextBlock Text="Mode:" Margin="10,30,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <ToggleButton x:Name="MoveButton" IsChecked="True" Content="Move" Margin="10,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToMove" Grid.ColumnSpan="2"/>
+        <ToggleButton x:Name="SelectButton" IsChecked="False" Content="Insert" Margin="80,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToInsert" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="LabelEditorLabel" Text="Label:" Margin="10,110,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <TextBox IsEnabled="False" x:Name="LabelEditor" TextChanged="LabelChanged" Margin="10,130,0,0" Height="22" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Expander Header="Symulation&#10;Options" Margin="10,170,0,0" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" IsExpanded="False" Grid.ColumnSpan="2">
             <StackPanel>
                 <TextBlock Text="Forces Multiplier" Height="15" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 <Slider Name="ForcesMultiplierSlider" Height="20" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Value="50" Minimum="0"
@@ -51,6 +54,6 @@
                 <TextBlock Name="FrictionTextBlock" Margin="85,-20,0,0" Height="20" Width="55" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </StackPanel>
         </Expander>
-        <Canvas Name="MainCanvas" ClipToBounds="True" HorizontalAlignment="Stretch" Margin="160,20,0,0" VerticalAlignment="Stretch" Background="#AAAAAA"/>
+        <Canvas Name="MainCanvas" ClipToBounds="True" HorizontalAlignment="Stretch" Margin="160,20,0,0" VerticalAlignment="Stretch" Background="#AAAAAA" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

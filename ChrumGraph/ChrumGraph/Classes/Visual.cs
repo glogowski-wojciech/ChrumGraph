@@ -131,6 +131,8 @@ namespace ChrumGraph
         private Edge clickedEdge;
         private Point previousMousePosition;
 
+        private int SelectedAndPinnedVertices = 0;
+
         private Line addedEdge;
 
         private MouseState mouseState = MouseState.Normal;
@@ -192,6 +194,8 @@ namespace ChrumGraph
             Point mousePosition = e.GetPosition(canvas);
             if (GraphMode == GraphMode.DraggingMode)
             {
+                CleanSelectedVertices();
+                CleanSelectedEdges();
                 previousMousePosition = mousePosition;
                 mouseState = MouseState.MovingGraph;
                 ViewWindow.Static = true;
@@ -297,7 +301,6 @@ namespace ChrumGraph
             {
                 if (mouseState == MouseState.MovingVertex && clickedVertex != null)
                 {
-                    clickedVertex.Selected = false;
                     clickedVertex = null;
                 }
                 mouseState = MouseState.Normal;
@@ -314,14 +317,20 @@ namespace ChrumGraph
         private void Select(Vertex v)
         {
             if (v == null) return;
+            if (v.Pinned)
+                SelectedAndPinnedVertices++;
             v.Selected = true;
             v.changeColor(selectVertexColor);
             SelectedVertices.Add(v);
         }
+
         private void Unselect(Vertex v)
         {
+            if (v.Pinned)
+                SelectedAndPinnedVertices--;
             v.Selected = false;
             v.changeColor(vertexColor); // TODO: What if there was pinned before select? Back to pinnedColor?
+            SelectedVertices.Remove(v);
         }
 
         /// <summary>
@@ -343,9 +352,8 @@ namespace ChrumGraph
         /// </summary>
         public void CleanSelectedVertices()
         {
-            IEnumerator<Vertex> iter = SelectedVertices.GetEnumerator();
-            while (iter.MoveNext())
-                Unselect(iter.Current);
+            while (SelectedVertices.Count > 0)
+                Unselect(SelectedVertices.First());
             SelectedVertices.Clear();
         }
 
@@ -373,6 +381,7 @@ namespace ChrumGraph
         {
             e.Selected = false;
             e.changeColor(edgeColor);
+            SelectedEdges.Remove(e);
         }
 
         /// <summary>
@@ -380,10 +389,9 @@ namespace ChrumGraph
         /// </summary>
         public void CleanSelectedEdges()
         {
-            IEnumerator<Edge> iter = SelectedEdges.GetEnumerator();
-            while (iter.MoveNext())
-                Unselect(iter.Current);
-            SelectedVertices.Clear();
+            while (SelectedEdges.Count > 0)
+                Unselect(SelectedEdges.First());
+            SelectedEdges.Clear();
         }
 
         private void SelectionProcessing()
@@ -417,6 +425,17 @@ namespace ChrumGraph
                 mainWindow.EnableVertexControls(SelectedVertices.First().Label);
             else
                 mainWindow.DisableVertexControls();
+
+            if (SelectedVertices.Count == 0)
+            {
+                mainWindow.UncheckPinnedCheckBox();
+                mainWindow.DisablePinnedCheckBox();
+            }
+
+            if (SelectedAndPinnedVertices == SelectedVertices.Count && SelectedVertices.Count > 0)
+                mainWindow.CheckPinnedCheckBox();
+            else
+                mainWindow.UncheckPinnedCheckBox();
         }
 
         /// <summary>
@@ -560,6 +579,32 @@ namespace ChrumGraph
                 RemoveVisualEdge(e);
             }
             ViewWindow.Static = false;
+        }
+
+        /// <summary>
+        /// Pinns all selected vertices
+        /// </summary>
+        public void PinnSelected()
+        {
+            List<Vertex> l = SelectedVertices.ToList();
+            foreach (Vertex v in l)
+            {
+                v.Pinned = true;
+            }
+            SelectedAndPinnedVertices = SelectedVertices.Count;
+        }
+
+        /// <summary>
+        /// Unpinns all selected vertices
+        /// </summary>
+        public void UnpinnSelected()
+        {
+            List<Vertex> l = SelectedVertices.ToList();
+            foreach (Vertex v in l)
+            {
+                v.Pinned = false;
+            }
+            SelectedAndPinnedVertices = 0;
         }
     }
 }
