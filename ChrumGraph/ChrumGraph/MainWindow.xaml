@@ -24,6 +24,7 @@
         <TextBlock Text="Mode:" Margin="10,30,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <ToggleButton x:Name="MoveButton" IsChecked="True" Content="Move" Margin="10,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToMove" Grid.ColumnSpan="2"/>
         <ToggleButton x:Name="SelectButton" IsChecked="False" Content="Insert" Margin="80,50,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ChangeModeToInsert" Grid.ColumnSpan="2"/>
+        <CheckBox x:Name="PinnedCheckBox" IsChecked="False" IsEnabled="False" Content="Pinned" Margin="10,90,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Click="PinnedCheckBoxClick"/>
         <TextBlock x:Name="LabelEditorLabel" Text="Label:" Margin="10,110,0,0" Height="25" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <TextBox IsEnabled="False" x:Name="LabelEditor" TextChanged="LabelChanged" Margin="10,130,0,0" Height="22" Width="140" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <Expander Header="Symulation&#10;Options" Margin="10,170,0,0" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" IsExpanded="False" Grid.ColumnSpan="2">

@@ -253,5 +253,12 @@ namespace ChrumGraph
         {
             visual.ChangeSelectedLabel(LabelEditor.Text);
         }
+
+        private void PinnedCheckBoxClick(object sender, RoutedEventArgs e)
+        {
+            CheckBox cb = sender as CheckBox;
+            if ((bool)cb.IsChecked) visual.PinnSelected();
+            else visual.UnpinnSelected();
+        }
     }
 }
