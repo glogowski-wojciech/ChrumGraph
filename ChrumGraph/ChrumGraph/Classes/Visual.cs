@@ -256,10 +256,21 @@ namespace ChrumGraph
                         CleanSelectedEdges();
                     }
 
-                    foreach(Vertex v in Core.Vertices)
+                    foreach (Vertex v in Core.Vertices)
                     {
                         if (IsPointInSelectionBox(ViewWindow.CoreToVisualPosition(v.Position)))
                             Select(v);
+                    }
+
+                    foreach (Edge edge in Core.Edges)
+                    {
+                        Point v1 = ViewWindow.CoreToVisualPosition(edge.V1.Position);
+                        Point v2 = ViewWindow.CoreToVisualPosition(edge.V2.Position);
+                        v1.X = (v1.X + v2.X) / 2;
+                        v1.Y = (v1.Y + v2.Y) / 2;
+
+                        if (IsPointInSelectionBox(v1))
+                            Select(edge);
                     }
                        
                 }
@@ -333,7 +344,7 @@ namespace ChrumGraph
                     Canvas.SetTop(selectionBox, mousePosition.Y);
                     selectionBox.Height = mouseShiftDownPosition.Y - mousePosition.Y;
                 }
-                Console.WriteLine(selectionBox.Width);
+
                 previousMousePosition = mousePosition;
                 return;
             }
