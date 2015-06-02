@@ -477,11 +477,18 @@ namespace ChrumGraph
         /// </summary>
         public void DeleteSelected()
         {
-            List<Vertex> l = SelectedVertices.ToList();
-            foreach (Vertex v in l)
+            List<Vertex> lv = SelectedVertices.ToList();
+            foreach (Vertex v in lv)
             {
                 Unselect(v);
                 Core.RemoveVertex(v);
+            }
+
+            List<Edge> le = SelectedEdges.ToList();
+            foreach (Edge e in le)
+            {
+                Unselect(e);
+                Core.RemoveEdge(e);
             }
         }
 

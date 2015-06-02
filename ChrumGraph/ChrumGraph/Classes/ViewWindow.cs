@@ -58,8 +58,8 @@ namespace ChrumGraph
                 if (Static) return;
 
                 double xMin, xMax, yMin, yMax, coreWidth, coreHeight;
-                xMin = yMin = double.PositiveInfinity;
-                xMax = yMax = double.NegativeInfinity;
+                xMin = yMin = -1;
+                xMax = yMax = 1;
 
                 foreach (Vertex v in visual.Core.Vertices)
                 {
