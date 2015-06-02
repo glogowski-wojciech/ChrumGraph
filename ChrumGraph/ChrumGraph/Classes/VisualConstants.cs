@@ -22,6 +22,8 @@ namespace ChrumGraph
         private static Color selectEdgeColor = Color.FromRgb(138, 10, 12);
         private static Color selectRectColor = Colors.MistyRose;
 
+        private static Color selectionBoxColor = Colors.Black;
+
         /// <summary>
         /// Sidebar color
         /// </summary>

@@ -15,6 +15,7 @@ namespace ChrumGraph
         private Core core;
         private Visual visual;
         private bool CheckBoxCheckOverriden = false;
+
         /// <summary>
         /// Initialize window.
         /// </summary>
@@ -40,11 +41,14 @@ namespace ChrumGraph
 
         private void KeyHandler(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Delete)
+            if (e.Key == Key.Delete)
                 visual.DeleteSelected();
 
-            if(e.Key == Key.Escape)
+            if (e.Key == Key.Escape)
+            {
                 visual.CleanSelectedVertices();
+                visual.CleanSelectedEdges();
+            }
         }
 
         private void OpenClick(object sender, RoutedEventArgs e)

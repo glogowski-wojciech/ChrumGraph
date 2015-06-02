@@ -107,8 +107,18 @@ namespace ChrumGraph
                 StrokeThickness = VertexSize / verticeToEdgeRatio,
                 Visibility = Visibility.Hidden,
             };
+
             canvas.Children.Add(addedEdge);
             Canvas.SetZIndex(addedEdge, 1);
+
+            selectionBox = new Rectangle 
+            {
+                Visibility = Visibility.Collapsed,
+                Stroke = new SolidColorBrush(selectionBoxColor),
+                StrokeThickness = 1,
+            };
+
+            canvas.Children.Add(selectionBox);
 
             canvas.MouseDown += CanvasMouseDown;
             canvas.MouseUp += CanvasMouseUp;
@@ -132,6 +142,10 @@ namespace ChrumGraph
         private Point previousMousePosition;
 
         private int SelectedAndPinnedVertices = 0;
+
+        private bool mouseShiftDown = false;
+        private Point mouseShiftDownPosition;
+        private Rectangle selectionBox;
 
         private Line addedEdge;
 
@@ -192,16 +206,36 @@ namespace ChrumGraph
             if (mouseState != MouseState.Normal) return;
 
             Point mousePosition = e.GetPosition(canvas);
-            if (GraphMode == GraphMode.DraggingMode)
+
+            mouseShiftDownPosition = mousePosition;
+            if (Forms.Control.ModifierKeys == Forms.Keys.Shift || Forms.Control.ModifierKeys == (Forms.Keys.Shift | Forms.Keys.Control))
             {
-                CleanSelectedVertices();
-                CleanSelectedEdges();
+                mouseShiftDown = true;
+                canvas.CaptureMouse();
+
+                Canvas.SetLeft(selectionBox, mouseShiftDownPosition.X);
+                Canvas.SetTop(selectionBox, mouseShiftDownPosition.Y);
+                selectionBox.Width = 0;
+                selectionBox.Height = 0;
+
+                selectionBox.Visibility = Visibility.Visible;
+            }
+
+            if (GraphMode == GraphMode.DraggingMode)
+            {   
+                if(!(Forms.Control.ModifierKeys == Forms.Keys.Control || Forms.Control.ModifierKeys == (Forms.Keys.Shift | Forms.Keys.Control)))
+                {
+                    CleanSelectedVertices();
+                    CleanSelectedEdges();
+                }
                 previousMousePosition = mousePosition;
                 mouseState = MouseState.MovingGraph;
                 ViewWindow.Static = true;
             }
             else if (GraphMode == GraphMode.InsertingMode)
             {
+                if (Forms.Control.ModifierKeys == Forms.Keys.Shift || Forms.Control.ModifierKeys == (Forms.Keys.Shift | Forms.Keys.Control))
+                    return;
                 Point corePos = ViewWindow.VisualToCorePosition(mousePosition);
                 clickedVertex = Core.CreateVertex(corePos.X, corePos.Y);
                 SelectionProcessing();
@@ -210,6 +244,28 @@ namespace ChrumGraph
 
         private void CanvasMouseUp(object sender, MouseEventArgs e)
         {
+            if (mouseShiftDown)
+            {
+                mouseShiftDown = false;
+                canvas.ReleaseMouseCapture();
+                if (Forms.Control.ModifierKeys == Forms.Keys.Shift || Forms.Control.ModifierKeys == (Forms.Keys.Shift | Forms.Keys.Control))
+                {
+                    if (Forms.Control.ModifierKeys == Forms.Keys.Shift)
+                    {
+                        CleanSelectedVertices();
+                        CleanSelectedEdges();
+                    }
+
+                    foreach(Vertex v in Core.Vertices)
+                    {
+                        if (IsPointInSelectionBox(ViewWindow.CoreToVisualPosition(v.Position)))
+                            Select(v);
+                    }
+                       
+                }
+                selectionBox.Visibility = Visibility.Collapsed;
+            }
+
             if (GraphMode == GraphMode.InsertingMode)
             {
                 addedEdge.Visibility = Visibility.Hidden;
@@ -241,19 +297,57 @@ namespace ChrumGraph
             }
             else //adding new edge
             {
-                addedEdge.X1 = addedEdge.X2 = Canvas.GetLeft(clickedVertex.Ellipse) + VertexSize / 2.0; // TODO: Null reference after selecting edge in insert mode
-                addedEdge.Y1 = addedEdge.Y2 = Canvas.GetTop(clickedVertex.Ellipse) + VertexSize / 2.0;
-                addedEdge.Visibility = Visibility.Visible;
+                if (line == null)
+                {
+                    addedEdge.X1 = addedEdge.X2 = Canvas.GetLeft(clickedVertex.Ellipse) + VertexSize / 2.0;
+                    addedEdge.Y1 = addedEdge.Y2 = Canvas.GetTop(clickedVertex.Ellipse) + VertexSize / 2.0;
+                    addedEdge.Visibility = Visibility.Visible;
+                }
             }
         }
 
         private void MouseMove(object sender, MouseEventArgs e)
         {
+            Point mousePosition = e.GetPosition(canvas);
+
+            if (mouseShiftDown && Forms.Control.ModifierKeys == Forms.Keys.Shift || Forms.Control.ModifierKeys == (Forms.Keys.Shift | Forms.Keys.Control))
+            {
+                if (mouseShiftDownPosition.X < mousePosition.X)
+                {
+                    Canvas.SetLeft(selectionBox, mouseShiftDownPosition.X);
+                    selectionBox.Width = mousePosition.X - mouseShiftDownPosition.X;
+                }
+                else
+                {
+                    Canvas.SetLeft(selectionBox, mousePosition.X);
+                    selectionBox.Width = mouseShiftDownPosition.X - mousePosition.X;
+                }
+
+                if (mouseShiftDownPosition.Y < mousePosition.Y)
+                {
+                    Canvas.SetTop(selectionBox, mouseShiftDownPosition.Y);
+                    selectionBox.Height = mousePosition.Y - mouseShiftDownPosition.Y;
+                }
+                else
+                {
+                    Canvas.SetTop(selectionBox, mousePosition.Y);
+                    selectionBox.Height = mouseShiftDownPosition.Y - mousePosition.Y;
+                }
+                Console.WriteLine(selectionBox.Width);
+                previousMousePosition = mousePosition;
+                return;
+            }
+            else if (mouseShiftDown)
+            {
+                mouseShiftDown = false;
+                canvas.ReleaseMouseCapture();
+                selectionBox.Visibility = Visibility.Collapsed;
+            }
+
             if (GraphMode == GraphMode.DraggingMode)
             {
                 if (mouseState == MouseState.Normal) return;
 
-                Point mousePosition = e.GetPosition(canvas);
                 Vector coreShift = ViewWindow.VisualToCorePosition(mousePosition) -
                     ViewWindow.VisualToCorePosition(previousMousePosition);
                 previousMousePosition = mousePosition;
@@ -271,7 +365,6 @@ namespace ChrumGraph
             {
                 if (Mouse.LeftButton == MouseButtonState.Pressed)
                 {
-                    Point mousePosition = e.GetPosition(canvas);
                     addedEdge.X2 = mousePosition.X - 1;
                     addedEdge.Y2 = mousePosition.Y - 1;
                     if (mousePosition.X < addedEdge.X1)
@@ -288,10 +381,14 @@ namespace ChrumGraph
             if (GraphMode == GraphMode.InsertingMode)
             {
                 UIElement element = sender as UIElement;
-                Vertex currentVertex = VertexDict[element];
+                Line line = sender as Line;
                 addedEdge.Visibility = Visibility.Hidden;
-                if (currentVertex != clickedVertex)
-                    clickedEdge = Core.CreateEdge(currentVertex, clickedVertex);
+                if (line == null)
+                {
+                    Vertex currentVertex = VertexDict[element];
+                    if (currentVertex != clickedVertex)
+                        clickedEdge = Core.CreateEdge(currentVertex, clickedVertex);
+                }
             }
         }
 
@@ -313,6 +410,13 @@ namespace ChrumGraph
             ViewWindow.SetZoom(e.Delta / 120.0, position);
         }
         #endregion
+
+        private bool IsPointInSelectionBox(Point p)
+        {
+            return (p.X >= Canvas.GetLeft(selectionBox) && p.Y >= Canvas.GetTop(selectionBox) &&
+                    p.X - Canvas.GetLeft(selectionBox) <= selectionBox.ActualWidth &&
+                    p.Y - Canvas.GetTop(selectionBox) <= selectionBox.ActualHeight);
+        }
 
         private void Select(Vertex v)
         {
@@ -534,6 +638,12 @@ namespace ChrumGraph
 
             Canvas.SetLeft(v.VisualLabel, visualPosition.X - v.VisualLabel.ActualWidth / 2.0 - VertexSize / 4.0);
             Canvas.SetTop(v.VisualLabel, visualPosition.Y - VertexSize / 1.7);
+
+            if (v == clickedVertex)
+            {
+                addedEdge.X1 = Canvas.GetLeft(clickedVertex.Ellipse) + VertexSize / 2.0;
+                addedEdge.Y1 = Canvas.GetTop(clickedVertex.Ellipse) + VertexSize / 2.0;
+            }
         }
 
         /// <summary>
@@ -588,9 +698,8 @@ namespace ChrumGraph
         {
             List<Vertex> l = SelectedVertices.ToList();
             foreach (Vertex v in l)
-            {
-                v.Pinned = true;
-            }
+                Core.Pin(v);
+
             SelectedAndPinnedVertices = SelectedVertices.Count;
         }
 
@@ -601,9 +710,8 @@ namespace ChrumGraph
         {
             List<Vertex> l = SelectedVertices.ToList();
             foreach (Vertex v in l)
-            {
-                v.Pinned = false;
-            }
+                Core.Unpin(v);
+
             SelectedAndPinnedVertices = 0;
         }
     }

@@ -48,7 +48,7 @@ namespace ChrumGraph
         }
 
         /// <summary>
-        /// Moves vector by a specified vector.
+        /// Moves vertex by a specified vector.
         /// </summary>
         /// <param name="shift">Core shift</param>
         public void Shift(Vector shift)
