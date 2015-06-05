@@ -1,4 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$class_chrum_graph_1_1_simulation_already_running_exception.html" title="Thrown if IPhysics simulation is being run again with StartSimulation without StopSimulation after pr..." alt="" coords="224,5,428,47"/>
-<area shape="rect" id="node3" href="$class_chrum_graph_1_1_simulation_already_stopped_exception.html" title="Thrown if IPhysics simulation is being stopped again with StopSimulation without being run after prev..." alt="" coords="224,71,428,112"/>
-</map>

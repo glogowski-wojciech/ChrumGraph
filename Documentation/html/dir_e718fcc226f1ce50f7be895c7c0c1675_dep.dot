@@ -1,9 +1,0 @@
-digraph "ChrumGraph/Classes" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_3c6d3df59f3a7cd9434389651192ab90 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="ChrumGraph" fontname="Helvetica", fontsize="10", URL="dir_3c6d3df59f3a7cd9434389651192ab90.html"]
-  dir_e718fcc226f1ce50f7be895c7c0c1675 [shape=box, label="Classes", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_e718fcc226f1ce50f7be895c7c0c1675.html"];
-  }
-}

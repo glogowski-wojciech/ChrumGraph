@@ -1,4 +1,0 @@
-<map id="ChrumGraph.IVisual.CreateVisualVertex" name="ChrumGraph.IVisual.CreateVisualVertex">
-<area shape="rect" id="node2" href="$class_chrum_graph_1_1_core.html#a023f217ddb9942a9b79675451221a705" title="Creates Core vertex and releted Visual vertex. " alt="" coords="233,13,440,39"/>
-<area shape="rect" id="node3" href="$class_chrum_graph_1_1_core.html#acead75352c6d16fc20beae712e3e9fde" title="Loads graph from file ASD represenation, that ignores vertex position. " alt="" coords="488,13,697,39"/>
-</map>

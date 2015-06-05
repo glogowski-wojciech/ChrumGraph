@@ -1,9 +1,0 @@
-digraph "ChrumGraph/Properties" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_3c6d3df59f3a7cd9434389651192ab90 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="ChrumGraph" fontname="Helvetica", fontsize="10", URL="dir_3c6d3df59f3a7cd9434389651192ab90.html"]
-  dir_0708c151a296341ea462133c8bd09d95 [shape=box, label="Properties", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_0708c151a296341ea462133c8bd09d95.html"];
-  }
-}
