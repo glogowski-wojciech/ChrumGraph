@@ -64,8 +64,8 @@ namespace ChrumGraph
             edges = physicsCore.Edges;
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += (sender, e) => { IterateSimulation(); };
-            VertexForceParam = 4.0;
-            EdgeForceParam = 0.8;
+            VertexForceParam = 2.0;
+            EdgeForceParam = 0.4;
             EdgeLength = 1.0;
             frictionParam = 0.0;
             Simulate = false;

@@ -11,7 +11,7 @@ namespace ChrumGraph
     /// </summary>
     public partial class Core: IPhysicsCore, IVisualCore
     {
-        private const double defaultFPS = 30.0;
+        private const double defaultFPS = 60.0;
 
         private DispatcherTimer refreshTimer = new DispatcherTimer();
         private double fps;
@@ -40,6 +40,7 @@ namespace ChrumGraph
                     }
                 };
             refreshTimer.Start();
+            physics.StartSimulation(FPS);
         }
         
         /// <summary>
